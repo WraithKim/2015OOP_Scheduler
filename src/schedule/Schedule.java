@@ -6,7 +6,7 @@ package schedule;
  * 스케쥴 하나에 관한 클래스
  */
 enum Priority{
-    NONE, IMPORTANT, URGENT;
+    NONE, NOTICED, URGENT; //오른쪽으로 갈 수록 중요도가 높아짐
 }
 public class Schedule {
     private String name;

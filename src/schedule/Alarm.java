@@ -20,7 +20,7 @@ public class Alarm {
         return new Alarm(new Date(timeToBegin.getTime() - 3600));
     }
 
-    public static Alarm ImportantAlarm(Date timeToBegin){
+    public static Alarm NoticedAlarm(Date timeToBegin){
         return new Alarm(new Date(timeToBegin.getTime() - 7200));
     }
 
