@@ -4,6 +4,9 @@ package util;
  * 프로젝트 진행 시 공통적으로 필요한 상수들을 정의해 놓은 클래스입니다. (정적 클래스)
  */
 public class Constant {
+    /**
+     * 빈 문자열입니다.
+     */
     public static final String EMPTY_STRING = "";
 
     /**
