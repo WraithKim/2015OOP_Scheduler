@@ -5,18 +5,24 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.fluent.Content;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import util.Constant;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -36,9 +42,10 @@ public class HttpRequest {
     /**
      * Url로부터, GET 방법을 통해 HttpRequest를 Url에 요청합니다.
      * @param urlToSend Request를 요청할 Url 정보입니다.
+     * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpGetRequest(String urlToSend) {
+    public static String sendHttpGetRequest(String urlToSend, String interpretEncoding) {
         try {
             URI targetUri = new URI(urlToSend);
             targetUri = new URIBuilder(targetUri).build();
@@ -48,6 +55,7 @@ public class HttpRequest {
             HttpEntity entity = response.getEntity();
             String content = EntityUtils.toString(entity);
 
+            content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
             System.out.println("HttpRequest::sendHttpGetRequest - Uri를 올바르게 생성할 수 없습니다.");
@@ -62,9 +70,10 @@ public class HttpRequest {
      * Url로부터, GET 방법을 통해 HttpRequest를 Url에 요청합니다.
      * @param urlToSend Request를 요청할 Url 정보입니다.
      * @param urlParameter Url에 추가할 Parameter를 가리킵니다.
+     * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpGetRequest(String urlToSend, Map<String, String> urlParameter) {
+    public static String sendHttpGetRequest(String urlToSend, Map<String, String> urlParameter, String interpretEncoding) {
         try {
             URI targetUri = new URI(urlToSend);
             targetUri = addParameterToUri(targetUri, urlParameter);
@@ -74,6 +83,7 @@ public class HttpRequest {
             HttpEntity entity = response.getEntity();
             String content = EntityUtils.toString(entity);
 
+            content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
             System.out.println("HttpRequest::sendHttpGetRequest - Uri를 올바르게 생성할 수 없습니다.");
@@ -89,20 +99,24 @@ public class HttpRequest {
      * Url로부터, POST 방법을 통해 HttpRequest를 Url에 요청합니다.
      * @param urlToSend Request를 요청할 Url 정보입니다.
      * @param postParameter POST에 추가할 Form-data를 가리킵니다.
+     * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpPostRequest(String urlToSend, Map<String, String> postParameter) {
+    public static String sendHttpPostRequest(String urlToSend, Map<String, String> postParameter, String interpretEncoding) {
         try {
             URI targetUri = new URI(urlToSend);
 
             targetUri = new URIBuilder(targetUri).build();
             HttpPost postObject = new HttpPost(targetUri);
             postObject.setEntity(new UrlEncodedFormEntity(fetchNameValuePair(postParameter)));
+
             HttpClient client = HttpClientBuilder.create().build();
             HttpResponse response = client.execute(postObject);
+
             HttpEntity entity = response.getEntity();
             String content = EntityUtils.toString(entity);
 
+            content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
@@ -117,9 +131,10 @@ public class HttpRequest {
      * Url로부터, POST 방법을 통해 HttpRequest를 Url에 요청합니다.
      * @param urlToSend Request를 요청할 Url 정보입니다.
      * @param requestPayLoad POST에 추가할 RequestPayLoad를 가리킵니다.
+     * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpPostRequest(String urlToSend, String requestPayLoad) {
+    public static String sendHttpPostRequest(String urlToSend, String requestPayLoad, String interpretEncoding) {
         try {
             URI targetUri = new URI(urlToSend);
 
@@ -131,6 +146,7 @@ public class HttpRequest {
             HttpEntity entity = response.getEntity();
             String content = EntityUtils.toString(entity);
 
+            content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
@@ -146,9 +162,10 @@ public class HttpRequest {
      * @param urlToSend Request를 요청할 Url 정보입니다.
      * @param postParameter POST에 추가할 Form-data를 가리킵니다.
      * @param urlParameter Url에 추가할 Parameter를 가리킵니다.
+     * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpPostRequest(String urlToSend, Map<String, String> urlParameter, Map<String, String> postParameter) {
+    public static String sendHttpPostRequest(String urlToSend, Map<String, String> urlParameter, Map<String, String> postParameter, String interpretEncoding) {
         try {
             URI targetUri = new URI(urlToSend);
             targetUri = addParameterToUri(targetUri, urlParameter);
@@ -162,6 +179,7 @@ public class HttpRequest {
             HttpEntity entity = response.getEntity();
             String content = EntityUtils.toString(entity);
 
+            content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
@@ -177,9 +195,10 @@ public class HttpRequest {
      * @param urlToSend Request를 요청할 Url 정보입니다.
      * @param keys POST에 추가할 Form-data의 Key들을 가리킵니다.
      * @param values POST에 추가할 value들을 가리킵니다.
+     * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpPostRequest(String urlToSend, String[] keys, String[] values) {
+    public static String sendHttpPostRequest(String urlToSend, String[] keys, String[] values, String interpretEncoding) {
         if (keys.length != values.length) {
             System.out.println("HttpRequest::sendHttpPostRequest - key와 value의 개수가 다릅니다.");
             return Constant.EMPTY_STRING;
@@ -191,7 +210,7 @@ public class HttpRequest {
             parameterHash.put(keys[i], values[i]);
         }
 
-        return sendHttpPostRequest(urlToSend, parameterHash);
+        return sendHttpPostRequest(urlToSend, parameterHash, interpretEncoding);
     }
 
     /**
