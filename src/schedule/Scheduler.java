@@ -2,6 +2,8 @@ package schedule;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by Donghwan on 11/29/2015.
@@ -12,10 +14,12 @@ public class Scheduler {
 
     private MonthSchedule currentMonth;
     private MonthSchedule nextMonth;
+    private AlarmThread alarmThread;
 
     public Scheduler(){
         Calendar cur = GregorianCalendar.getInstance();
         loadMonthSchedule(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH));
+
     }
 
     public void loadMonthSchedule(int year, int month){

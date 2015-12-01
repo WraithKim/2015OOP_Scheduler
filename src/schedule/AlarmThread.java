@@ -17,6 +17,11 @@ public class AlarmThread extends Thread implements AutoCloseable{
     private PriorityQueue<Schedule> alarmQueue;
     private Player alarmSound;
 
+
+    private boolean checkAlarm(){
+        return true;
+    }
+
     public AlarmThread() throws FileNotFoundException, JavaLayerException{
         alarmSound = new Player(new FileInputStream("." + File.separator + "res" + File.separator + "DingDong.mp3"));
     }
@@ -28,19 +33,24 @@ public class AlarmThread extends Thread implements AutoCloseable{
     @Override
     public void run() {
         try {
-            while (!isInterrupted()) {
+            while (!Thread.interrupted()) {
+                if(checkAlarm()){
+                    // 알람이 울리면 해야 될 일 정의
+                    alarmSound.play();
 
-                this.sleep(1000);
-
+                }
+                Thread.sleep(1000);
             }
-        }catch(InterruptedException ie){
+        }catch(InterruptedException ie) {
+
+        }catch(JavaLayerException jle){
 
         }
     }
 
     @Override
     public void close() throws Exception {
-        if(this.isAlive()) this.interrupt();
+        if(!(this.isInterrupted())) this.interrupt();
         if(alarmSound != null) {
             alarmSound.close();
             alarmSound = null;
