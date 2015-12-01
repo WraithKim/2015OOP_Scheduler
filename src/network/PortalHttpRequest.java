@@ -20,14 +20,20 @@ public class PortalHttpRequest {
      * @param studentID 요청하고자 하는 학번을 가리킵니다.
      * @return Request 요청의 결과입니다. XML 형식의 문자열이 반환됩니다.
      */
-    public static String getHomeworkList(int studentID) {
+    public static String getHomeworkList(String studentID) {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getHomeworkRequestPayload(studentID);
         String requestResult = HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
         return requestResult;
     }
 
-    public static String getD
+    public static String getHomeworkDetailTime(String studentID, int lectureID) {
+        PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
+        String payLoad = payloadFactory.getHomeworkDetailTimePayload(studentID, lectureID);
+        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.DetailHomework.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
+
+        return requestResult;
+    }
 
     /**
      * 요청할 수 있는 Request의 목록을 나열하는 열거형입니다.

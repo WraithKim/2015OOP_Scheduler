@@ -89,14 +89,28 @@ public class PortalXmlParser {
 
             for (int i = 0; i < totalHomeworkList.getLength(); i++) {
                 NodeList detailHomeworkList = totalHomeworkList.item(i).getChildNodes();
+                String currentHomeworkStatus = detailHomeworkList.item(5).getAttributes().item(0).getTextContent();
 
                 // detailHomeworkList.item(5) => taskendyn 노드를 불러움
-                if (detailHomeworkList.item(5).getAttributes().item(0).getTextContent().equals("ING")) {
+                if (currentHomeworkStatus.equals("ING")) {
                     String homeworkName = detailHomeworkList.item(2).getAttributes().item(0).getTextContent();
                     String homeworkStartTime = detailHomeworkList.item(3).getAttributes().item(0).getTextContent();
                     String homeworkEndTime = detailHomeworkList.item(4).getAttributes().item(0).getTextContent();
-                    int homeworkTotalStudentNum = Integer.parseInt(detailHomeworkList.item(8).getAttributes().item(0).getTextContent());
                     int homeworkSubmitStudentNum = Integer.parseInt(detailHomeworkList.item(7).getAttributes().item(0).getTextContent());
+                    int homeworkTotalStudentNum = Integer.parseInt(detailHomeworkList.item(8).getAttributes().item(0).getTextContent());
+
+                    // TODO : Schedule
+                    System.out.println("Homework StartTime : " + homeworkStartTime);
+                    System.out.println("Homework EndTime : " + homeworkEndTime);
+                    System.out.println("Homework TotalStudent : " + homeworkTotalStudentNum);
+                    System.out.println("Homework SubmitStudent : " + homeworkSubmitStudentNum);
+                    System.out.println("Homework Name : " + homeworkName);
+                } else if (currentHomeworkStatus.equals("END")) {
+                    String homeworkName = detailHomeworkList.item(2).getAttributes().item(0).getTextContent();
+                    String homeworkStartTime = detailHomeworkList.item(3).getAttributes().item(0).getTextContent();
+                    String homeworkEndTime = detailHomeworkList.item(4).getAttributes().item(0).getTextContent();
+                    int homeworkSubmitStudentNum = Integer.parseInt(detailHomeworkList.item(7).getAttributes().item(0).getTextContent());
+                    int homeworkTotalStudentNum = Integer.parseInt(detailHomeworkList.item(8).getAttributes().item(0).getTextContent());
 
                     // TODO : Schedule
                     System.out.println("Homework StartTime : " + homeworkStartTime);

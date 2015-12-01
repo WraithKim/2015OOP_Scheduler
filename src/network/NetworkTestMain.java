@@ -8,7 +8,10 @@ import util.PortalXmlParser;
 public class NetworkTestMain {
     public static void main(String[] args) throws Exception{
         PortalXmlParser parser = new PortalXmlParser();
-        String content = PortalHttpRequest.getHomeworkList(20146824);
+        String content = PortalHttpRequest.getHomeworkList("20146824");
+        String content_2 = PortalHttpRequest.getHomeworkDetailTime("20146824", 97325);
+
+        parser.parseHomeworkTime(content_2);
         parser.parseHomeworkList(content);
         System.out.println();
     }
