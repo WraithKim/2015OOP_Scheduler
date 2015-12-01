@@ -7,6 +7,14 @@ import java.nio.charset.StandardCharsets;
  * 포탈에 관련된 HttpRequest를 요청하는 정적 클래스입니다.
  */
 public class PortalHttpRequest {
+
+    /**
+     *
+     */
+    private PortalHttpRequest() {
+
+    }
+
     /**
      * 학번을 입력받아, 그에 해당하는 과제 리스트를 요청하는 Request를 보내 그 결과를 받아냅니다.
      * @param studentID 요청하고자 하는 학번을 가리킵니다.
@@ -15,7 +23,8 @@ public class PortalHttpRequest {
     public static String getHomeworkList(int studentID) {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getHomeworkRequestPayload(studentID);
-        return HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
+        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
+        return requestResult;
     }
 
     /**

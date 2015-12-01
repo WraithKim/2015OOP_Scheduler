@@ -21,7 +21,7 @@ public class PortalPayloadFactory {
      * @return 과제방 목록을 불러오기 위한 Request Payload입니다. 입력한 학번에 해당되는 Payload가 반환됩니다.
      */
     public String getHomeworkRequestPayload(int studentID) {
-        return "<map><userId value=\" "+ studentID + "\"/><groupCode value=\"cau\"/></map>";
+        return "<map><userId value=\""+ studentID + "\"/><groupCode value=\"cau\"/></map>";
     }
 
 
