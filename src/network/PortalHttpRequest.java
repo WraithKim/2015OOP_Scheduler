@@ -27,11 +27,21 @@ public class PortalHttpRequest {
         return requestResult;
     }
 
+    public static String getD
+
     /**
      * 요청할 수 있는 Request의 목록을 나열하는 열거형입니다.
      */
     public enum RequestList {
-        HomeworkList("http://cautis.cau.ac.kr/LMS/LMS/prof/myp/pLmsMyp040/getStudLectureCourse.do");
+        /**
+         * 과제 리스트를 불러오는 Request입니다.
+         */
+        HomeworkList("http://cautis.cau.ac.kr/LMS/LMS/prof/myp/pLmsMyp040/getStudLectureCourse.do"),
+
+        /**
+         * 과제의 상세 정보를 불러오는 Request입니다.
+         */
+        DetailHomework("http://cautis.cau.ac.kr/LMS/LMS/std/lec/sLmsLec070/selectTaskList.do");
 
         String mappedUrl;
 
