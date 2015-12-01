@@ -1,12 +1,11 @@
 package schedule;
 
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Created by Donghwan on 12/1/2015.
@@ -14,37 +13,40 @@ import java.util.PriorityQueue;
  * 알람을 검사하는 쓰레드
  */
 public class AlarmThread extends Thread implements AutoCloseable{
-    private PriorityQueue<Schedule> alarmQueue;
-    private Player alarmSound;
+    private PriorityBlockingQueue<Alarm> alarmQueue;
+    private MediaPlayer alarmSound;
 
 
     private boolean checkAlarm(){
-        return true;
+        if((!alarmQueue.isEmpty()) &&
+                alarmQueue.peek().getDueDate().getTime() <= System.currentTimeMillis()){
+            Alarm top = alarmQueue.poll();
+            top.setDisabled();
+            return true;
+        }else{
+            return false;
+        }
     }
 
-    public AlarmThread() throws FileNotFoundException, JavaLayerException{
-        alarmSound = new Player(new FileInputStream("." + File.separator + "res" + File.separator + "DingDong.mp3"));
-    }
-
-    public void setAlarmQueue(PriorityQueue<Schedule> alarmQueue) {
+    public AlarmThread(PriorityBlockingQueue<Alarm> alarmQueue) throws FileNotFoundException{
+        alarmSound = new MediaPlayer(new Media(
+                new File("." + File.separator + "res" + File.separator + "DingDong.mp3").toURI().toString()));
         this.alarmQueue = alarmQueue;
     }
 
     @Override
     public void run() {
         try {
-            while (!Thread.interrupted()) {
+            while (!this.isInterrupted()) {
                 if(checkAlarm()){
                     // 알람이 울리면 해야 될 일 정의
                     alarmSound.play();
-
+                    alarmSound.seek(alarmSound.getStartTime());
                 }
                 Thread.sleep(1000);
             }
-        }catch(InterruptedException ie) {
-
-        }catch(JavaLayerException jle){
-
+        }catch(InterruptedException alarmNotPlaySoundException){
+            alarmNotPlaySoundException.printStackTrace();
         }
     }
 
@@ -52,7 +54,6 @@ public class AlarmThread extends Thread implements AutoCloseable{
     public void close() throws Exception {
         if(!(this.isInterrupted())) this.interrupt();
         if(alarmSound != null) {
-            alarmSound.close();
             alarmSound = null;
         }
 

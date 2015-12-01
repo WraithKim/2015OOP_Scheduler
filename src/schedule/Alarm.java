@@ -8,7 +8,7 @@ import java.util.Date;
  *
  * 알람에 대한 클래스
  */
-public class Alarm implements Serializable{
+public class Alarm implements Serializable, Comparable<Alarm>{
     private static final long serialVersionUID = 20151201L;
 
     private boolean enabled;
@@ -17,6 +17,11 @@ public class Alarm implements Serializable{
     public Alarm(Date dueDate){
         this.dueDate = dueDate;
         this.enabled = true;
+    }
+
+    @Override
+    public int compareTo(Alarm o) {
+        return dueDate.compareTo(o.dueDate);
     }
 
     public static Alarm NormalAlarm(Date timeToBegin){
