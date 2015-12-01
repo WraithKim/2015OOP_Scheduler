@@ -10,7 +10,8 @@ import java.util.GregorianCalendar;
  */
 public class Scheduler {
 
-    private MonthSchedule monthSchedule;
+    private MonthSchedule currentMonth;
+    private MonthSchedule nextMonth;
 
     public Scheduler(){
         Calendar cur = GregorianCalendar.getInstance();
@@ -19,10 +20,11 @@ public class Scheduler {
 
     public void loadMonthSchedule(int year, int month){
         // 여기서 해당 년, 해당 월의 일정리스트를 불러와서 monthSchedule에 대입해야 함.
+        // 다음 월도 불러와야 하는데 12월에 대한 예외 처리 필요
     }
 
-    public MonthSchedule getMonthSchedule(){
-        return monthSchedule;
+    public MonthSchedule getCurrentMonth(){
+        return currentMonth;
     }
 
     public void saveMonthSchedule(){
