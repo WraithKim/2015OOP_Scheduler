@@ -1,5 +1,7 @@
 package schedule;
 
+import java.io.Serializable;
+
 /**
  * Created by Donghwan on 11/28/2015.
  *
@@ -8,7 +10,9 @@ package schedule;
 enum Priority{
     NONE, NOTICED, URGENT; //오른쪽으로 갈 수록 중요도가 높아짐
 }
-public class Schedule {
+public class Schedule implements Serializable{
+    private static final long serialVersionUID = 20151201L;
+
     private String name;
     private String description;
     private Priority priority;

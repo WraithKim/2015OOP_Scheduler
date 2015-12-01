@@ -1,5 +1,6 @@
 package schedule;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -7,7 +8,9 @@ import java.util.Date;
  *
  * 알람에 대한 클래스
  */
-public class Alarm {
+public class Alarm implements Serializable{
+    private static final long serialVersionUID = 20151201L;
+
     private boolean enabled;
     private Date dueDate;
 
