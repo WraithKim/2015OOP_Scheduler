@@ -77,19 +77,19 @@ public class FileManager {
 	    }     
 	} 
 	
-	//TODO : interface Á¦°øÇØÁÖ±â
+	//interface ë¶€ë¶„, writeì™€ read ì œê³µ
 
 	public void writeFile(ArrayList<Schedule> scheduleList, int year, int month) {
 		File[] fileList = readFileList(year, month);
 		Schedule e;
 		
-		//¸ÕÀú ÇØ´ç directory¿¡ ÀÖ´ø fileÀ» ¸ğµÎ »èÁ¦
+		//ê¸°ì¡´ folderì— ìˆë˜ ë‚´ìš© ì‚­ì œ
 		if(fileList != null) {
 			for(int i = 0 ; i < fileList.length; i++) {
 				fileList[i].delete();
 			}
 		}		
-		//±× ÈÄ ÆÄÀÏµéÀ» »õ·Î ¾´´Ù
+		//í˜„ì¬ ê°–ê³  ìˆëŠ” ë‚´ìš©ë“¤ ì“°ê¸°
 		while(!scheduleList.isEmpty()) {
 			e = scheduleList.get(0);
 			writeEachFile(e);
