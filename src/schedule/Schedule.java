@@ -1,6 +1,7 @@
 package schedule;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -42,9 +43,9 @@ public class Schedule implements Serializable{
         }
 
         public long getAlarmTime(){
-            if(priority == Priority.NONE) return dueDate.getTime() - A_DAY_AS_TIME;
-            if(priority == Priority.NOTICED) return dueDate.getTime() - THREE_DAY_AS_TIME;
-            if(priority == Priority.URGENT) return dueDate.getTime() - A_WEEK_AS_TIME;
+            if(priority == Priority.NONE) return dueDate.getTimeInMillis() - A_DAY_AS_TIME;
+            if(priority == Priority.NOTICED) return dueDate.getTimeInMillis() - THREE_DAY_AS_TIME;
+            if(priority == Priority.URGENT) return dueDate.getTimeInMillis() - A_WEEK_AS_TIME;
             else return 0L;
         }
     }
@@ -54,7 +55,7 @@ public class Schedule implements Serializable{
     private String name;
     private String description;
     private Priority priority;
-    private Date dueDate;
+    private Calendar dueDate;
     private Alarm alarm;
 
     {
@@ -94,11 +95,11 @@ public class Schedule implements Serializable{
         return alarm;
     }
 
-    public Date getDueDate() {
+    public Calendar getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(Date dueDate) {
+    public void setDueDate(Calendar dueDate) {
         this.dueDate = dueDate;
     }
 }
