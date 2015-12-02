@@ -3,7 +3,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
@@ -30,14 +29,14 @@ public class FileManager {
 	}
 	
 	private void makeYearDir(int year) {
-		File dir = new File(System.getProperty("user.dir") + "\\" + MAIN_DIRECTORY + "\\"
+		File dir = new File(System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
 				, String.valueOf(year));
 		
 		if(!dir.exists()){
 	         dir.mkdir();
 	         
 	         for(int i = 1 ; i <= 12 ; i++) {
-	     		 dir = new File(System.getProperty("user.dir") + "\\" + MAIN_DIRECTORY + "\\"
+	     		 dir = new File(System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
 	     				+ String.valueOf(year), String.valueOf(i));
 	     		 
 	     		 if(!dir.exists()) {
@@ -49,20 +48,18 @@ public class FileManager {
 	
 	private File[] readFileList(int year, int month) {
 		
-		String path = System.getProperty("user.dir") + "\\" + MAIN_DIRECTORY + "\\" 
-				+ String.valueOf(year) + "\\" + String.valueOf(month) + "\\";
+		String path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
+				+ String.valueOf(year) + File.separator + String.valueOf(month) + File.separator;
 		
 		File file = new File(path);
-		File[] list = file.listFiles();
-		
-		return list;
+		return file.listFiles();
 	}
 	
 	private void writeEachFile(Schedule schedule) {
 		String path = "";
 		makeYearDir(schedule.getDueDate().get(Calendar.YEAR));
-		path = System.getProperty("user.dir") + "\\" + MAIN_DIRECTORY + "\\" 
-				+schedule.getDueDate().get(Calendar.YEAR) + "\\" 
+		path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
+				+schedule.getDueDate().get(Calendar.YEAR) + File.separator
 				+ (schedule.getDueDate().get(Calendar.MONTH) + 1)
 				+ "\\" + schedule.getName();
 		
@@ -73,7 +70,7 @@ public class FileManager {
 	        oo.flush(); 
 	       } 
 	    catch(IOException e) {
-	        	 
+			e.printStackTrace();
 	    }     
 	} 
 	
@@ -85,8 +82,8 @@ public class FileManager {
 		
 		//기존 folder에 있던 내용 삭제
 		if(fileList != null) {
-			for(int i = 0 ; i < fileList.length; i++) {
-				fileList[i].delete();
+			for(File file : fileList){
+				file.delete();
 			}
 		}		
 		//현재 갖고 있는 내용들 쓰기
@@ -104,19 +101,16 @@ public class FileManager {
 		File[] fileList = readFileList(year, month);
 		
 		   try {
-			   for(int i = 0 ; i < fileList.length; i++) {
-		           FileInputStream fin = new FileInputStream(fileList[i].getPath()); 
+			   for(File file : fileList) {
+		           FileInputStream fin = new FileInputStream(file.getPath());
 		           ObjectInput oi = new ObjectInputStream(fin); 
 		           s = (Schedule)oi.readObject();
 		           resultSet.add(s);
 			   }
-	         } 
-	         catch(IOException e) {
-	        	 
-	         }     
-	         catch(ClassNotFoundException e) {
-	        	 
-	         } 
+		   }
+		   catch(IOException | ClassNotFoundException e) {
+			   e.printStackTrace();
+		   }
 		   
 		   return resultSet;
 	}
