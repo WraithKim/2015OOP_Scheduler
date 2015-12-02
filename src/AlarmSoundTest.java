@@ -32,11 +32,10 @@
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import schedule.Alarm;
 import schedule.AlarmThread;
+import schedule.Schedule;
 
 import java.io.FileNotFoundException;
-import java.util.Date;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class AlarmSoundTest extends Application {
@@ -45,20 +44,19 @@ public class AlarmSoundTest extends Application {
     
     @Override
     public void start(Stage primaryStage) {
-        PriorityBlockingQueue<Alarm> priorityQueue = new PriorityBlockingQueue<>();
-        AlarmThread alarmThread = null;
         try{
-            alarmThread = new AlarmThread(priorityQueue);
+        PriorityBlockingQueue<Schedule.Alarm> priorityQueue = new PriorityBlockingQueue<>();
+        AlarmThread alarmThread = new AlarmThread(priorityQueue);
             alarmThread.start();
         }catch(FileNotFoundException alarmSoundNotLoadException){
             alarmSoundNotLoadException.printStackTrace();
         }
 
-        priorityQueue.add(new Alarm(new Date(System.currentTimeMillis()+10000)));
+        //priorityQueue.add();
         System.out.println("get 1");
-        priorityQueue.add(new Alarm(new Date(System.currentTimeMillis()+5000)));
+        //priorityQueue.add(new Schedule.Alarm(new Date(System.currentTimeMillis()+5000)));
         System.out.println("get 2");
-        priorityQueue.add(new Alarm(new Date(System.currentTimeMillis()+15000)));
+        //priorityQueue.add(new Schedule.Alarm(new Date(System.currentTimeMillis()+15000)));
         System.out.println("get 3");
     }
 

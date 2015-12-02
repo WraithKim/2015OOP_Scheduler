@@ -20,7 +20,7 @@ public class Schedule implements Serializable{
 
         private boolean enabled;
 
-        public Alarm(){
+        private Alarm(){
             this.enabled = false;
         }
 

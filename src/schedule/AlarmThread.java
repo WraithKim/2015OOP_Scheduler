@@ -18,13 +18,19 @@ public class AlarmThread extends Thread implements AutoCloseable{
 
 
     private boolean checkAlarm(){
-        if((!alarmQueue.isEmpty()) &&
-                alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()){
-            Schedule.Alarm top = alarmQueue.poll();
-            top.setDisabled();
-            return true;
-        }else{
+        if(alarmQueue.isEmpty()) {
             return false;
+        }else{
+            if(!(alarmQueue.peek().isEnabled())){
+                alarmQueue.poll();
+                return false;
+            }else if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()){
+                Schedule.Alarm top = alarmQueue.poll();
+                top.setDisabled();
+                return true;
+            }else{
+                return false;
+            }
         }
     }
 
@@ -45,8 +51,8 @@ public class AlarmThread extends Thread implements AutoCloseable{
                 }
                 Thread.sleep(1000);
             }
-        }catch(InterruptedException alarmNotPlaySoundException){
-            alarmNotPlaySoundException.printStackTrace();
+        }catch(InterruptedException ie){
+            ie.printStackTrace();
         }
     }
 
