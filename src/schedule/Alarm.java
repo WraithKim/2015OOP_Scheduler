@@ -8,8 +8,9 @@ import java.util.Date;
  *
  * 알람에 대한 클래스
  */
+/*
 public class Alarm implements Serializable, Comparable<Alarm>{
-    private static final long serialVersionUID = 20151201L;
+    private static final long serialVersionUID = 20151202L;
 
     private boolean enabled;
     private Date dueDate;
@@ -54,5 +55,4 @@ public class Alarm implements Serializable, Comparable<Alarm>{
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
-    }
-}
+    }*/
