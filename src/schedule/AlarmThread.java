@@ -60,7 +60,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
     public void close() throws Exception {
         if(!(this.isInterrupted())) this.interrupt();
         if(alarmSound != null) {
-            alarmSound = null;
+            alarmSound.stop();
         }
 
     }

@@ -14,6 +14,7 @@ public class Scheduler {
 
     private MonthSchedule currentMonth;
     private MonthSchedule nextMonth;
+    private MonthSchedule showingMonth;
     private AlarmThread alarmThread;
 
     public Scheduler(){
