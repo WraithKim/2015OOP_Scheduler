@@ -5,24 +5,18 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.fluent.Content;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 import util.Constant;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -58,9 +52,11 @@ public class HttpRequest {
             content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpGetRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpGetRequest - HttpClient가 GET Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
             return Constant.EMPTY_STRING;
         }
@@ -86,9 +82,11 @@ public class HttpRequest {
             content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpGetRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpGetRequest - HttpClient가 GET Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
             return Constant.EMPTY_STRING;
         }
@@ -119,9 +117,11 @@ public class HttpRequest {
             content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - HttpClient가 POST Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
             return Constant.EMPTY_STRING;
         }
@@ -141,6 +141,7 @@ public class HttpRequest {
             targetUri = new URIBuilder(targetUri).build();
             HttpPost postObject = new HttpPost(targetUri);
             postObject.setEntity(new StringEntity(requestPayLoad));
+
             HttpClient client = HttpClientBuilder.create().build();
             HttpResponse response = client.execute(postObject);
             HttpEntity entity = response.getEntity();
@@ -149,9 +150,11 @@ public class HttpRequest {
             content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - HttpClient가 POST Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
             return Constant.EMPTY_STRING;
         }
@@ -182,9 +185,11 @@ public class HttpRequest {
             content = new String(content.getBytes(interpretEncoding));
             return content;
         } catch (URISyntaxException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - HttpClient가 POST Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
             return Constant.EMPTY_STRING;
         }
