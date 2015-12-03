@@ -2,6 +2,7 @@ package network;
 
 import util.Restourant;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
@@ -23,7 +24,7 @@ public class PortalHttpRequest {
      * @param studentID 요청하고자 하는 학번을 가리킵니다.
      * @return Request 요청의 결과입니다. XML 형식의 문자열이 반환됩니다.
      */
-    public static String getHomeworkList(String studentID) {
+    public static String getHomeworkList(String studentID) throws IOException {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getHomeworkRequestPayload(studentID);
         String requestResult = HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
@@ -36,7 +37,7 @@ public class PortalHttpRequest {
      * @param lectureID 요청하고자 하는 과목의 ID를 가리킵니다.
      * @return Request 요청의 결과입니다. XML 형식의 문자열이 반환됩니다.
      */
-    public static String getHomeworkDetailTime(String studentID, int lectureID) {
+    public static String getHomeworkDetailTime(String studentID, int lectureID) throws IOException {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getHomeworkDetailTimePayload(studentID, lectureID);
         String requestResult = HttpRequest.sendHttpPostRequest(RequestList.DetailHomework.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
@@ -44,7 +45,7 @@ public class PortalHttpRequest {
         return requestResult;
     }
 
-    public static String getMealList(Date timeDate, Restourant restourant) {
+    public static String getMealList(Date timeDate, Restourant restourant) throws IOException {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getMealPayload(timeDate, restourant);
         String requestResult = HttpRequest.sendHttpPostRequest(RequestList.Meal.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
