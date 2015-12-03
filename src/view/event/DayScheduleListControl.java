@@ -1,15 +1,13 @@
 package view.event;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableView;
 import schedule.Schedule;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -20,13 +18,15 @@ import java.util.ResourceBundle;
 public class DayScheduleListControl implements Initializable{
 
     @FXML
-    ListView<Schedule> scheduleList;
+    private TableView<Schedule> scheduleList;
 
     @FXML
     private Button addButton;
 
     @FXML
     private Button deleteButton;
+
+
 
     @FXML
     protected void handleAddButtonAction(ActionEvent event){

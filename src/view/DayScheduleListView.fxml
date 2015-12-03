@@ -7,16 +7,16 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.event.DayScheduleListControl">
    <children>
-      <Label prefHeight="35.0" prefWidth="55.0" text="2015/12/3">
+      <Label prefHeight="35.0" prefWidth="55.0" text="Date">
          <VBox.margin>
             <Insets left="10.0" />
          </VBox.margin>
       </Label>
-      <TableView prefHeight="470.0" prefWidth="251.0">
+      <TableView fx:id="scheduleList" prefHeight="470.0" prefWidth="251.0">
         <columns>
-          <TableColumn editable="false" prefWidth="198.0" resizable="false" text="Name" />
-          <TableColumn editable="false" prefWidth="83.0" resizable="false" text="Time" />
-            <TableColumn editable="false" prefWidth="55.0" resizable="false" text="Priority" />
+          <TableColumn cellValueFactory="nameProperty" editable="false" prefWidth="198.0" resizable="false" text="Name" />
+          <TableColumn cellValueFactory="timeProperty" editable="false" prefWidth="83.0" resizable="false" text="Time" />
+            <TableColumn cellValueFactory="priorityProperty" editable="false" prefWidth="55.0" resizable="false" text="Priority" />
         </columns>
       </TableView>
       <GridPane alignment="CENTER">

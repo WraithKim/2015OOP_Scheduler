@@ -1,8 +1,13 @@
 package schedule;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Donghwan on 11/28/2015.
@@ -49,27 +54,39 @@ public class Schedule implements Serializable{
 
     private static final long serialVersionUID = 20151201L;
 
-    private String name;
+    //for TableView
+    private transient final SimpleStringProperty nameProperty;
+    private transient final SimpleObjectProperty<SimpleDateFormat> timeProperty;
+    private transient final SimpleObjectProperty<Priority> priorityProperty;
+
+    //real attributes
+    private final SimpleDateFormat dateForm;
+    private final String name;
     private String description;
     private Priority priority;
     private Calendar dueDate;
     private Alarm alarm;
 
     {
-        priority = Priority.NONE;
+        nameProperty = new SimpleStringProperty();
+        timeProperty = new SimpleObjectProperty<>();
+        priorityProperty = new SimpleObjectProperty<>();
+
+        dateForm = new SimpleDateFormat("HH:mm");
+        dueDate = new GregorianCalendar();
         alarm = new Alarm();
     }
 
-    public Schedule(String name){
+    public Schedule(String name, Priority priority, Calendar dueDate){
         this.name = name;
+        nameProperty.set(name);
+        setPriority(priority);
+        setDueDate(dueDate);
+        dateForm.setCalendar(dueDate);
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
@@ -86,6 +103,7 @@ public class Schedule implements Serializable{
 
     public void setPriority(Priority priority) {
         this.priority = priority;
+        priorityProperty.set(priority);
     }
 
     public Alarm getAlarm() {
@@ -97,6 +115,6 @@ public class Schedule implements Serializable{
     }
 
     public void setDueDate(Calendar dueDate) {
-        this.dueDate = dueDate;
+        this.dueDate.setTime(dueDate.getTime());
     }
 }
