@@ -39,7 +39,7 @@ public class HttpRequest {
      * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpGetRequest(String urlToSend, String interpretEncoding) {
+    public static String sendHttpGetRequest(String urlToSend, String interpretEncoding) throws IOException {
         try {
             URI targetUri = new URI(urlToSend);
             targetUri = new URIBuilder(targetUri).build();
@@ -55,10 +55,6 @@ public class HttpRequest {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpGetRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("HttpRequest::sendHttpGetRequest - HttpClient가 GET Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
-            return Constant.EMPTY_STRING;
         }
     }
 
@@ -69,7 +65,7 @@ public class HttpRequest {
      * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpGetRequest(String urlToSend, Map<String, String> urlParameter, String interpretEncoding) {
+    public static String sendHttpGetRequest(String urlToSend, Map<String, String> urlParameter, String interpretEncoding) throws IOException {
         try {
             URI targetUri = new URI(urlToSend);
             targetUri = addParameterToUri(targetUri, urlParameter);
@@ -85,10 +81,6 @@ public class HttpRequest {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpGetRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("HttpRequest::sendHttpGetRequest - HttpClient가 GET Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
-            return Constant.EMPTY_STRING;
         }
     }
 
@@ -100,7 +92,7 @@ public class HttpRequest {
      * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpPostRequest(String urlToSend, Map<String, String> postParameter, String interpretEncoding) {
+    public static String sendHttpPostRequest(String urlToSend, Map<String, String> postParameter, String interpretEncoding) throws IOException {
         try {
             URI targetUri = new URI(urlToSend);
 
@@ -120,10 +112,6 @@ public class HttpRequest {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("HttpRequest::sendHttpPostRequest - HttpClient가 POST Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
-            return Constant.EMPTY_STRING;
         }
     }
 
@@ -134,7 +122,7 @@ public class HttpRequest {
      * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpPostRequest(String urlToSend, String requestPayLoad, String interpretEncoding) {
+    public static String sendHttpPostRequest(String urlToSend, String requestPayLoad, String interpretEncoding) throws IOException {
         try {
             URI targetUri = new URI(urlToSend);
 
@@ -153,10 +141,6 @@ public class HttpRequest {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("HttpRequest::sendHttpPostRequest - HttpClient가 POST Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
-            return Constant.EMPTY_STRING;
         }
     }
 
@@ -168,7 +152,7 @@ public class HttpRequest {
      * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpPostRequest(String urlToSend, Map<String, String> urlParameter, Map<String, String> postParameter, String interpretEncoding) {
+    public static String sendHttpPostRequest(String urlToSend, Map<String, String> urlParameter, Map<String, String> postParameter, String interpretEncoding) throws IOException {
         try {
             URI targetUri = new URI(urlToSend);
             targetUri = addParameterToUri(targetUri, urlParameter);
@@ -188,10 +172,6 @@ public class HttpRequest {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
             return Constant.EMPTY_STRING;
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("HttpRequest::sendHttpPostRequest - HttpClient가 POST Request를 수행하는데 문제가 발생했거나, 올바르지 않은 Entity를 String으로 바꾸려고 합니다.");
-            return Constant.EMPTY_STRING;
         }
     }
 
@@ -203,7 +183,7 @@ public class HttpRequest {
      * @param interpretEncoding 문자열 해석에 사용할 인코딩 형식을 가리킵니다.
      * @return Url에 대한 Reqeust 정보를 반환합니다. 빈 문자열이 반환될 경우 문제가 발생한 것입니다.
      */
-    public static String sendHttpPostRequest(String urlToSend, String[] keys, String[] values, String interpretEncoding) {
+    public static String sendHttpPostRequest(String urlToSend, String[] keys, String[] values, String interpretEncoding) throws IOException {
         if (keys.length != values.length) {
             System.out.println("HttpRequest::sendHttpPostRequest - key와 value의 개수가 다릅니다.");
             return Constant.EMPTY_STRING;

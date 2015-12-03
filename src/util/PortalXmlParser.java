@@ -4,6 +4,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import schedule.Schedule;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPath;
@@ -12,6 +14,12 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.IOException;
 import java.io.StringReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Lumin on 2015-11-30.
@@ -28,9 +36,13 @@ public class PortalXmlParser {
 
     /**
      * 주어진 과제 리스트 Xml 내용으로부터 과제 내용을 가져옵니다.
+     *
      * @param homeworkXmlContent 과제 리스트를 담고 있는 Xml 내용을 가리킵니다.
+     * @return Schedule형 List를 반환합니다. 실제 인스턴스는 HomeworkFrame 타입의 인스턴스입니다.
      */
-    public void parseHomeworkList(String homeworkXmlContent) {
+    public List<Schedule> parseHomeworkList(String homeworkXmlContent) {
+        List<Schedule> homeworkFrames = new ArrayList<>();
+
         try {
             InputSource inputSource = new InputSource(new StringReader(homeworkXmlContent));
             Document homeworkDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
@@ -44,22 +56,32 @@ public class PortalXmlParser {
 
                 // detailPlanList.item(1) => sumgubun 노드를 불러움
                 if (detailPlanList.item(1).getAttributes().item(0).getTextContent().equals("과제방")) {
-                    String homeworkPeriod = detailPlanList.item(2).getAttributes().item(0).getTextContent();
+                    String homeworkEndPeriod = detailPlanList.item(2).getAttributes().item(0).getTextContent();
+                    homeworkEndPeriod = homeworkEndPeriod.substring(homeworkEndPeriod.lastIndexOf(" ") + 1);
                     String lectureName = detailPlanList.item(3).getAttributes().item(0).getTextContent();
                     int lectureNumber = Integer.parseInt(detailPlanList.item(4).getAttributes().item(0).getTextContent());
                     String homeworkName = detailPlanList.item(5).getAttributes().item(0).getTextContent();
 
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                    Calendar homeworkEndCalendar = Calendar.getInstance();
+                    homeworkEndCalendar.setTime(dateFormat.parse(homeworkEndPeriod));
 
+                    HomeworkFrame homeworkFrame = new HomeworkFrame(lectureName, lectureNumber);
+                    homeworkFrame.setDueDate(homeworkEndCalendar);
+                    homeworkFrame.setDescription(homeworkName);
 
-                    // TODO : Schedule
-                    System.out.println("Homework Period : " + homeworkPeriod);
+                    homeworkFrames.add(homeworkFrame);
+
+                    System.out.println("------------ Homework -----------------------");
+                    System.out.println("Homework Period : " + homeworkEndPeriod);
                     System.out.println("Lecture Name : " + lectureName);
                     System.out.println("Lecture Number : " + lectureNumber);
                     System.out.println("Homework Name : " + homeworkName);
+                    System.out.println("------------ Homework End -----------------------");
                 }
             }
 
-        } catch (ParserConfigurationException e) {
+        } catch (ParserConfigurationException | ParseException e) {
             e.printStackTrace();
             System.out.println("PortalXmlParser::parseHomeworkList - Parser를 올바르게 설정할 수 없습니다.");
         } catch (IOException e) {
@@ -72,13 +94,19 @@ public class PortalXmlParser {
             e.printStackTrace();
             System.out.println("PortalXmlParser::parseHomeworkList - XPath에서 실행하는 표현식이 올바르지 않습니다.");
         }
+
+        return homeworkFrames;
     }
 
     /**
      * 주어진 과제방 Xml 내용으로부터 과제의 상세한 내역을 가져옵니다.
+     *
      * @param homeworkXmlContent 과제방에 요청한 결과가 담겨있는 Xml을 가리킵니다.
+     * @return Schedule형 List를 반환합니다. 실제 인스턴스는 Homework 타입의 인스턴스입니다.
      */
-    public void parseHomeworkTime(String homeworkXmlContent) {
+    public List<Schedule> parseHomeworkTime(String homeworkXmlContent) {
+        List<Schedule> homeworks = new ArrayList<>();
+
         try {
             InputSource inputSource = new InputSource(new StringReader(homeworkXmlContent));
             Document homeworkDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
@@ -93,27 +121,47 @@ public class PortalXmlParser {
                 String homeworkName = detailHomeworkList.item(2).getAttributes().item(0).getTextContent();
                 String homeworkStartTime = detailHomeworkList.item(3).getAttributes().item(0).getTextContent();
                 String homeworkEndTime = detailHomeworkList.item(4).getAttributes().item(0).getTextContent();
+
                 int homeworkSubmitStudentNum = Integer.parseInt(detailHomeworkList.item(7).getAttributes().item(0).getTextContent());
                 int homeworkTotalStudentNum = Integer.parseInt(detailHomeworkList.item(8).getAttributes().item(0).getTextContent());
 
-                // TODO : Schedule
                 // detailHomeworkList.item(5) => taskendyn 노드를 불러움
                 if (currentHomeworkStatus.equals("ING")) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+                    Calendar homeworkEndCalendar = Calendar.getInstance();
+                    Calendar homeworkStartCalendar = Calendar.getInstance();
+
+                    homeworkEndCalendar.setTime(dateFormat.parse(homeworkStartTime));
+                    homeworkStartCalendar.setTime(dateFormat.parse(homeworkEndTime));
+
+
+                    Homework homeworkInst = new Homework(homeworkName);
+                    homeworkInst.setTotalRelatedStudent(homeworkTotalStudentNum);
+                    homeworkInst.setTotalSummitStudent(homeworkSubmitStudentNum);
+                    homeworkInst.setDueDate(homeworkEndCalendar);
+                    homeworkInst.setHomeworkStartCalendar(homeworkStartCalendar);
+
+
+                    homeworks.add(homeworkInst);
+                    System.out.println("------------ Homework -----------------------");
                     System.out.println("Homework StartTime : " + homeworkStartTime);
                     System.out.println("Homework EndTime : " + homeworkEndTime);
                     System.out.println("Homework TotalStudent : " + homeworkTotalStudentNum);
                     System.out.println("Homework SubmitStudent : " + homeworkSubmitStudentNum);
                     System.out.println("Homework Name : " + homeworkName);
+                    System.out.println("------------ Homework End -----------------------");
                 } else if (currentHomeworkStatus.equals("END")) {
+                    System.out.println("------------ Homework -----------------------");
                     System.out.println("Homework StartTime : " + homeworkStartTime);
                     System.out.println("Homework EndTime : " + homeworkEndTime);
                     System.out.println("Homework TotalStudent : " + homeworkTotalStudentNum);
                     System.out.println("Homework SubmitStudent : " + homeworkSubmitStudentNum);
                     System.out.println("Homework Name : " + homeworkName);
+                    System.out.println("------------ Homework End -----------------------");
                 }
             }
 
-        } catch (ParserConfigurationException e) {
+        } catch (ParserConfigurationException | ParseException e) {
             e.printStackTrace();
             System.out.println("PortalXmlParser::parseHomeworkTime - Parser를 올바르게 설정할 수 없습니다.");
         } catch (IOException e) {
@@ -126,10 +174,13 @@ public class PortalXmlParser {
             e.printStackTrace();
             System.out.println("PortalXmlParser::parseHomeworkTime - XPath에서 실행하는 표현식이 올바르지 않습니다.");
         }
+
+        return homeworks;
     }
 
     /**
      * 주어진 Xml 내용으로부터 식단의 상세한 내역을 가져옵니다.
+     *
      * @param homeworkXmlContent 식단 Request를 요청한 결과가 담겨있는 Xml을 가리킵니다.
      */
     public void parseMealList(String homeworkXmlContent) {
