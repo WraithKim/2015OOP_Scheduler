@@ -9,9 +9,6 @@ import java.util.Date;
  *
  * 스케쥴 하나에 관한 클래스
  */
-enum Priority{
-    NONE, NOTICED, URGENT //오른쪽으로 갈 수록 중요도가 높아짐
-}
 public class Schedule implements Serializable{
     public class Alarm implements Serializable, Comparable<Alarm>{
         private static final long serialVersionUID = 20151202L;
