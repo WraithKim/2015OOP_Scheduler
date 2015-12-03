@@ -3,6 +3,7 @@ package view.event;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 /**
  * Created by CAUCSE on 2015-12-03.
@@ -14,7 +15,15 @@ public class SettingViewControl {
     private Button settingSaveButton;
 
     @FXML
+    private TextField settingSIDInputForm;
+
+    @FXML
     protected void handleSaveButtonAction(ActionEvent event){
-        System.out.println("Saved!");
+        if(
+                settingSIDInputForm.getText() != null &&
+                !settingSIDInputForm.getText().isEmpty()
+                ) {
+            System.out.println(settingSIDInputForm.getText());
+        }
     }
 }
