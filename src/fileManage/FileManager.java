@@ -52,7 +52,8 @@ public class FileManager {
 		String path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
 				+schedule.getDueDate().get(Calendar.YEAR) + File.separator
 				+ (schedule.getDueDate().get(Calendar.MONTH) + 1)
-				+ File.separator + schedule.getName();
+				+ File.separator + schedule.getDueDate().get(Calendar.DATE) 
+				+ "_" + schedule.getName();
 
 		FileOutputStream fos = new FileOutputStream(path);
 		ObjectOutput oo = new ObjectOutputStream(fos);
