@@ -1,15 +1,9 @@
-import javazoom.jl.decoder.JavaLayerException;
-import schedule.Alarm;
-import schedule.AlarmThread;
-
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.PriorityQueue;
-import java.util.concurrent.PriorityBlockingQueue;
+import fileManage.FileManager;
 
 /**
  * Created by Donghwan on 12/1/2015.
+ *
+ * for test
  */
 public class Test {
 
@@ -55,7 +49,7 @@ public class Test {
         });
         test.execute(()->{});
         */
-
+        FileManager fileManager = new FileManager();
     }
 
 }

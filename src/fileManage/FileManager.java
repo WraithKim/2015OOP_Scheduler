@@ -20,30 +20,22 @@ public class FileManager {
 		makeDirectory(MAIN_DIRECTORY);
 	}
 	
-	private void makeDirectory(String dirName) {
+	private boolean makeDirectory(String dirName) {
 		File dir = new File(System.getProperty("user.dir"), dirName);
-		
-		if(!dir.exists()){
-	         dir.mkdir();
-	    }
+		return dir.mkdir();
 	}
 	
-	private void makeYearDir(int year) {
+	private boolean makeYearDir(int year) {
 		File dir = new File(System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
 				, String.valueOf(year));
-		
-		if(!dir.exists()){
-	         dir.mkdir();
-	         
-	         for(int i = 1 ; i <= 12 ; i++) {
-	     		 dir = new File(System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
-	     				+ String.valueOf(year), String.valueOf(i));
-	     		 
-	     		 if(!dir.exists()) {
-	     			 dir.mkdir();
-	     		 }
-	         }
-	    }
+
+		if(!dir.mkdir()) return false;
+		for(int i = 1 ; i <= 12 ; i++) {
+		 dir = new File(System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
+				+ String.valueOf(year), String.valueOf(i));
+			if(!dir.mkdir()) return false;
+		}
+		return true;
 	}
 	
 	private File[] readFileList(int year, int month) {
@@ -55,48 +47,48 @@ public class FileManager {
 		return file.listFiles();
 	}
 	
-	private void writeEachFile(Schedule schedule) {
-		String path = "";
+	private void writeEachFile(Schedule schedule) throws IOException{
 		makeYearDir(schedule.getDueDate().get(Calendar.YEAR));
-		path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
+		String path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
 				+schedule.getDueDate().get(Calendar.YEAR) + File.separator
 				+ (schedule.getDueDate().get(Calendar.MONTH) + 1)
-				+ "\\" + schedule.getName();
-		
-	    try{       
-	        FileOutputStream fos = new FileOutputStream(path); 
-	        ObjectOutput oo = new ObjectOutputStream(fos);  
-	        oo.writeObject(schedule); 
-	        oo.flush(); 
-	       } 
-	    catch(IOException e) {
-			e.printStackTrace();
-	    }     
+				+ File.separator + schedule.getName();
+
+		FileOutputStream fos = new FileOutputStream(path);
+		ObjectOutput oo = new ObjectOutputStream(fos);
+		oo.writeObject(schedule);
+		oo.flush();
+		oo.close();
 	} 
 	
 	//interface 부분, write와 read 제공
 
-	public void writeFile(ArrayList<Schedule> scheduleList, int year, int month) {
+	public boolean writeFile(ArrayList<Schedule> scheduleList, int year, int month) {
 		File[] fileList = readFileList(year, month);
 		Schedule e;
 		
 		//기존 folder에 있던 내용 삭제
 		if(fileList != null) {
 			for(File file : fileList){
-				file.delete();
+				if(!file.delete()) return false;
 			}
 		}		
 		//현재 갖고 있는 내용들 쓰기
-		while(!scheduleList.isEmpty()) {
-			e = scheduleList.get(0);
-			writeEachFile(e);
-			scheduleList.remove(0);			
+		try {
+			while (!scheduleList.isEmpty()) {
+				e = scheduleList.get(0);
+				writeEachFile(e);
+				scheduleList.remove(0);
+			}
+		}catch(IOException ioe){
+			return false;
 		}
+
+		return true;
 	}
 	
 	public ArrayList<Schedule> readFile(int year, int month) {
-		ArrayList<Schedule> resultSet = new ArrayList<Schedule>();
-		Schedule s = null;
+		ArrayList<Schedule> resultSet = new ArrayList<>();
 		
 		File[] fileList = readFileList(year, month);
 		
@@ -104,8 +96,9 @@ public class FileManager {
 			   for(File file : fileList) {
 		           FileInputStream fin = new FileInputStream(file.getPath());
 		           ObjectInput oi = new ObjectInputStream(fin); 
-		           s = (Schedule)oi.readObject();
+		           Schedule s = (Schedule)oi.readObject();
 		           resultSet.add(s);
+				   oi.close();
 			   }
 		   }
 		   catch(IOException | ClassNotFoundException e) {

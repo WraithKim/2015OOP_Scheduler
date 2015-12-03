@@ -41,7 +41,7 @@ public class PortalPayloadFactory {
     public String getMealPayload(Date timeDate, Restourant restourant) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(timeDate);
-        String timeShortcut = Integer.toString(calendar.get(calendar.YEAR)) + String.format("%02d", calendar.get(calendar.MONTH)) + String.format("%02d", calendar.get(calendar.DATE));
+        String timeShortcut = Integer.toString(calendar.get(Calendar.YEAR)) + String.format("%02d", calendar.get(Calendar.MONTH)) + String.format("%02d", calendar.get(Calendar.DATE));
         return "<map><userid value=\"" + "20146824" + "\"/><calvalue value=\"0\"/><gb value=\"1\"/>" +
                 "<storediv value=\"" + restourant.getCode() + "\"/><campfg value=\"1\"/>" +
                 "<today value=\"" + timeShortcut + "\"/><store value=\"" + restourant.getCode() + "\"/></map>";
