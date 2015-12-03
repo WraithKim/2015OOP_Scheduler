@@ -62,6 +62,17 @@ public class FileManager {
 		oo.close();
 	} 
 	
+	private void writeEachFile(String studentNumber) throws IOException {
+		String path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
+				+ "StudentNumber";
+		
+		FileOutputStream fos = new FileOutputStream(path);
+		ObjectOutput oo = new ObjectOutputStream(fos);
+		oo.writeObject(studentNumber);
+		oo.flush();
+		oo.close();
+	}
+	
 	//interface 부분, write와 read 제공
 
 	public boolean writeFile(ArrayList<Schedule> scheduleList, int year, int month) {
@@ -108,4 +119,35 @@ public class FileManager {
 		   
 		   return resultSet;
 	}
+	
+	public boolean writeStudentNumber(String studentNumber) {
+		try {
+			writeEachFile(studentNumber);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public String readStudentNumber() {
+		String studentNumber = null;
+		String path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY + File.separator
+				+ "StudentNumber";
+		
+		   try {
+	           FileInputStream fin = new FileInputStream(path);
+	           ObjectInput oi = new ObjectInputStream(fin); 
+	           studentNumber = (String)oi.readObject();
+			   oi.close();			   
+		   }
+		   catch(IOException | ClassNotFoundException e) {
+			   e.printStackTrace();
+		   }
+		   
+		   return studentNumber;
+	}
+	
 }
