@@ -22,10 +22,10 @@ public class ViewTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         try{
-            Parent root = FXMLLoader.load(getClass().getResource("SettingView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("ScheduleEditorView.fxml"));
             Scene scene = new Scene(root);
 
-            primaryStage.setTitle("Setting View");
+            primaryStage.setTitle("Editor");
             primaryStage.setScene(scene);
             primaryStage.show();
         }catch(IOException ioe){
