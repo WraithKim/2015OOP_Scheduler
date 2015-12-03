@@ -12,18 +12,21 @@ import javafx.scene.control.TextField;
  */
 public class SettingViewControl {
     @FXML
-    private Button settingSaveButton;
-
-    @FXML
     private TextField settingSIDInputForm;
 
     @FXML
+    private Button settingSaveButton;
+
+    @FXML
     protected void handleSaveButtonAction(ActionEvent event){
+        /*
         if(
                 settingSIDInputForm.getText() != null &&
                 !settingSIDInputForm.getText().isEmpty()
                 ) {
             System.out.println(settingSIDInputForm.getText());
         }
+        */
+        // 여기에 설정 창의 저장 버튼에 대한 처리를 넣으세요.
     }
 }
