@@ -1,6 +1,9 @@
 package schedule;
 
-import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.util.*;
 
 /**
  * Created by Donghwan on 11/29/2015.
@@ -22,4 +25,9 @@ public class DaySchedule extends ArrayList<Schedule>{
     public int getDay() {
         return day;
     }
+
+    public ObservableList<Schedule> getObservableArrayList(){
+        return FXCollections.observableArrayList(this);
+    }
+
 }

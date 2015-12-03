@@ -1,9 +1,9 @@
 package view.event;
 
+import extfx.scene.control.RestrictiveTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
 /**
  * Created by CAUCSE on 2015-12-03.
@@ -12,7 +12,7 @@ import javafx.scene.control.TextField;
  */
 public class SettingViewControl {
     @FXML
-    private TextField settingSIDInputForm;
+    private RestrictiveTextField settingSIDInputForm;
 
     @FXML
     private Button settingSaveButton;

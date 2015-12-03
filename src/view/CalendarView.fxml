@@ -6,30 +6,32 @@
 <?import extfx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<?import extfx.scene.control.skin.CalendarViewSkin?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="view.event.CalendarControl" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
-       <CalendarView prefHeight="175.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+       <CalendarView fx:id="calendarView" prefHeight="175.0" prefWidth="600.0" BorderPane.alignment="CENTER">
 
        </CalendarView>
    </center>
     <bottom>
         <BorderPane prefHeight="49.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <left>
-                <Button contentDisplay="CENTER" mnemonicParsing="false" text="Setting" BorderPane.alignment="CENTER">
+                <Button fx:id="settingButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSettingButtonAction" text="Setting" BorderPane.alignment="CENTER">
                     <BorderPane.margin>
                         <Insets left="10.0" />
                     </BorderPane.margin>
                 </Button>
             </left>
+            <center>
+                <Button fx:id="detailButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleDetailButton" text="Detail" BorderPane.alignment="CENTER" />
+            </center>
             <right>
-                <Button alignment="CENTER_RIGHT" contentDisplay="CENTER" mnemonicParsing="false" text="Sync" BorderPane.alignment="CENTER">
+                <Button fx:id="syncButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSyncButtonAction" text="Sync" BorderPane.alignment="CENTER">
                     <BorderPane.margin>
                         <Insets right="10.0" />
                     </BorderPane.margin>
                 </Button>
             </right>
+
         </BorderPane>
     </bottom>
 </BorderPane>
