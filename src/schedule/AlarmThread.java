@@ -13,7 +13,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  * 알람을 검사하는 쓰레드
  */
 public class AlarmThread extends Thread implements AutoCloseable{
-    private PriorityBlockingQueue<Schedule.Alarm> alarmQueue;
+    private PriorityBlockingQueue<Schedule> alarmQueue;
     private MediaPlayer alarmSound;
 
 
@@ -21,12 +21,8 @@ public class AlarmThread extends Thread implements AutoCloseable{
         if(alarmQueue.isEmpty()) {
             return false;
         }else{
-            if(!(alarmQueue.peek().isEnabled())){
-                alarmQueue.poll();
-                return false;
-            }else if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()){
-                Schedule.Alarm top = alarmQueue.poll();
-                top.setDisabled();
+            if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()){
+                Schedule top = alarmQueue.poll();
                 return true;
             }else{
                 return false;
@@ -34,7 +30,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
         }
     }
 
-    public AlarmThread(PriorityBlockingQueue<Schedule.Alarm> alarmQueue) throws FileNotFoundException{
+    public AlarmThread(PriorityBlockingQueue<Schedule> alarmQueue) throws FileNotFoundException{
         alarmSound = new MediaPlayer(new Media(
                 new File("." + File.separator + "res" + File.separator + "DingDong.mp3").toURI().toString()));
         this.alarmQueue = alarmQueue;
