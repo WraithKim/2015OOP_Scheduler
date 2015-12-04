@@ -66,7 +66,7 @@ public class FileManager {
 	} 
 	
 	private void writeEachFile(String studentNumber) throws IOException {	
-		String path = makePath("STUDENT_NUMBER");
+		String path = makePath(STUDENT_NUMBER);
 		
 		FileOutputStream fos = new FileOutputStream(path);
 		ObjectOutput oo = new ObjectOutputStream(fos);
@@ -137,7 +137,7 @@ public class FileManager {
 	public String readStudentNumber() throws IOException, ClassNotFoundException {
 		String studentNumber = null;
 		
-		String path = makePath("STUDENT_NUMBER");
+		String path = makePath(STUDENT_NUMBER);
 		
            FileInputStream fin = new FileInputStream(path);
            ObjectInput oi = new ObjectInputStream(fin); 
