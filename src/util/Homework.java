@@ -13,8 +13,8 @@ public class Homework extends Schedule {
     private int totalSummitStudent;
     private Calendar homeworkStartCalendar;
 
-    public Homework(String name) {
-        super(name);
+    public Homework(String name, Calendar dueDate, Priority priority) {
+        super(name, dueDate, priority);
         super.setPriority(Priority.NOTICED);
         this.totalRelatedStudent = 0;
         this.totalSummitStudent = 0;

@@ -4,6 +4,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import schedule.Priority;
 import schedule.Schedule;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,10 +17,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Lumin on 2015-11-30.
@@ -35,13 +33,13 @@ public class PortalXmlParser {
     }
 
     /**
-     * 주어진 과제 리스트 Xml 내용으로부터 과제 내용을 가져옵니다.
+     * 주어진 과제 리스트 Xml 내용으로부터 과제가 담겨있는 과목의 ID들을 가져옵니다.
      *
      * @param homeworkXmlContent 과제 리스트를 담고 있는 Xml 내용을 가리킵니다.
-     * @return Schedule형 List를 반환합니다. 실제 인스턴스는 HomeworkFrame 타입의 인스턴스입니다.
+     * @return 과목 ID들의 Set을 반환합니다.
      */
-    public List<Schedule> parseHomeworkList(String homeworkXmlContent) {
-        List<Schedule> homeworkFrames = new ArrayList<>();
+    public Set<Integer> parseHomeworkList(String homeworkXmlContent) {
+        Set<Integer> homeworkLectureIDSet = new TreeSet<>();
 
         try {
             InputSource inputSource = new InputSource(new StringReader(homeworkXmlContent));
@@ -66,11 +64,7 @@ public class PortalXmlParser {
                     Calendar homeworkEndCalendar = Calendar.getInstance();
                     homeworkEndCalendar.setTime(dateFormat.parse(homeworkEndPeriod));
 
-                    HomeworkFrame homeworkFrame = new HomeworkFrame(lectureName, lectureNumber);
-                    homeworkFrame.setDueDate(homeworkEndCalendar);
-                    homeworkFrame.setDescription(homeworkName);
-
-                    homeworkFrames.add(homeworkFrame);
+                    homeworkLectureIDSet.add(lectureNumber);
 
                     System.out.println("------------ Homework -----------------------");
                     System.out.println("Homework Period : " + homeworkEndPeriod);
@@ -95,7 +89,7 @@ public class PortalXmlParser {
             System.out.println("PortalXmlParser::parseHomeworkList - XPath에서 실행하는 표현식이 올바르지 않습니다.");
         }
 
-        return homeworkFrames;
+        return homeworkLectureIDSet;
     }
 
     /**
@@ -135,7 +129,7 @@ public class PortalXmlParser {
                     homeworkStartCalendar.setTime(dateFormat.parse(homeworkEndTime));
 
 
-                    Homework homeworkInst = new Homework(homeworkName);
+                    Homework homeworkInst = new Homework(homeworkName, homeworkEndCalendar, Priority.NOTICED);
                     homeworkInst.setTotalRelatedStudent(homeworkTotalStudentNum);
                     homeworkInst.setTotalSummitStudent(homeworkSubmitStudentNum);
                     homeworkInst.setDueDate(homeworkEndCalendar);
