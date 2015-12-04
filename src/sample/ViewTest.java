@@ -23,6 +23,12 @@ public class ViewTest extends Application {
         launch(args);
     }
 
+    public static final String viewPackage = ".."+File.separator+"view"+File.separator;
+    public static final String DayScheduleListView = "DayScheduleListView.fxml";
+    public static final String CalendarView = "CalendarView.fxml";
+    public static final String ScheduleEditorView = "ScheduleEditorView.fxml";
+    public static final String SettingView = "SettingView.fxml";
+
     @Override
     public void start(Stage primaryStage) {
         try{
@@ -32,7 +38,7 @@ public class ViewTest extends Application {
             //calendarView.setLocale(Locale.KOREAN);
             //Scene scene = new Scene(root);
 
-            Parent root = FXMLLoader.load(getClass().getResource(".."+File.separator+"view"+File.separator+"DayScheduleListView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(viewPackage+DayScheduleListView));
             Scene scene = new Scene(root);
 
             // Setting its location with always on top.

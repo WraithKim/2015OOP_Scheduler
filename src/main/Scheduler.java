@@ -32,15 +32,17 @@ public class Scheduler extends Application{
     }
 
     public void loadAlarmQueue(){
-        //현재 시간에서 8일 후까지의 일정을 불러온다.
-        //알람큐에 등록
+        // 현재 시간에서 8일 후까지의 일정을 불러온다.
+        // 알람큐에 등록
     }
 
-
+    public void loadStudentId(){
+        // 학생의 학번을 불러옴
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        //스케쥴러 관리 프로그램을 생성하고
-        //달력 뷰를 생성
+        // 스케쥴러 관리 프로그램을 생성하고
+        // 달력 뷰를 생성
     }
 }
