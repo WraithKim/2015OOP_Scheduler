@@ -44,7 +44,7 @@ public class DayScheduleListControl implements Initializable{
         //예제 코드 - 선택된 스케쥴 복붙하기
         Schedule focusedItem;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
-            scheduleTableView.getItems().add(focusedItem);
+            scheduleTableView.getItems().add(new Schedule("test"+System.currentTimeMillis(), GregorianCalendar.getInstance(), Priority.NONE));
         }
         //===========================================================================
     }
