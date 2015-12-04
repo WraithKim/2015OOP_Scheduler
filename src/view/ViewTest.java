@@ -26,13 +26,13 @@ public class ViewTest extends Application {
     public void start(Stage primaryStage) {
         try{
 
-            Parent root = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
-            CalendarView calendarView = (CalendarView)(((BorderPane)root).getCenter());
-            calendarView.setLocale(Locale.KOREAN);
-            Scene scene = new Scene(root);
-
-            //Parent root = FXMLLoader.load(getClass().getResource("DayScheduleListView.fxml"));
+            //Parent root = FXMLLoader.load(getClass().getResource("CalendarView.fxml"));
+            //CalendarView calendarView = (CalendarView)(((BorderPane)root).getCenter());
+            //calendarView.setLocale(Locale.KOREAN);
             //Scene scene = new Scene(root);
+
+            Parent root = FXMLLoader.load(getClass().getResource("DayScheduleListView.fxml"));
+            Scene scene = new Scene(root);
 
             // Setting its location with always on top.
             // TODO : Where is the icon file?

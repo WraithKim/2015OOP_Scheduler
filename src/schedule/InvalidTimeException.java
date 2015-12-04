@@ -5,7 +5,7 @@ package schedule;
  *
  * 맞지 않는 시간에 대한 예외
  */
-class InvalidTimeException extends Exception{
+public class InvalidTimeException extends Exception{
     @Override
     public String getMessage() {
         return "Invalid time";

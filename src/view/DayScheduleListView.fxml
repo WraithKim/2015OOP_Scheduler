@@ -1,23 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.cell.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
+<?import view.event.FormattedTableCellFactory?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.event.DayScheduleListControl">
    <children>
-      <Label prefHeight="35.0" prefWidth="55.0" text="Date">
+      <Label fx:id="dateLable" prefHeight="35.0" prefWidth="55.0" text="Date">
          <VBox.margin>
             <Insets left="10.0" />
          </VBox.margin>
       </Label>
-      <TableView fx:id="scheduleList" prefHeight="470.0" prefWidth="251.0">
+      <TableView fx:id="scheduleTableView" prefHeight="470.0" prefWidth="251.0">
         <columns>
-          <TableColumn cellValueFactory="nameProperty" editable="false" prefWidth="198.0" resizable="false" text="Name" />
-          <TableColumn cellValueFactory="timeProperty" editable="false" prefWidth="83.0" resizable="false" text="Time" />
-            <TableColumn cellValueFactory="priorityProperty" editable="false" prefWidth="55.0" resizable="false" text="Priority" />
+            <TableColumn editable="false" prefWidth="198.0" resizable="false" sortable="false" text="Name">
+                <cellValueFactory><PropertyValueFactory property="nameProperty" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="timeColumn" editable="false" prefWidth="83.0" resizable="false" sortable="true" sortType="ASCENDING" text="Time">
+                <cellValueFactory><PropertyValueFactory property="timeProperty" />
+                </cellValueFactory>
+                <cellFactory>
+                    <FormattedTableCellFactory alignment="center">
+                    </FormattedTableCellFactory>
+                </cellFactory>
+            </TableColumn>
+            <TableColumn editable="false" prefWidth="55.0" resizable="false" sortable="false" text="Priority">
+                <cellValueFactory><PropertyValueFactory property="priorityProperty" />
+                </cellValueFactory>
+                <cellFactory>
+                    <FormattedTableCellFactory alignment="center">
+                    </FormattedTableCellFactory>
+                </cellFactory>
+            </TableColumn>
         </columns>
+          <sortOrder>
+              <fx:reference source="timeColumn"/>
+          </sortOrder>
       </TableView>
       <GridPane alignment="CENTER">
         <columnConstraints>

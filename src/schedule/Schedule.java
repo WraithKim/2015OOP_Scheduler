@@ -1,12 +1,10 @@
 package schedule;
 
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -52,37 +50,38 @@ public class Schedule implements Serializable{
         }
     }
 
-    private static final long serialVersionUID = 20151201L;
+    private static final long serialVersionUID = 20151204L;
+    private static final SimpleDateFormat dateForm;
 
     //for TableView
     private transient final SimpleStringProperty nameProperty;
-    private transient final SimpleObjectProperty<SimpleDateFormat> timeProperty;
-    private transient final SimpleObjectProperty<Priority> priorityProperty;
+    private transient final SimpleStringProperty timeProperty;
+    private transient final SimpleStringProperty priorityProperty;
 
     //real attributes
-    private final SimpleDateFormat dateForm;
     private final String name;
     private String description;
     private Priority priority;
     private Calendar dueDate;
     private Alarm alarm;
 
-    {
-        nameProperty = new SimpleStringProperty();
-        timeProperty = new SimpleObjectProperty<>();
-        priorityProperty = new SimpleObjectProperty<>();
-
+    static{
         dateForm = new SimpleDateFormat("HH:mm");
-        dueDate = new GregorianCalendar();
-        alarm = new Alarm();
     }
 
-    public Schedule(String name, Priority priority, Calendar dueDate){
+    public Schedule(String name, Calendar dueDate, Priority priority){
+        nameProperty = new SimpleStringProperty();
+        timeProperty = new SimpleStringProperty();
+        priorityProperty = new SimpleStringProperty();
+
+        this.dueDate = new GregorianCalendar();
+        alarm = new Alarm();
+
         this.name = name;
         nameProperty.set(name);
-        setPriority(priority);
         setDueDate(dueDate);
         dateForm.setCalendar(dueDate);
+        setPriority(priority);
     }
 
     public String getName() {
@@ -103,7 +102,7 @@ public class Schedule implements Serializable{
 
     public void setPriority(Priority priority) {
         this.priority = priority;
-        priorityProperty.set(priority);
+        priorityProperty.set(priority.toString());
     }
 
     public Alarm getAlarm() {
@@ -116,5 +115,30 @@ public class Schedule implements Serializable{
 
     public void setDueDate(Calendar dueDate) {
         this.dueDate.setTime(dueDate.getTime());
+        this.timeProperty.set(dateForm.format(this.dueDate.getTime()));
+    }
+
+    public String getNameProperty() {
+        return nameProperty.get();
+    }
+
+    public SimpleStringProperty namePropertyProperty() {
+        return nameProperty;
+    }
+
+    public String getTimeProperty() {
+        return timeProperty.get();
+    }
+
+    public SimpleStringProperty timePropertyProperty() {
+        return timeProperty;
+    }
+
+    public String getPriorityProperty() {
+        return priorityProperty.get();
+    }
+
+    public SimpleStringProperty priorityPropertyProperty() {
+        return priorityProperty;
     }
 }

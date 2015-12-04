@@ -1,13 +1,22 @@
 package view.event;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableView;
+import schedule.DaySchedule;
+import schedule.InvalidTimeException;
+import schedule.Priority;
 import schedule.Schedule;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
 /**
@@ -16,9 +25,11 @@ import java.util.ResourceBundle;
  * 하루 일정 창에 달린 이벤트 리스너
  */
 public class DayScheduleListControl implements Initializable{
+    @FXML
+    private Label dateLable;
 
     @FXML
-    private TableView<Schedule> scheduleList;
+    private TableView<Schedule> scheduleTableView;
 
     @FXML
     private Button addButton;
@@ -30,7 +41,12 @@ public class DayScheduleListControl implements Initializable{
 
     @FXML
     protected void handleAddButtonAction(ActionEvent event){
-
+        //예제 코드 - 선택된 스케쥴 복붙하기
+        Schedule focusedItem;
+        if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
+            scheduleTableView.getItems().add(focusedItem);
+        }
+        //===========================================================================
     }
 
     @FXML
@@ -41,7 +57,19 @@ public class DayScheduleListControl implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // GUI 창을 띄우기 직전에 해야할 작업(일종의 GUI 창 생성자)
-        // 예시는 스케쥴 편집 창에서 시간 콤보박스를 만드는 코드를 보세요
+        scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        //예시 코드
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
+        dateLable.setText(dateFormat.format(new Date(System.currentTimeMillis())));
+        try{
+            DaySchedule daySchedule = new DaySchedule(2);
+            daySchedule.add(new Schedule("test", GregorianCalendar.getInstance(), Priority.NONE));
+            daySchedule.add(new Schedule("test", GregorianCalendar.getInstance(), Priority.URGENT));
+            scheduleTableView.setItems(FXCollections.observableArrayList(daySchedule));
+        }catch(InvalidTimeException e){
+            e.printStackTrace();
+        }
+        //==========================================================================================
 
     }
 }

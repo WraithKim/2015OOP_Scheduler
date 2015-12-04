@@ -25,9 +25,4 @@ public class DaySchedule extends ArrayList<Schedule>{
     public int getDay() {
         return day;
     }
-
-    public ObservableList<Schedule> getObservableArrayList(){
-        return FXCollections.observableArrayList(this);
-    }
-
 }
