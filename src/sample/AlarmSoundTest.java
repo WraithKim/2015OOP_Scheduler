@@ -45,7 +45,7 @@ public class AlarmSoundTest extends Application {
     @Override
     public void start(Stage primaryStage) {
         try{
-        PriorityBlockingQueue<Schedule.Alarm> priorityQueue = new PriorityBlockingQueue<>();
+        PriorityBlockingQueue<Schedule> priorityQueue = new PriorityBlockingQueue<>();
         AlarmThread alarmThread = new AlarmThread(priorityQueue);
             alarmThread.start();
         }catch(FileNotFoundException alarmSoundNotLoadException){
