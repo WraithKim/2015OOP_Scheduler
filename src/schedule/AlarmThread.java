@@ -2,6 +2,7 @@ package schedule;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import util.AlarmQueue;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,16 +14,20 @@ import java.util.concurrent.PriorityBlockingQueue;
  * 알람을 검사하는 쓰레드
  */
 public class AlarmThread extends Thread implements AutoCloseable{
-    private PriorityBlockingQueue<Schedule> alarmQueue;
     private MediaPlayer alarmSound;
 
+    private static AlarmThread ourInstance = new AlarmThread();
+
+    public static AlarmThread getInstance(){
+        return ourInstance;
+    }
 
     private boolean checkAlarm(){
-        if(alarmQueue.isEmpty()) {
+        if(AlarmQueue.getInstance().isEmpty()) {
             return false;
         }else{
-            if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()){
-                Schedule top = alarmQueue.poll();
+            if(AlarmQueue.getInstance().peek().getAlarmTime() <= System.currentTimeMillis()){
+                Schedule top = AlarmQueue.getInstance().poll();
                 return true;
             }else{
                 return false;
@@ -30,10 +35,9 @@ public class AlarmThread extends Thread implements AutoCloseable{
         }
     }
 
-    public AlarmThread(PriorityBlockingQueue<Schedule> alarmQueue) throws FileNotFoundException{
+    private AlarmThread(){
         alarmSound = new MediaPlayer(new Media(
                 new File("." + File.separator + "res" + File.separator + "DingDong.mp3").toURI().toString()));
-        this.alarmQueue = alarmQueue;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package view.event;
 
 import extfx.scene.control.RestrictiveTextField;
-import fileManage.FileManager;
+import util.FileManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -23,20 +23,24 @@ public class SettingViewControl {
 
     @FXML
     protected void handleSaveButtonAction(ActionEvent event) throws ClassNotFoundException {
-        FileManager fileManager = new FileManager();
         try {
             System.out.println("Save Button Clicked :: Inputform Content : " + this.settingSIDInputForm.getText());
-            System.out.println("Save Button Clicked :: Loaded Content : " + fileManager.readStudentNumber());
+            System.out.println("Save Button Clicked :: Loaded Content : " + FileManager.getInstance().readStudentNumber());
 
             // Try to invoke exception.
             Long.parseLong(this.settingSIDInputForm.getText());
             Constant.savedStudentID = this.settingSIDInputForm.getText();
-            fileManager.writeStudentNumber(Constant.savedStudentID);
+            FileManager.getInstance().writeStudentNumber(Constant.savedStudentID);
 
             System.out.println("Save Button Clicked :: Saved Content : " + Constant.savedStudentID);
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println("Save Button Clicked :: IOException");
+            Constant.savedStudentID = this.settingSIDInputForm.getText();
+            try {
+                FileManager.getInstance().writeStudentNumber(Constant.savedStudentID);
+            }catch(IOException e2){
+                e2.printStackTrace();
+            }
         }
     }
 }

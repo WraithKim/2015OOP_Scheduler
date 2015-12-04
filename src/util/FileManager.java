@@ -1,4 +1,4 @@
-package fileManage;
+package util;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.io.File;
@@ -16,8 +16,14 @@ import schedule.Schedule;
 public class FileManager {
 	private static final String MAIN_DIRECTORY = "Data";
 	private static final String STUDENT_NUMBER = "StudentNumber";
-	
-	public FileManager() {
+
+	private static FileManager ourInstance = new FileManager();
+
+	public static FileManager getInstance(){
+		return ourInstance;
+	}
+
+	private FileManager() {
 		String path = makePath();
 		makeDirectory(path);
 	}
