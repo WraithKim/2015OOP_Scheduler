@@ -25,8 +25,7 @@ import java.util.ResourceBundle;
  * <p>
  * 설정 창에 달린 이벤트 리스너
  */
-public class SettingViewControl implements Initializable{
-    private static boolean isCreated = false;
+public class SettingControl implements Initializable{
 
     @FXML
     private RestrictiveTextField settingSIDInputForm;
@@ -63,47 +62,6 @@ public class SettingViewControl implements Initializable{
             }
         }
     }
-
-    private static Stage newSettingViewStage() throws Exception {
-        if(isCreated) return null;
-        isCreated = true;
-        Parent root = FXMLLoader.load(new URL(Constant.SettingView));
-        Scene scene = new Scene(root);
-        Stage settingView = new Stage();
-        settingView.setScene(scene);
-        settingView.setAlwaysOnTop(true);
-        settingView.setResizable(false);
-        return settingView;
-    }
-
-    public static Stage newUserSettingViewStage() throws Exception{
-        Stage settingView = newSettingViewStage();
-        if(settingView != null) {
-            settingView.setTitle("New Student ID");
-            settingView.setOnCloseRequest((WindowEvent event) -> {
-                try {
-                    FileManager.getInstance().readStudentNumber();
-                } catch (Exception e) {
-
-                    System.exit(1);
-                }
-                isCreated = false;
-                settingView.close();
-            });
-        }
-        return settingView;
-    }
-
-    public static Stage defaultSettingViewStage() throws Exception{
-        Stage settingView = newSettingViewStage();
-        if(settingView != null){
-            settingView.setTitle("Setting");
-            settingView.setOnCloseRequest((WindowEvent event)->{
-                isCreated = false;
-            });
-        }
-        return settingView;
-}
 
     @Override
     public void initialize(URL location, ResourceBundle resources){

@@ -10,12 +10,10 @@ import schedule.AlarmThread;
 import util.AlarmQueue;
 import util.Constant;
 import util.FileManager;
-import view.event.SettingViewControl;
+import view.stageBuilder.SettingStageBuilder;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -63,7 +61,7 @@ public class Scheduler extends Application{
             Constant.savedStudentID = FileManager.getInstance().readStudentNumber();
         }catch(FileNotFoundException fnfe){
             // 설정 창을 열어서 id를 입력받게 해야함.
-            Stage settingView = SettingViewControl.newUserSettingViewStage();
+            Stage settingView = SettingStageBuilder.newUserSettingViewStage();
             if(settingView != null) settingView.show();
         }
     }
@@ -83,7 +81,7 @@ public class Scheduler extends Application{
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest((WindowEvent event)->{
-            // 끄기 전에 저장을 할거면 여기에 저장하는 코드를 넣어야 함
+            // TODO 끄기 전에 저장을 할거면 여기에 저장하는 코드를 넣어야 함
             System.exit(0);
         });
 

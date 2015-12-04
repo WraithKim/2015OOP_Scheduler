@@ -9,10 +9,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import network.PortalHttpRequest;
-import schedule.DaySchedule;
 import schedule.Schedule;
 import util.Constant;
 import util.PortalXmlParser;
+import view.stageBuilder.SettingStageBuilder;
 
 import java.io.IOException;
 import java.net.URL;
@@ -61,7 +61,7 @@ public class CalendarControl {
 
     @FXML
     protected void handleSettingButtonAction(ActionEvent event) throws Exception{
-        Stage settingView = SettingViewControl.defaultSettingViewStage();
+        Stage settingView = SettingStageBuilder.defaultSettingViewStage();
         if(settingView != null) settingView.show();
     }
 
@@ -69,9 +69,8 @@ public class CalendarControl {
     protected void handleSyncButtonAction(ActionEvent event){
         System.out.println("Sync Button :: loaded Student ID : " + Constant.savedStudentID);
         if (Constant.savedStudentID.isEmpty()) {
-            System.out.println("먼저 학번 설정을 해주세요!");
-            Constant.savedStudentID = "20146824";
-            //return;
+            System.err.println("먼저 학번 설정을 해주세요!");
+            return;
         }
 
         try {
