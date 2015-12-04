@@ -24,10 +24,10 @@ public class PortalHttpRequest {
      * @param studentID 요청하고자 하는 학번을 가리킵니다.
      * @return Request 요청의 결과입니다. XML 형식의 문자열이 반환됩니다.
      */
-    public static String getHomeworkList(String studentID) throws IOException {
+    public static String getHomeworkLectureIDList(String studentID) throws IOException {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getHomeworkRequestPayload(studentID);
-        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
+        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.HomeworkLectureIDList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
         return requestResult;
     }
 
@@ -37,10 +37,10 @@ public class PortalHttpRequest {
      * @param lectureID 요청하고자 하는 과목의 ID를 가리킵니다.
      * @return Request 요청의 결과입니다. XML 형식의 문자열이 반환됩니다.
      */
-    public static String getHomeworkDetailTime(String studentID, int lectureID) throws IOException {
+    public static String getHomeworkList(String studentID, int lectureID) throws IOException {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getHomeworkDetailTimePayload(studentID, lectureID);
-        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.DetailHomework.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
+        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
 
         return requestResult;
     }
@@ -58,14 +58,14 @@ public class PortalHttpRequest {
      */
     public enum RequestList {
         /**
-         * 과제 리스트를 불러오는 Request입니다.
+         * 과제 과목 ID 리스트를 불러오는 Request입니다.
          */
-        HomeworkList("http://cautis.cau.ac.kr/LMS/LMS/prof/myp/pLmsMyp040/getStudLectureCourse.do"),
+        HomeworkLectureIDList("http://cautis.cau.ac.kr/LMS/LMS/prof/myp/pLmsMyp040/getStudLectureCourse.do"),
 
         /**
          * 과제의 상세 정보를 불러오는 Request입니다.
          */
-        DetailHomework("http://cautis.cau.ac.kr/LMS/LMS/std/lec/sLmsLec070/selectTaskList.do"),
+        HomeworkList("http://cautis.cau.ac.kr/LMS/LMS/std/lec/sLmsLec070/selectTaskList.do"),
 
         /**
          * 식단 정보를 불러오는 Request입니다.

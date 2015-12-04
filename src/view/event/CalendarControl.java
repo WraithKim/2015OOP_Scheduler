@@ -4,10 +4,13 @@ import extfx.scene.control.CalendarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import network.PortalHttpRequest;
+import schedule.Schedule;
+import util.Constant;
+import util.PortalXmlParser;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created by CAUCSE on 2015-12-03.
@@ -26,6 +29,8 @@ public class CalendarControl {
 
     @FXML
     private Button syncButton;
+
+    private PortalXmlParser portalParser = new PortalXmlParser();
 
     @FXML
     protected void handleDetailButton(ActionEvent event){
@@ -46,6 +51,26 @@ public class CalendarControl {
 
     @FXML
     protected void handleSyncButtonAction(ActionEvent event){
+        System.out.println("Sync Button :: loaded Student ID : " + Constant.savedStudentID);
+        if (Constant.savedStudentID.isEmpty()) {
+            System.out.println("먼저 학번 설정을 해주세요!");
+            return;
+        }
 
+        try {
+            String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(Constant.savedStudentID);
+            System.out.println("Sync Button :: lectureIDList : " + lectureIDXmlInfo);
+            Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
+            List<List<Schedule>> totalHomeworkList = new ArrayList<>();
+
+            for (Integer lectureID : lectureIDSet) {
+                String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(Constant.savedStudentID, lectureID);
+                System.out.println("Sync Button :: homeworkXmlInfo : " + homeworkXmlInfo);
+                List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
+                totalHomeworkList.add(entityHomeworkList);
+            }
+        } catch (IOException e) {
+            // TODO : How Exception control?
+        }
     }
 }

@@ -38,7 +38,7 @@ public class PortalXmlParser {
      * @param homeworkXmlContent 과제 리스트를 담고 있는 Xml 내용을 가리킵니다.
      * @return 과목 ID들의 Set을 반환합니다.
      */
-    public Set<Integer> parseHomeworkList(String homeworkXmlContent) {
+    public Set<Integer> parseHomeworkLectureIDList(String homeworkXmlContent) {
         Set<Integer> homeworkLectureIDSet = new TreeSet<>();
 
         try {
@@ -77,16 +77,16 @@ public class PortalXmlParser {
 
         } catch (ParserConfigurationException | ParseException e) {
             e.printStackTrace();
-            System.out.println("PortalXmlParser::parseHomeworkList - Parser를 올바르게 설정할 수 없습니다.");
+            System.out.println("PortalXmlParser::parseHomeworkLectureIDList - Parser를 올바르게 설정할 수 없습니다.");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("PortalXmlParser::parseHomeworkList - Document 인스턴스 생성 중 문제가 발생하였습니다.");
+            System.out.println("PortalXmlParser::parseHomeworkLectureIDList - Document 인스턴스 생성 중 문제가 발생하였습니다.");
         } catch (SAXException e) {
             e.printStackTrace();
-            System.out.println("PortalXmlParser::parseHomeworkList - Document 인스턴스 생성 중 문제가 발생하였습니다.");
+            System.out.println("PortalXmlParser::parseHomeworkLectureIDList - Document 인스턴스 생성 중 문제가 발생하였습니다.");
         } catch (XPathExpressionException e) {
             e.printStackTrace();
-            System.out.println("PortalXmlParser::parseHomeworkList - XPath에서 실행하는 표현식이 올바르지 않습니다.");
+            System.out.println("PortalXmlParser::parseHomeworkLectureIDList - XPath에서 실행하는 표현식이 올바르지 않습니다.");
         }
 
         return homeworkLectureIDSet;
@@ -98,7 +98,7 @@ public class PortalXmlParser {
      * @param homeworkXmlContent 과제방에 요청한 결과가 담겨있는 Xml을 가리킵니다.
      * @return Schedule형 List를 반환합니다. 실제 인스턴스는 Homework 타입의 인스턴스입니다.
      */
-    public List<Schedule> parseHomeworkTime(String homeworkXmlContent) {
+    public List<Schedule> parseHomeworkList(String homeworkXmlContent) {
         List<Schedule> homeworks = new ArrayList<>();
 
         try {
@@ -157,16 +157,16 @@ public class PortalXmlParser {
 
         } catch (ParserConfigurationException | ParseException e) {
             e.printStackTrace();
-            System.out.println("PortalXmlParser::parseHomeworkTime - Parser를 올바르게 설정할 수 없습니다.");
+            System.out.println("PortalXmlParser::parseHomeworkList - Parser를 올바르게 설정할 수 없습니다.");
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("PortalXmlParser::parseHomeworkTime - Document 인스턴스 생성 중 문제가 발생하였습니다.");
+            System.out.println("PortalXmlParser::parseHomeworkList - Document 인스턴스 생성 중 문제가 발생하였습니다.");
         } catch (SAXException e) {
             e.printStackTrace();
-            System.out.println("PortalXmlParser::parseHomeworkTime - Document 인스턴스 생성 중 문제가 발생하였습니다.");
+            System.out.println("PortalXmlParser::parseHomeworkList - Document 인스턴스 생성 중 문제가 발생하였습니다.");
         } catch (XPathExpressionException e) {
             e.printStackTrace();
-            System.out.println("PortalXmlParser::parseHomeworkTime - XPath에서 실행하는 표현식이 올바르지 않습니다.");
+            System.out.println("PortalXmlParser::parseHomeworkList - XPath에서 실행하는 표현식이 올바르지 않습니다.");
         }
 
         return homeworks;

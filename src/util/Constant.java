@@ -14,6 +14,9 @@ public class Constant {
      */
     public static final String DUMMY_STUDENT_ID = "20000000";
 
+
+    public static String savedStudentID = EMPTY_STRING;
+
     /**
      * Constant 클래스의 인스턴스를 초기화합니다. Constant 클래스는 정적 클래스이므로 외부에서 인스턴스화 할 수 없습니다.
      */
