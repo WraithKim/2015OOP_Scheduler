@@ -54,7 +54,8 @@ public class CalendarControl {
         System.out.println("Sync Button :: loaded Student ID : " + Constant.savedStudentID);
         if (Constant.savedStudentID.isEmpty()) {
             System.out.println("먼저 학번 설정을 해주세요!");
-            return;
+            Constant.savedStudentID = "20146824";
+            //return;
         }
 
         try {
@@ -69,6 +70,7 @@ public class CalendarControl {
                 List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
                 totalHomeworkList.add(entityHomeworkList);
             }
+            // TODO : Return to Main List.
         } catch (IOException e) {
             // TODO : How Exception control?
         }
