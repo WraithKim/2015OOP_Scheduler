@@ -1,4 +1,4 @@
-package view;
+package sample;
 /**
  * Created by CAUCSE on 2015-12-03.
  *
