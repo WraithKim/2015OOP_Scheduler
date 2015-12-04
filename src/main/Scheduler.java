@@ -11,8 +11,11 @@ import util.AlarmQueue;
 import util.Constant;
 import util.FileManager;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -46,8 +49,7 @@ public class Scheduler extends Application{
                 return;
             }
         }
-
-        while(alarmQueue.peek().getAlarmTime() < cur.getTimeInMillis()){
+        while(!(alarmQueue.isEmpty())&&(alarmQueue.peek().getAlarmTime() < cur.getTimeInMillis())){
             alarmQueue.poll();
         }
 
@@ -68,7 +70,6 @@ public class Scheduler extends Application{
             settingView.setScene(scene);
             settingView.setAlwaysOnTop(true);
             settingView.setResizable(false);
-            settingView.setAlwaysOnTop(true);
             settingView.show();
             settingView.setOnCloseRequest((WindowEvent event)->{
                 try{
@@ -88,7 +89,7 @@ public class Scheduler extends Application{
         initAlarmQueue();
 
         // 달력 뷰를 생성
-        Parent root = FXMLLoader.load(getClass().getResource(Constant.viewPackage+Constant.CalendarView));
+        Parent root = FXMLLoader.load(new URL(Constant.CalendarView));
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Calendar");

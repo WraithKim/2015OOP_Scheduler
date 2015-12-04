@@ -3,13 +3,18 @@ package view.event;
 import extfx.scene.control.CalendarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import network.PortalHttpRequest;
 import schedule.Schedule;
 import util.Constant;
 import util.PortalXmlParser;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -45,8 +50,15 @@ public class CalendarControl {
     }
 
     @FXML
-    protected void handleSettingButtonAction(ActionEvent event){
-
+    protected void handleSettingButtonAction(ActionEvent event) throws Exception{
+        Parent root = FXMLLoader.load(new URL(Constant.SettingView));
+        Scene scene = new Scene(root);
+        Stage settingView = new Stage();
+        settingView.setTitle("Setting");
+        settingView.setScene(scene);
+        settingView.setAlwaysOnTop(true);
+        settingView.setResizable(false);
+        settingView.show();
     }
 
     @FXML

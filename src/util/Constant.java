@@ -19,11 +19,11 @@ public class Constant {
 
     public static String savedStudentID = EMPTY_STRING;
 
-    public static final String viewPackage = ".."+ File.separator+"view"+File.separator;
-    public static final String DayScheduleListView = "DayScheduleListView.fxml";
-    public static final String CalendarView = "CalendarView.fxml";
-    public static final String ScheduleEditorView = "ScheduleEditorView.fxml";
-    public static final String SettingView = "SettingView.fxml";
+    public static final String viewPackage = new File(System.getProperty("user.dir")).toURI().toString() + "/src/view/";
+    public static final String DayScheduleListView = Constant.viewPackage+"DayScheduleView.fxml";
+    public static final String CalendarView = Constant.viewPackage+"CalendarView.fxml";
+    public static final String ScheduleEditorView = Constant.viewPackage+"ScheduleEditorView";
+    public static final String SettingView = Constant.viewPackage+"SettingView.fxml";
 
     /**
      * Constant 클래스의 인스턴스를 초기화합니다. Constant 클래스는 정적 클래스이므로 외부에서 인스턴스화 할 수 없습니다.

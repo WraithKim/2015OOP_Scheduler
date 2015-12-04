@@ -122,16 +122,17 @@ public class FileManager {
 		ArrayList<Schedule> resultSet = new ArrayList<>();
 		
 		File[] fileList = readFileList(year, month, day);
-		
-		   for(File file : fileList) {
-	           FileInputStream fin = new FileInputStream(file.getPath());
-	           ObjectInput oi = new ObjectInputStream(fin); 
-	           Schedule s = (Schedule)oi.readObject();
-	           resultSet.add(s);
-			   oi.close();
-		   }
-		   		   
-		   return resultSet;
+		if(fileList != null) {
+			for (File file : fileList) {
+				if (file == null) continue;
+				FileInputStream fin = new FileInputStream(file.getPath());
+				ObjectInput oi = new ObjectInputStream(fin);
+				Schedule s = (Schedule) oi.readObject();
+				resultSet.add(s);
+				oi.close();
+			}
+		}
+	   return resultSet;
 	}
 	
 	public boolean writeStudentNumber(String studentNumber) throws IOException {
