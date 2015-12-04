@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import network.PortalHttpRequest;
+import schedule.DaySchedule;
 import schedule.Schedule;
 import util.Constant;
 import util.PortalXmlParser;
@@ -38,27 +39,30 @@ public class CalendarControl {
     private PortalXmlParser portalParser = new PortalXmlParser();
 
     @FXML
-    protected void handleDetailButton(ActionEvent event){
+    protected void handleDetailButton(ActionEvent event) throws Exception{
         Date selectedDate = null;
         if((selectedDate = calendarView.getSelectedDate()) != null){
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(calendarView.getSelectedDate());
             //selectedDate: 현재 선택한 날짜
             //System.out.println("date"+calendar.get(Calendar.YEAR)+calendar.get(Calendar.MONTH)+calendar.get(Calendar.DAY_OF_MONTH));
-            //여기에 해당 버튼이 해야 될 일
+
+            //TODO 새 스케쥴리스트 창을 위한 날짜 문자열과 스케쥴리스트 객체를 만들어서 새 창에 넘겨줘야 함
+
+            Parent root = FXMLLoader.load(new URL(Constant.DayScheduleListView));
+            Scene scene = new Scene(root);
+            Stage settingView = new Stage();
+            settingView.setTitle("Schedule List");
+            settingView.setScene(scene);
+            settingView.setResizable(false);
+            settingView.show();
         }
     }
 
     @FXML
     protected void handleSettingButtonAction(ActionEvent event) throws Exception{
-        Parent root = FXMLLoader.load(new URL(Constant.SettingView));
-        Scene scene = new Scene(root);
-        Stage settingView = new Stage();
-        settingView.setTitle("Setting");
-        settingView.setScene(scene);
-        settingView.setAlwaysOnTop(true);
-        settingView.setResizable(false);
-        settingView.show();
+        Stage settingView = SettingViewControl.defaultSettingViewStage();
+        if(settingView != null) settingView.show();
     }
 
     @FXML
@@ -82,7 +86,7 @@ public class CalendarControl {
                 List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
                 totalHomeworkList.add(entityHomeworkList);
             }
-            // TODO : Return to Main List.
+            // TODO : Save in
         } catch (IOException e) {
             // TODO : How Exception control?
         }

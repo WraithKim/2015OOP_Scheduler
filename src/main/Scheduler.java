@@ -10,6 +10,7 @@ import schedule.AlarmThread;
 import util.AlarmQueue;
 import util.Constant;
 import util.FileManager;
+import view.event.SettingViewControl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,29 +57,14 @@ public class Scheduler extends Application{
         AlarmThread.getInstance().start();
     }
 
-    private void initStudentId() throws ClassNotFoundException, IOException{
+    private void initStudentId() throws Exception{
         // 학생의 학번을 불러옴
         try {
             Constant.savedStudentID = FileManager.getInstance().readStudentNumber();
         }catch(FileNotFoundException fnfe){
             // 설정 창을 열어서 id를 입력받게 해야함.
-            Parent root = FXMLLoader.load(getClass().getResource(Constant.viewPackage+Constant.SettingView));
-            Scene scene = new Scene(root);
-            Stage settingView = new Stage();
-
-            settingView.setTitle("New Student ID");
-            settingView.setScene(scene);
-            settingView.setAlwaysOnTop(true);
-            settingView.setResizable(false);
-            settingView.show();
-            settingView.setOnCloseRequest((WindowEvent event)->{
-                try{
-                    FileManager.getInstance().readStudentNumber();
-                }catch(Exception e){
-                    System.exit(1);
-                }
-                settingView.close();
-            });
+            Stage settingView = SettingViewControl.newUserSettingViewStage();
+            if(settingView != null) settingView.show();
         }
     }
 
@@ -87,6 +73,7 @@ public class Scheduler extends Application{
         // 스케쥴러 관리 프로그램을 생성하고
         initStudentId();
         initAlarmQueue();
+        //AlarmThread.getInstance().start();
 
         // 달력 뷰를 생성
         Parent root = FXMLLoader.load(new URL(Constant.CalendarView));

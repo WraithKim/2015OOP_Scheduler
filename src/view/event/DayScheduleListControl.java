@@ -17,6 +17,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -55,21 +56,13 @@ public class DayScheduleListControl implements Initializable{
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void initialize(URL location, ResourceBundle resources) {
         // GUI 창을 띄우기 직전에 해야할 작업(일종의 GUI 창 생성자)
         scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        //예시 코드
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
-        dateLable.setText(dateFormat.format(new Date(System.currentTimeMillis())));
-        try{
-            DaySchedule daySchedule = new DaySchedule(2);
-            daySchedule.add(new Schedule("test", GregorianCalendar.getInstance(), Priority.NONE));
-            daySchedule.add(new Schedule("test", GregorianCalendar.getInstance(), Priority.URGENT));
-            scheduleTableView.setItems(FXCollections.observableArrayList(daySchedule));
-        }catch(InvalidTimeException e){
-            e.printStackTrace();
-        }
-        //==========================================================================================
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
+        dateLable.setText(dateFormat.format(resources.getObject("date")));
+        scheduleTableView.setItems(FXCollections.observableArrayList((List<Schedule>)resources.getObject("scheduleList")));
     }
 }
