@@ -15,6 +15,7 @@ import schedule.Schedule;
 
 public class FileManager {
 	private static final String MAIN_DIRECTORY = "Data";
+	private static final String HOMEWORK_DIRECTORY = "Homework";
 	private static final String STUDENT_NUMBER = "StudentNumber";
 
 	private static FileManager ourInstance = new FileManager();
@@ -54,6 +55,13 @@ public class FileManager {
 		return file.listFiles();
 	}
 	
+	private File[] readHomeworkFileList() {
+		String path = makePath(HOMEWORK_DIRECTORY);
+		
+		File file = new File(path);
+		return file.listFiles();
+	}
+	
 	private void writeEachFile(Schedule schedule) throws IOException{
 		makeYearDir(schedule.getDueDate().get(Calendar.YEAR));
 		String path = makePath(String.valueOf(schedule.getDueDate().get(Calendar.YEAR)), String.valueOf(schedule.getDueDate().get(Calendar.MONTH) + 1),
@@ -67,6 +75,20 @@ public class FileManager {
 		FileOutputStream fos = new FileOutputStream(path);
 		ObjectOutput oo = new ObjectOutputStream(fos);
 		oo.writeObject(schedule);
+		oo.flush();
+		oo.close();
+	} 
+	
+	private void writeEachFile(Homework homework) throws IOException{
+		String path = makePath(HOMEWORK_DIRECTORY);
+		
+		makeDirectory(path);
+
+		path = makePath(HOMEWORK_DIRECTORY, homework.getName());
+		
+		FileOutputStream fos = new FileOutputStream(path);
+		ObjectOutput oo = new ObjectOutputStream(fos);
+		oo.writeObject(homework);
 		oo.flush();
 		oo.close();
 	} 
@@ -118,6 +140,30 @@ public class FileManager {
 		return true;
 	}
 	
+	public boolean writeHomeworkFile(ArrayList<Homework> homeworkList) throws IOException {
+		if(homeworkList.isEmpty())
+			return false;
+		
+		Homework e = homeworkList.get(0);
+		
+		File[] fileList = readHomeworkFileList();
+		
+		//기존 folder에 있던 내용 삭제
+		if(fileList != null) {
+			for(File file : fileList){
+				if(!file.delete()) return false;
+			}
+		}		
+		//현재 갖고 있는 내용들 쓰기
+		while (!homeworkList.isEmpty()) {
+			e = homeworkList.get(0);
+			writeEachFile(e);
+			homeworkList.remove(0);
+		}
+		
+		return true;
+	}
+	
 	public ArrayList<Schedule> readFile(int year, int month, int day) throws IOException, ClassNotFoundException {
 		ArrayList<Schedule> resultSet = new ArrayList<>();
 		
@@ -133,6 +179,22 @@ public class FileManager {
 			}
 		}
 	   return resultSet;
+	}
+	
+	public ArrayList<Homework> readHomeworkFile() throws IOException, ClassNotFoundException {
+		ArrayList<Homework> resultSet = new ArrayList<>();
+		
+		File[] fileList = readHomeworkFileList();
+		
+		   for(File file : fileList) {
+	           FileInputStream fin = new FileInputStream(file.getPath());
+	           ObjectInput oi = new ObjectInputStream(fin); 
+	           Homework h = (Homework)oi.readObject();
+	           resultSet.add(h);
+			   oi.close();
+		   }
+		   		   
+		   return resultSet;
 	}
 	
 	public boolean writeStudentNumber(String studentNumber) throws IOException {
