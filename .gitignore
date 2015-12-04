@@ -1,5 +1,6 @@
 extfx-0.3-apidocs/
 
+Data/
 # For Eclipse user
 *.pydevproject
 .metadata
