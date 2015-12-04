@@ -36,8 +36,11 @@ public class Scheduler extends Application{
         //알람큐에 등록
     }
 
+
+
     @Override
     public void start(Stage primaryStage) throws Exception {
-
+        //스케쥴러 관리 프로그램을 생성하고
+        //달력 뷰를 생성
     }
 }

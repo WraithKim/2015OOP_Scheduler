@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
@@ -31,7 +32,7 @@ public class ViewTest extends Application {
             //calendarView.setLocale(Locale.KOREAN);
             //Scene scene = new Scene(root);
 
-            Parent root = FXMLLoader.load(getClass().getResource("DayScheduleListView.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource(".."+File.separator+"view"+File.separator+"DayScheduleListView.fxml"));
             Scene scene = new Scene(root);
 
             // Setting its location with always on top.
