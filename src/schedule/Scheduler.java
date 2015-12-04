@@ -1,7 +1,9 @@
 package schedule;
 
+import java.io.FileNotFoundException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.concurrent.PriorityBlockingQueue;
 
 /**
  * Created by Donghwan on 11/29/2015.
@@ -9,33 +11,19 @@ import java.util.GregorianCalendar;
  * 스케쥴러 프로그램
  */
 public class Scheduler {
-    private int year;
-    private Month month;
 
-    private MonthSchedule showingMonth;
     private AlarmThread alarmThread;
-
+    private PriorityBlockingQueue<Schedule> scheduleAlarmQueue;
     private int studentId;
 
-    public Scheduler(){
+    public Scheduler() throws FileNotFoundException{
+        scheduleAlarmQueue = new PriorityBlockingQueue<>();
+        alarmThread = new AlarmThread(scheduleAlarmQueue);
         Calendar cur = GregorianCalendar.getInstance();
-        loadMonthSchedule(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH));
     }
 
-    public void loadMonthSchedule(int year, int month){
-        // 여기서 해당 년, 해당 월의 일정리스트를 불러와서 monthSchedule에 대입해야 함.
-        // 다음 월도 불러와야 하는데 12월에 대한 예외 처리 필요
-    }
-
-    public MonthSchedule getShowingMonth() {
-        return showingMonth;
-    }
-
-    public void saveMonthSchedule(){
-        // 현재 Scheduler가 가지고 있는 월의 일정리스트를 파일로 저장
-
-        // 용도
-        // 변경되었든 변경되지 않았든 다른 월의 일정리스트를 보기 전에
-        // 이 메소드를 호출해서 현재 일정리스트를 전부 파일로 백업해야함.
+    public void loadAlarmQueue(){
+        //현재 시간에서 8일 후까지의 일정을 불러온다.
+        //알람큐에 등록
     }
 }

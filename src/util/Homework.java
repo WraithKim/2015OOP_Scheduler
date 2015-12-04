@@ -7,15 +7,16 @@ import java.util.Calendar;
 
 /**
  * Created by Lumin on 2015-12-03.
+ *
+ * 과제 클래스
  */
 public class Homework extends Schedule {
     private int totalRelatedStudent;
     private int totalSummitStudent;
     private Calendar homeworkStartCalendar;
 
-    public Homework(String name, Calendar dueDate, Priority priority) {
-        super(name, dueDate, priority);
-        super.setPriority(Priority.NOTICED);
+    public Homework(String name, Calendar dueDate) {
+        super(name, dueDate, Priority.NOTICED);
         this.totalRelatedStudent = 0;
         this.totalSummitStudent = 0;
     }

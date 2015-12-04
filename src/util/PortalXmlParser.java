@@ -129,7 +129,7 @@ public class PortalXmlParser {
                     homeworkStartCalendar.setTime(dateFormat.parse(homeworkEndTime));
 
 
-                    Homework homeworkInst = new Homework(homeworkName, homeworkEndCalendar, Priority.NOTICED);
+                    Homework homeworkInst = new Homework(homeworkName, homeworkEndCalendar);
                     homeworkInst.setTotalRelatedStudent(homeworkTotalStudentNum);
                     homeworkInst.setTotalSummitStudent(homeworkSubmitStudentNum);
                     homeworkInst.setDueDate(homeworkEndCalendar);
