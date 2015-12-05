@@ -38,9 +38,9 @@ public class Scheduler extends Application{
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
         for(int i = 0; i < 8; i++){
             try{
-                alarmQueue.addAll(FileManager.getInstance().readScheduleFile(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH), cur.get(Calendar.DAY_OF_MONTH)));
+                alarmQueue.addAll(FileManager.getInstance().readScheduleFile(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH) + 1, cur.get(Calendar.DAY_OF_MONTH) + 1));
             }catch(IOException ioe) {
-
+                // nothing to do
             }catch(ClassNotFoundException cnfe){
                 System.err.println("Something wrong in Data directory");
                 System.exit(1);
