@@ -116,7 +116,7 @@ public class FileManager {
 	
 	//interface 부분, write와 read 제공
 
-	public boolean writeFile(ArrayList<Schedule> scheduleList) throws IOException {
+	public boolean writeScheduleFile(ArrayList<Schedule> scheduleList) throws IOException {
 		if(scheduleList.isEmpty())
 			return false;
 		
@@ -164,7 +164,7 @@ public class FileManager {
 		return true;
 	}
 	
-	public ArrayList<Schedule> readFile(int year, int month, int day) throws IOException, ClassNotFoundException {
+	public ArrayList<Schedule> readScheduleFile(int year, int month, int day) throws IOException, ClassNotFoundException {
 		ArrayList<Schedule> resultSet = new ArrayList<>();
 		
 		File[] fileList = readFileList(year, month, day);

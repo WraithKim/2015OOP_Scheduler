@@ -14,7 +14,6 @@ import view.stageBuilder.SettingStageBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -39,7 +38,7 @@ public class Scheduler extends Application{
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
         for(int i = 0; i < 8; i++){
             try{
-                alarmQueue.addAll(FileManager.getInstance().readFile(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH), cur.get(Calendar.DAY_OF_MONTH)));
+                alarmQueue.addAll(FileManager.getInstance().readScheduleFile(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH), cur.get(Calendar.DAY_OF_MONTH)));
             }catch(IOException ioe) {
 
             }catch(ClassNotFoundException cnfe){

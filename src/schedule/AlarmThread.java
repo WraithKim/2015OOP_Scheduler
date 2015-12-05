@@ -15,7 +15,6 @@ import java.util.GregorianCalendar;
  */
 public class AlarmThread extends Thread implements AutoCloseable{
     private MediaPlayer alarmSound;
-    private Calendar nextDay;
 
     private static AlarmThread ourInstance = new AlarmThread();
 
@@ -23,41 +22,34 @@ public class AlarmThread extends Thread implements AutoCloseable{
         return ourInstance;
     }
 
-    private boolean checkAlarm(){
-        if(AlarmQueue.getInstance().isEmpty()) {
-            return false;
-        }else{
-            if(AlarmQueue.getInstance().peek().getAlarmTime() <= System.currentTimeMillis()) return true;
-            else return false;
-        }
-    }
 
-    private boolean checkBecomeNextDay(){
-        if(nextDay.getTimeInMillis() <= System.currentTimeMillis()) return true;
-        else return false;
-    }
 
     private AlarmThread(){
         alarmSound = new MediaPlayer(new Media(
                 new File("res" + File.separator + "DingDong.mp3").toURI().toString()));
     }
 
-    private void addNextDaySchedule(){
-
-    }
-
     @Override
     public void run() {
-        nextDay = GregorianCalendar.getInstance();
-
-
+        // 퍼포먼스를 위해 함수 호출을 줄였습니다.
+        Calendar nextDay = GregorianCalendar.getInstance();
+        nextDay.set(Calendar.HOUR_OF_DAY, 0);
+        nextDay.set(Calendar.MINUTE, 0);
+        nextDay.add(Calendar.DAY_OF_MONTH, 1);
+        AlarmQueue queueRef = AlarmQueue.getInstance();
         try {
             while (!this.isInterrupted()) {
-                if(checkAlarm()){
+                if(!(queueRef.isEmpty()) &&
+                        queueRef.peek().getAlarmTime() <= System.currentTimeMillis()
+                        ){
                     // 알람이 울리면 해야 될 일 정의
-                    Schedule top = AlarmQueue.getInstance().poll();
+                    Schedule top = queueRef.poll();
                     alarmSound.play();
                     alarmSound.seek(alarmSound.getStartTime());
+                }
+                if(nextDay.getTimeInMillis() <= System.currentTimeMillis()){
+                    nextDay.add(Calendar.DAY_OF_MONTH, 1);
+                    // TODO 다음날로 넘어가면 알람 목록에 하루를 더 추가 해야함
                 }
                 Thread.sleep(1000);
             }
