@@ -61,7 +61,7 @@ public class Scheduler extends Application{
             Constant.savedStudentID = FileManager.getInstance().readStudentNumber();
         }catch(FileNotFoundException fnfe){
             // 설정 창을 열어서 id를 입력받게 해야함.
-            Stage settingView = SettingStageBuilder.newUserSettingViewStage();
+            Stage settingView = SettingStageBuilder.getInstance().newUserSettingViewStage();
             if(settingView != null) settingView.show();
         }
     }
@@ -74,7 +74,7 @@ public class Scheduler extends Application{
         //AlarmThread.getInstance().start();
 
         // 달력 뷰를 생성
-        Parent root = FXMLLoader.load(new URL(Constant.CalendarView));
+        Parent root = FXMLLoader.load(getClass().getResource(Constant.CalendarView));
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Calendar");

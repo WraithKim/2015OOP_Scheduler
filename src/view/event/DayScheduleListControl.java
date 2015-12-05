@@ -38,8 +38,6 @@ public class DayScheduleListControl implements Initializable{
     @FXML
     private Button deleteButton;
 
-
-
     @FXML
     protected void handleAddButtonAction(ActionEvent event){
         //예제 코드 - 선택된 스케쥴 복붙하기
@@ -47,6 +45,7 @@ public class DayScheduleListControl implements Initializable{
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
             scheduleTableView.getItems().add(new Schedule("test"+System.currentTimeMillis(), GregorianCalendar.getInstance(), Priority.NONE));
         }
+        // TODO 스케쥴 편집창을 생성하면서 해당 스케쥴을 편집창에 넘겨줌
         //===========================================================================
     }
 
@@ -62,7 +61,8 @@ public class DayScheduleListControl implements Initializable{
         scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
-        dateLable.setText(dateFormat.format(resources.getObject("date")));
-        scheduleTableView.setItems(FXCollections.observableArrayList((List<Schedule>)resources.getObject("scheduleList")));
+        // TODO 달력 창에서 선택한 날짜와 그에 해당되는 하루 일정을 가져와야 함.
+        //dateLable.setText(dateFormat.format());
+        //scheduleTableView.setItems(FXCollections.observableArrayList());
     }
 }

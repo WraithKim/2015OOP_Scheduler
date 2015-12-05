@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import extfx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 

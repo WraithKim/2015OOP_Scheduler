@@ -5,8 +5,8 @@ import javafx.scene.media.MediaPlayer;
 import util.AlarmQueue;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.concurrent.PriorityBlockingQueue;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Donghwan on 12/1/2015.
@@ -15,6 +15,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  */
 public class AlarmThread extends Thread implements AutoCloseable{
     private MediaPlayer alarmSound;
+    private Calendar nextDay;
 
     private static AlarmThread ourInstance = new AlarmThread();
 
@@ -26,26 +27,35 @@ public class AlarmThread extends Thread implements AutoCloseable{
         if(AlarmQueue.getInstance().isEmpty()) {
             return false;
         }else{
-            if(AlarmQueue.getInstance().peek().getAlarmTime() <= System.currentTimeMillis()){
-                Schedule top = AlarmQueue.getInstance().poll();
-                return true;
-            }else{
-                return false;
-            }
+            if(AlarmQueue.getInstance().peek().getAlarmTime() <= System.currentTimeMillis()) return true;
+            else return false;
         }
+    }
+
+    private boolean checkBecomeNextDay(){
+        if(nextDay.getTimeInMillis() <= System.currentTimeMillis()) return true;
+        else return false;
     }
 
     private AlarmThread(){
         alarmSound = new MediaPlayer(new Media(
-                new File("." + File.separator + "res" + File.separator + "DingDong.mp3").toURI().toString()));
+                new File("res" + File.separator + "DingDong.mp3").toURI().toString()));
+    }
+
+    private void addNextDaySchedule(){
+
     }
 
     @Override
     public void run() {
+        nextDay = GregorianCalendar.getInstance();
+
+
         try {
             while (!this.isInterrupted()) {
                 if(checkAlarm()){
                     // 알람이 울리면 해야 될 일 정의
+                    Schedule top = AlarmQueue.getInstance().poll();
                     alarmSound.play();
                     alarmSound.seek(alarmSound.getStartTime());
                 }

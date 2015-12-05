@@ -15,7 +15,6 @@ import util.PortalXmlParser;
 import view.stageBuilder.SettingStageBuilder;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 /**
@@ -49,7 +48,7 @@ public class CalendarControl {
 
             //TODO 새 스케쥴리스트 창을 위한 날짜 문자열과 스케쥴리스트 객체를 만들어서 새 창에 넘겨줘야 함
 
-            Parent root = FXMLLoader.load(new URL(Constant.DayScheduleListView));
+            Parent root = FXMLLoader.load(getClass().getResource(Constant.DayScheduleListView));
             Scene scene = new Scene(root);
             Stage settingView = new Stage();
             settingView.setTitle("Schedule List");
@@ -61,7 +60,7 @@ public class CalendarControl {
 
     @FXML
     protected void handleSettingButtonAction(ActionEvent event) throws Exception{
-        Stage settingView = SettingStageBuilder.defaultSettingViewStage();
+        Stage settingView = SettingStageBuilder.getInstance().defaultSettingViewStage();
         if(settingView != null) settingView.show();
     }
 

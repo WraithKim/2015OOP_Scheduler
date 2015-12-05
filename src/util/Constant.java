@@ -27,12 +27,10 @@ public class Constant {
     /**
      * fxml 파일을 불러올 경로를 저장
      */
-    public static final String viewPackage = new File(System.getProperty("user.dir")).toURI().toString()
-             + "/src/view/";
-            // + "/out/production/2015OOP_Scheduler/view/";
+    public static final String viewPackage = "/view/";
     public static final String DayScheduleListView = Constant.viewPackage+"DayScheduleView.fxml";
     public static final String CalendarView = Constant.viewPackage+"CalendarView.fxml";
-    public static final String ScheduleEditorView = Constant.viewPackage+"ScheduleEditorView";
+    public static final String ScheduleEditorView = Constant.viewPackage+"ScheduleEditorView.fxml";
     public static final String SettingView = Constant.viewPackage+"SettingView.fxml";
 
     /**

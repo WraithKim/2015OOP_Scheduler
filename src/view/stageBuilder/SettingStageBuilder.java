@@ -8,20 +8,24 @@ import javafx.stage.WindowEvent;
 import util.Constant;
 import util.FileManager;
 
-import java.net.URL;
-
 /**
  * Created by Donghwan on 12/5/2015.
  *
  * 설정 창을 생성하고 창에 대한 설정을 함
  */
 public class SettingStageBuilder {
-    private static boolean isCreated = false;
+    private static SettingStageBuilder ourInstance = new SettingStageBuilder();
 
-    private static Stage newSettingViewStage() throws Exception {
+    private boolean isCreated = false;
+
+    public static SettingStageBuilder getInstance(){
+        return ourInstance;
+    }
+
+    private Stage newSettingViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        Parent root = FXMLLoader.load(new URL(Constant.SettingView));
+        Parent root = FXMLLoader.load(getClass().getResource(Constant.SettingView));
         Scene scene = new Scene(root);
         Stage settingView = new Stage();
         settingView.setScene(scene);
@@ -30,7 +34,7 @@ public class SettingStageBuilder {
         return settingView;
     }
 
-    public static Stage newUserSettingViewStage() throws Exception{
+    public Stage newUserSettingViewStage() throws Exception{
         Stage settingView = newSettingViewStage();
         if(settingView != null) {
             settingView.setTitle("New Student ID");
@@ -48,7 +52,7 @@ public class SettingStageBuilder {
         return settingView;
     }
 
-    public static Stage defaultSettingViewStage() throws Exception{
+    public Stage defaultSettingViewStage() throws Exception{
         Stage settingView = newSettingViewStage();
         if(settingView != null){
             settingView.setTitle("Setting");

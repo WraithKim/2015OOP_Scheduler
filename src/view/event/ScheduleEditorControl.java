@@ -4,8 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
+import util.Constant;
 
 import java.net.URL;
 import java.util.LinkedList;
@@ -42,7 +48,6 @@ public class ScheduleEditorControl implements Initializable{
         System.out.println("Save");
     }
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         LinkedList<Integer> hourList = new LinkedList<>();
@@ -55,6 +60,8 @@ public class ScheduleEditorControl implements Initializable{
             minuteList.add(i);
         }
         minuteComboBox.setItems((FXCollections.observableArrayList(minuteList)));
+
+        // TODO 기존 일정을 편집하는 경우 기존 일정을 불러오고, 제목 입력 필드를 편집 불가로 바꿔야 함.
     }
 
 }
