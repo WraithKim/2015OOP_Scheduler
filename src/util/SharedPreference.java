@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * 프로젝트 진행 시 공통적으로 필요한 상수들을 정의해 놓은 클래스입니다. (정적 클래스)
  */
-public class Constant {
+public class SharedPreference {
     /**
      * 빈 문자열입니다.
      */
@@ -36,28 +36,28 @@ public class Constant {
      * fxml 파일을 불러올 경로를 저장
      */
     public static final String viewPackage = "/view/";
-    public static final String DayScheduleListView = Constant.viewPackage+"DayScheduleListView.fxml";
-    public static final String CalendarView = Constant.viewPackage+"CalendarView.fxml";
-    public static final String ScheduleEditorView = Constant.viewPackage+"ScheduleEditorView.fxml";
-    public static final String SettingView = Constant.viewPackage+"SettingView.fxml";
+    public static final String DayScheduleListView = SharedPreference.viewPackage+"DayScheduleListView.fxml";
+    public static final String CalendarView = SharedPreference.viewPackage+"CalendarView.fxml";
+    public static final String ScheduleEditorView = SharedPreference.viewPackage+"ScheduleEditorView.fxml";
+    public static final String SettingView = SharedPreference.viewPackage+"SettingView.fxml";
 
     /**
      * DateScheduleView를 불러오기 위해 쓸 공유 객체
      */
-    public static Date curDate;
-    public static ArrayList<Schedule> curScheduleList;
+    public static Date curDate = null;
+    public static ArrayList<Schedule> curScheduleList = null;
 
     /**
      * ScheduleEditorView를 불러오기 위해 쓸 공유 객체
      */
-    public static boolean editMode;
-    public static Schedule editingSchedule;
-    public static ObservableList<Schedule> daySchedule;
+    public static boolean editMode = false;
+    public static Schedule editingSchedule = null;
+    public static ObservableList<Schedule> daySchedule = null;
 
     /**
-     * Constant 클래스의 인스턴스를 초기화합니다. Constant 클래스는 정적 클래스이므로 외부에서 인스턴스화 할 수 없습니다.
+     * SharedPreference 클래스의 인스턴스를 초기화합니다. SharedPreference 클래스는 정적 클래스이므로 외부에서 인스턴스화 할 수 없습니다.
      */
-    private Constant() {
+    private SharedPreference() {
 
     }
 }

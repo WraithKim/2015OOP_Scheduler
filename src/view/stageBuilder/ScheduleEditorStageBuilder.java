@@ -4,7 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import util.Constant;
+import util.SharedPreference;
 
 /**
  * Created by Donghwan on 12/5/2015.
@@ -17,7 +17,7 @@ public class ScheduleEditorStageBuilder {
     }
 
     public Stage newScheduleEditor() throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource(Constant.SettingView));
+        Parent root = FXMLLoader.load(getClass().getResource(SharedPreference.ScheduleEditorView));
         Scene scene = new Scene(root);
         Stage settingView = new Stage();
         settingView.setScene(scene);

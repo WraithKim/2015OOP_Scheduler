@@ -1,20 +1,14 @@
 package view.event;
 
 import extfx.scene.control.RestrictiveTextField;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import util.FileManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import util.Constant;
+import util.SharedPreference;
 
 import java.io.IOException;
 import java.net.URL;
@@ -47,16 +41,16 @@ public class SettingControl implements Initializable{
         try {
             String newStudentID = this.settingSIDInputForm.getText();
             if(newStudentID.length() != 8) return;
-            Constant.savedStudentID = newStudentID;
-            FileManager.getInstance().writeStudentNumber(Constant.savedStudentID);
+            SharedPreference.savedStudentID = newStudentID;
+            FileManager.getInstance().writeStudentNumber(SharedPreference.savedStudentID);
 
-            System.out.println("Save Button Clicked :: Saved Content : " + Constant.savedStudentID);
+            System.out.println("Save Button Clicked :: Saved Content : " + SharedPreference.savedStudentID);
         } catch (IOException e) {
             System.out.println("Save Button Clicked :: IOException");
-            Constant.savedStudentID = this.settingSIDInputForm.getText();
-            System.out.println("Save Button Clicked :: Saved Content : " + Constant.savedStudentID);
+            SharedPreference.savedStudentID = this.settingSIDInputForm.getText();
+            System.out.println("Save Button Clicked :: Saved Content : " + SharedPreference.savedStudentID);
             try {
-                FileManager.getInstance().writeStudentNumber(Constant.savedStudentID);
+                FileManager.getInstance().writeStudentNumber(SharedPreference.savedStudentID);
             }catch(IOException e2){
                 System.err.println("Something wrong during save StudentID, Please try save again");
             }

@@ -12,7 +12,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import util.Constant;
+import util.SharedPreference;
 
 import java.io.IOException;
 import java.net.URI;
@@ -54,7 +54,7 @@ public class HttpRequest {
         } catch (URISyntaxException e) {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpGetRequest - Uri를 올바르게 생성할 수 없습니다.");
-            return Constant.EMPTY_STRING;
+            return SharedPreference.EMPTY_STRING;
         }
     }
 
@@ -80,7 +80,7 @@ public class HttpRequest {
         } catch (URISyntaxException e) {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpGetRequest - Uri를 올바르게 생성할 수 없습니다.");
-            return Constant.EMPTY_STRING;
+            return SharedPreference.EMPTY_STRING;
         }
     }
 
@@ -111,7 +111,7 @@ public class HttpRequest {
         } catch (URISyntaxException e) {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
-            return Constant.EMPTY_STRING;
+            return SharedPreference.EMPTY_STRING;
         }
     }
 
@@ -140,7 +140,7 @@ public class HttpRequest {
         } catch (URISyntaxException e) {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
-            return Constant.EMPTY_STRING;
+            return SharedPreference.EMPTY_STRING;
         }
     }
 
@@ -171,7 +171,7 @@ public class HttpRequest {
         } catch (URISyntaxException e) {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
-            return Constant.EMPTY_STRING;
+            return SharedPreference.EMPTY_STRING;
         }
     }
 
@@ -186,7 +186,7 @@ public class HttpRequest {
     public static String sendHttpPostRequest(String urlToSend, String[] keys, String[] values, String interpretEncoding) throws IOException {
         if (keys.length != values.length) {
             System.out.println("HttpRequest::sendHttpPostRequest - key와 value의 개수가 다릅니다.");
-            return Constant.EMPTY_STRING;
+            return SharedPreference.EMPTY_STRING;
         }
 
         Hashtable<String, String> parameterHash = new Hashtable<>();

@@ -7,7 +7,7 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import network.PortalHttpRequest;
 import schedule.Schedule;
-import util.Constant;
+import util.SharedPreference;
 import util.FileManager;
 import util.PortalXmlParser;
 import view.stageBuilder.DayScheduleListStageBuilder;
@@ -46,8 +46,8 @@ public class CalendarControl {
             //selectedDate: 현재 선택한 날짜
             // TODO 지금은 로컬에 저장된 일정리스트만 보여줌.
             // 나중에 과제 리스트 중 해당 날짜인 것도 저 curScheduleList에 추가해서 넘겨줘야 함.
-            Constant.curDate = calendar.getTime();
-            Constant.curScheduleList = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+            SharedPreference.curDate = calendar.getTime();
+            SharedPreference.curScheduleList = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
             Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();
             stage.show();
         }
@@ -62,21 +62,21 @@ public class CalendarControl {
 
     @FXML
     protected void handleSyncButtonAction(ActionEvent event){
-        System.out.println("Sync Button :: loaded Student ID : " + Constant.savedStudentID);
-        if (Constant.savedStudentID.isEmpty()) {
+        System.out.println("Sync Button :: loaded Student ID : " + SharedPreference.savedStudentID);
+        if (SharedPreference.savedStudentID.isEmpty()) {
             System.err.println("먼저 학번 설정을 해주세요!");
             return;
         }
 
         syncButton.setDisable(true);
         try {
-            String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(Constant.savedStudentID);
+            String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(SharedPreference.savedStudentID);
             System.out.println("Sync Button :: lectureIDList : " + lectureIDXmlInfo);
             Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
             List<List<Schedule>> totalHomeworkList = new ArrayList<>();
 
             for (Integer lectureID : lectureIDSet) {
-                String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(Constant.savedStudentID, lectureID);
+                String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(SharedPreference.savedStudentID, lectureID);
                 System.out.println("Sync Button :: homeworkXmlInfo : " + homeworkXmlInfo);
                 List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
                 totalHomeworkList.add(entityHomeworkList);

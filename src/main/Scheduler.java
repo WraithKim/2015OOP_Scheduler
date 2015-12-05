@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import schedule.AlarmThread;
 import util.AlarmQueue;
-import util.Constant;
+import util.SharedPreference;
 import util.FileManager;
 import view.stageBuilder.SettingStageBuilder;
 
@@ -58,7 +58,7 @@ public class Scheduler extends Application{
     private void initStudentId() throws Exception{
         // 학생의 학번을 불러옴
         try {
-            Constant.savedStudentID = FileManager.getInstance().readStudentNumber();
+            SharedPreference.savedStudentID = FileManager.getInstance().readStudentNumber();
         }catch(FileNotFoundException fnfe){
             // 설정 창을 열어서 id를 입력받게 해야함.
             Stage settingView = SettingStageBuilder.getInstance().newUserSettingViewStage();
@@ -74,7 +74,7 @@ public class Scheduler extends Application{
         //AlarmThread.getInstance().start();
 
         // 달력 뷰를 생성
-        Parent root = FXMLLoader.load(getClass().getResource(Constant.CalendarView));
+        Parent root = FXMLLoader.load(getClass().getResource(SharedPreference.CalendarView));
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Calendar");

@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import schedule.Schedule;
 import util.AlarmQueue;
-import util.Constant;
+import util.SharedPreference;
 import util.Homework;
 import view.stageBuilder.ScheduleEditorStageBuilder;
 
@@ -41,7 +41,7 @@ public class DayScheduleListControl implements Initializable{
     @FXML
     protected void handleAddButtonAction(ActionEvent event) throws Exception{
         addButton.setDisable(true);
-        Constant.editMode = true;
+        SharedPreference.editMode = false;
         Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
         stage.show();
         addButton.setDisable(false);
@@ -51,9 +51,10 @@ public class DayScheduleListControl implements Initializable{
     protected void handleEditButtonAction(ActionEvent event) throws Exception{
         //editButton.setDisable(true);
         Schedule focusedItem;
+        SharedPreference.editMode = true;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null &&
                 !(focusedItem instanceof Homework)){
-            Constant.editingSchedule = focusedItem;
+            SharedPreference.editingSchedule = focusedItem;
         }
         Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
         stage.show();
@@ -78,7 +79,7 @@ public class DayScheduleListControl implements Initializable{
         scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
-        dateLabel.setText(dateFormat.format(Constant.curDate));
-        scheduleTableView.setItems(FXCollections.observableArrayList(Constant.curScheduleList));
+        dateLabel.setText(dateFormat.format(SharedPreference.curDate));
+        scheduleTableView.setItems(FXCollections.observableArrayList(SharedPreference.curScheduleList));
     }
 }

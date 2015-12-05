@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import util.Constant;
+import util.SharedPreference;
 import util.FileManager;
 
 /**
@@ -25,7 +25,7 @@ public class SettingStageBuilder {
     private Stage newSettingViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        Parent root = FXMLLoader.load(getClass().getResource(Constant.SettingView));
+        Parent root = FXMLLoader.load(getClass().getResource(SharedPreference.SettingView));
         Scene scene = new Scene(root);
         Stage settingView = new Stage();
         settingView.setScene(scene);

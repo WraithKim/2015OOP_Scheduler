@@ -4,17 +4,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import schedule.Priority;
 import schedule.Schedule;
 import util.AlarmQueue;
-import util.Constant;
+import util.SharedPreference;
 
 import java.net.URL;
 import java.util.Calendar;
@@ -63,6 +58,7 @@ public class ScheduleEditorControl implements Initializable{
 
     @FXML
     protected void handleSaveButtonAction(ActionEvent event){
+        // TODO 예외 처리
         scheduleSaveButton.setDisable(true);
         if(!editMode){
             Priority priority = Priority.NONE;
@@ -103,9 +99,9 @@ public class ScheduleEditorControl implements Initializable{
         }
         minuteComboBox.setItems((FXCollections.observableArrayList(minuteList)));
 
-        editMode = Constant.editMode;
-        schedule = Constant.editingSchedule;
-        originDaySchedule = Constant.daySchedule;
+        editMode = SharedPreference.editMode;
+        schedule = SharedPreference.editingSchedule;
+        originDaySchedule = SharedPreference.daySchedule;
         if(editMode) {
             titleTextField.setEditable(false);
             titleTextField.setText(schedule.getName());
