@@ -6,8 +6,12 @@ import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import schedule.Schedule;
+import util.AlarmQueue;
 import util.Constant;
+import util.Homework;
+import view.stageBuilder.ScheduleEditorStageBuilder;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -35,26 +39,42 @@ public class DayScheduleListControl implements Initializable{
     private Button deleteButton;
 
     @FXML
-    protected void handleAddButtonAction(ActionEvent event){
-        //예제 코드 - 선택된 스케쥴 복붙하기
-        Schedule focusedItem;
-        if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
+    protected void handleAddButtonAction(ActionEvent event) throws Exception{
+        addButton.setDisable(true);
+        Constant.editMode = true;
+        Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
+        stage.show();
+        addButton.setDisable(false);
+    }
 
+    @FXML
+    protected void handleEditButtonAction(ActionEvent event) throws Exception{
+        //editButton.setDisable(true);
+        Schedule focusedItem;
+        if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null &&
+                !(focusedItem instanceof Homework)){
+            Constant.editingSchedule = focusedItem;
         }
-        // TODO 스케쥴 편집창을 생성하면서 해당 스케쥴을 편집창에 넘겨줌
-        //===========================================================================
+        Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
+        stage.show();
+        //editButton.setDisable(false);
     }
 
     @FXML
     protected void handleDeleteButtonAction(ActionEvent event){
-
+        deleteButton.setDisable(true);
+        Schedule focusedItem;
+        if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
+            scheduleTableView.getItems().remove(focusedItem);
+        }
+        AlarmQueue.getInstance().remove(focusedItem);
+        deleteButton.setDisable(false);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void initialize(URL location, ResourceBundle resources) {
         // GUI 창을 띄우기 직전에 해야할 작업(일종의 GUI 창 생성자)
-
         scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");

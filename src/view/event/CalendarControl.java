@@ -44,6 +44,8 @@ public class CalendarControl {
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(calendarView.getSelectedDate());
             //selectedDate: 현재 선택한 날짜
+            // TODO 지금은 로컬에 저장된 일정리스트만 보여줌.
+            // 나중에 과제 리스트 중 해당 날짜인 것도 저 curScheduleList에 추가해서 넘겨줘야 함.
             Constant.curDate = calendar.getTime();
             Constant.curScheduleList = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
             Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();
