@@ -3,11 +3,7 @@ package view.event;
 import extfx.scene.control.CalendarView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
 import network.PortalHttpRequest;
 import schedule.Schedule;
@@ -48,9 +44,6 @@ public class CalendarControl {
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(calendarView.getSelectedDate());
             //selectedDate: 현재 선택한 날짜
-            //System.out.println("date"+calendar.get(Calendar.YEAR)+calendar.get(Calendar.MONTH)+calendar.get(Calendar.DAY_OF_MONTH));
-
-            //TODO 새 스케쥴리스트 창을 위한 날짜 문자열과 스케쥴리스트 객체를 만들어서 새 창에 넘겨줘야 함
             Constant.curDate = calendar.getTime();
             Constant.curScheduleList = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
             Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();

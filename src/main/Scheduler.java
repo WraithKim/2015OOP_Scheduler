@@ -82,6 +82,7 @@ public class Scheduler extends Application{
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest((WindowEvent event)->{
             // TODO 끄기 전에 저장을 할거면 여기에 저장하는 코드를 넣어야 함
+            // 그냥 끄기 전에 전부 제대로 저장했는지 확인이라도 시켜줘야 할 듯...
             System.exit(0);
         });
 

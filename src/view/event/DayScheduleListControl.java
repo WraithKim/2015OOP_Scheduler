@@ -58,7 +58,6 @@ public class DayScheduleListControl implements Initializable{
         scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
-        // TODO 달력 창에서 선택한 날짜와 그에 해당되는 하루 일정을 가져와야 함.
         dateLabel.setText(dateFormat.format(Constant.curDate));
         scheduleTableView.setItems(FXCollections.observableArrayList(Constant.curScheduleList));
     }
