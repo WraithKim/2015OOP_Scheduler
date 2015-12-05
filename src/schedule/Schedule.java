@@ -106,9 +106,11 @@ public class Schedule implements Serializable{
     }
 
     public long getAlarmTime(){
-        if(priority == Priority.NONE) return dueDate.getTimeInMillis() - A_DAY_AS_TIME;
-        if(priority == Priority.NOTICED) return dueDate.getTimeInMillis() - THREE_DAY_AS_TIME;
-        if(priority == Priority.URGENT) return dueDate.getTimeInMillis() - A_WEEK_AS_TIME;
-        else return 0L;
+        switch(priority){
+            case NONE: return dueDate.getTimeInMillis() - A_DAY_AS_TIME;
+            case NOTICED: return dueDate.getTimeInMillis() - THREE_DAY_AS_TIME;
+            case URGENT: return dueDate.getTimeInMillis() - A_WEEK_AS_TIME;
+            default: return 0L;
+        }
     }
 }

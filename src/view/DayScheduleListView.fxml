@@ -4,11 +4,11 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import view.factory.FormattedTableCellFactory ?>
 
-<?import view.Factory.FormattedTableCellFactory?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.event.DayScheduleListControl">
    <children>
-      <Label fx:id="dateLable" prefHeight="35.0" prefWidth="55.0" text="Date">
+      <Label fx:id="dateLabel" prefHeight="35.0" prefWidth="55.0" text="Date">
          <VBox.margin>
             <Insets left="10.0" />
          </VBox.margin>

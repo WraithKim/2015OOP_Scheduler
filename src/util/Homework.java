@@ -11,6 +11,7 @@ import java.util.Calendar;
  * 과제 클래스
  */
 public class Homework extends Schedule {
+    // TODO 과제는 수정 불가능
     private int totalRelatedStudent;
     private int totalSummitStudent;
     private Calendar homeworkStartCalendar;

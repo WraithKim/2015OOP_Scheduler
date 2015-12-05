@@ -54,7 +54,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
                     Calendar oneWeekLater = new GregorianCalendar(nextDay.get(Calendar.YEAR), nextDay.get(Calendar.MONTH), nextDay.get(Calendar.DAY_OF_MONTH));
                     oneWeekLater.add(Calendar.DAY_OF_MONTH, 7);
                     try{
-                        alarmQueue.addAll(FileManager.getInstance().readScheduleFile(oneWeekLater.get(Calendar.YEAR), oneWeekLater.get(Calendar.MONTH) + 1, oneWeekLater.get(Calendar.DAY_OF_MONTH) + 1));
+                        alarmQueue.addAll(FileManager.getInstance().readScheduleFile(oneWeekLater.get(Calendar.YEAR), oneWeekLater.get(Calendar.MONTH) + 1, oneWeekLater.get(Calendar.DAY_OF_MONTH)));
                     }catch(IOException ioe){
                         // nothing to do
                     }catch(ClassNotFoundException cnfe){

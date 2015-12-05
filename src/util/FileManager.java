@@ -121,8 +121,8 @@ public class FileManager {
 			return false;
 		
 		Schedule e = scheduleList.get(0);
-		
-		File[] fileList = readFileList(e.getDueDate().get(Calendar.YEAR), e.getDueDate().get(Calendar.MONTH), e.getDueDate().get(Calendar.DATE));
+
+		File[] fileList = readFileList(e.getDueDate().get(Calendar.YEAR), e.getDueDate().get(Calendar.MONTH)+1, e.getDueDate().get(Calendar.DATE));
 		
 		//기존 folder에 있던 내용 삭제
 		if(fileList != null) {

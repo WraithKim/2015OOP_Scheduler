@@ -1,4 +1,4 @@
-package view.Factory;
+package view.factory;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;

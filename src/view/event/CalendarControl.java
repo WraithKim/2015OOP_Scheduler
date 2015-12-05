@@ -7,11 +7,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.stage.Stage;
 import network.PortalHttpRequest;
 import schedule.Schedule;
 import util.Constant;
+import util.FileManager;
 import util.PortalXmlParser;
+import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
 
 import java.io.IOException;
@@ -39,6 +42,7 @@ public class CalendarControl {
 
     @FXML
     protected void handleDetailButton(ActionEvent event) throws Exception{
+        detailButton.setDisable(true);
         Date selectedDate = null;
         if((selectedDate = calendarView.getSelectedDate()) != null){
             Calendar calendar = new GregorianCalendar();
@@ -47,15 +51,12 @@ public class CalendarControl {
             //System.out.println("date"+calendar.get(Calendar.YEAR)+calendar.get(Calendar.MONTH)+calendar.get(Calendar.DAY_OF_MONTH));
 
             //TODO 새 스케쥴리스트 창을 위한 날짜 문자열과 스케쥴리스트 객체를 만들어서 새 창에 넘겨줘야 함
-
-            Parent root = FXMLLoader.load(getClass().getResource(Constant.DayScheduleListView));
-            Scene scene = new Scene(root);
-            Stage settingView = new Stage();
-            settingView.setTitle("Schedule List");
-            settingView.setScene(scene);
-            settingView.setResizable(false);
-            settingView.show();
+            Constant.curDate = calendar.getTime();
+            Constant.curScheduleList = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+            Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();
+            stage.show();
         }
+        detailButton.setDisable(false);
     }
 
     @FXML
@@ -72,6 +73,7 @@ public class CalendarControl {
             return;
         }
 
+        syncButton.setDisable(true);
         try {
             String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(Constant.savedStudentID);
             System.out.println("Sync Button :: lectureIDList : " + lectureIDXmlInfo);
@@ -84,9 +86,13 @@ public class CalendarControl {
                 List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
                 totalHomeworkList.add(entityHomeworkList);
             }
-            // TODO : Save in
+            // TODO : 1. 과제리스트 객체에도 저장해야 하고, 알람 큐에도 등록해야함
+            //        2. 기존에 과제가 있었다면 과제리스트는 비운 다음 저장해야 하고, 알람 큐에도 기존 과제를 지워야 함
+
         } catch (IOException e) {
-            // TODO : How Exception control?
+            System.err.println("Couldn't get homework list. Please check your internet connection or something else");
+        }finally {
+            syncButton.setDisable(false);
         }
     }
 }

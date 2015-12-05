@@ -56,9 +56,7 @@ public class SettingStageBuilder {
         Stage settingView = newSettingViewStage();
         if(settingView != null){
             settingView.setTitle("Setting");
-            settingView.setOnCloseRequest((WindowEvent event)->{
-                isCreated = false;
-            });
+            settingView.setOnCloseRequest((WindowEvent event)-> isCreated = false);
         }
         return settingView;
     }
