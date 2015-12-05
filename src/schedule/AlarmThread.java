@@ -3,8 +3,10 @@ package schedule;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import util.AlarmQueue;
+import util.FileManager;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -27,6 +29,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
     private AlarmThread(){
         alarmSound = new MediaPlayer(new Media(
                 new File("res" + File.separator + "DingDong.mp3").toURI().toString()));
+        alarmSound.setOnEndOfMedia(()->alarmSound.seek(alarmSound.getStartTime()));
     }
 
     @Override
@@ -36,20 +39,29 @@ public class AlarmThread extends Thread implements AutoCloseable{
         nextDay.set(Calendar.HOUR_OF_DAY, 0);
         nextDay.set(Calendar.MINUTE, 0);
         nextDay.add(Calendar.DAY_OF_MONTH, 1);
-        AlarmQueue queueRef = AlarmQueue.getInstance();
+        AlarmQueue alarmQueue = AlarmQueue.getInstance();
         try {
             while (!this.isInterrupted()) {
-                if(!(queueRef.isEmpty()) &&
-                        queueRef.peek().getAlarmTime() <= System.currentTimeMillis()
+                if(!(alarmQueue.isEmpty()) &&
+                        alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()
                         ){
                     // 알람이 울리면 해야 될 일 정의
-                    Schedule top = queueRef.poll();
+                    Schedule top = alarmQueue.poll();
                     alarmSound.play();
-                    alarmSound.seek(alarmSound.getStartTime());
                 }
                 if(nextDay.getTimeInMillis() <= System.currentTimeMillis()){
                     nextDay.add(Calendar.DAY_OF_MONTH, 1);
-                    // TODO 다음날로 넘어가면 알람 목록에 하루를 더 추가 해야함
+                    Calendar oneWeekLater = new GregorianCalendar(nextDay.get(Calendar.YEAR), nextDay.get(Calendar.MONTH), nextDay.get(Calendar.DAY_OF_MONTH));
+                    oneWeekLater.add(Calendar.DAY_OF_MONTH, 7);
+                    try{
+                        alarmQueue.addAll(FileManager.getInstance().readScheduleFile(oneWeekLater.get(Calendar.YEAR), oneWeekLater.get(Calendar.MONTH) + 1, oneWeekLater.get(Calendar.DAY_OF_MONTH) + 1));
+                    }catch(IOException ioe){
+                        // nothing to do
+                    }catch(ClassNotFoundException cnfe){
+                        System.err.println("Data has corrupted in Data directory");
+                        System.exit(1);
+                        return;
+                    }
                 }
                 Thread.sleep(1000);
             }

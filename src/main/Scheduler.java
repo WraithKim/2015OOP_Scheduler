@@ -31,18 +31,19 @@ public class Scheduler extends Application{
     public Scheduler() throws FileNotFoundException{
     }
 
-    public void initAlarmQueue(){
+    public void initAlarmThread(){
         // 현재 시간에서 8일 후까지의 일정을 불러온다.
         // 알람큐에 등록
         Calendar cur = GregorianCalendar.getInstance();
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
+        FileManager fileManager = FileManager.getInstance();
         for(int i = 0; i < 8; i++){
             try{
-                alarmQueue.addAll(FileManager.getInstance().readScheduleFile(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH) + 1, cur.get(Calendar.DAY_OF_MONTH) + 1));
+                alarmQueue.addAll(fileManager.readScheduleFile(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH) + 1, cur.get(Calendar.DAY_OF_MONTH) + 1));
             }catch(IOException ioe) {
                 // nothing to do
             }catch(ClassNotFoundException cnfe){
-                System.err.println("Something wrong in Data directory");
+                System.err.println("Data has corrupted in Data directory");
                 System.exit(1);
                 return;
             }
@@ -69,7 +70,7 @@ public class Scheduler extends Application{
     public void start(Stage primaryStage) throws Exception {
         // 스케쥴러 관리 프로그램을 생성하고
         initStudentId();
-        initAlarmQueue();
+        initAlarmThread();
         //AlarmThread.getInstance().start();
 
         // 달력 뷰를 생성
