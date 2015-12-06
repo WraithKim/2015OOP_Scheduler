@@ -144,14 +144,6 @@ public class PortalXmlParser {
                     System.out.println("Homework SubmitStudent : " + homeworkSubmitStudentNum);
                     System.out.println("Homework Name : " + homeworkName);
                     System.out.println("------------ Homework End -----------------------");
-                } else if (currentHomeworkStatus.equals("END")) {
-                    System.out.println("------------ Homework -----------------------");
-                    System.out.println("Homework StartTime : " + homeworkStartTime);
-                    System.out.println("Homework EndTime : " + homeworkEndTime);
-                    System.out.println("Homework TotalStudent : " + homeworkTotalStudentNum);
-                    System.out.println("Homework SubmitStudent : " + homeworkSubmitStudentNum);
-                    System.out.println("Homework Name : " + homeworkName);
-                    System.out.println("------------ Homework End -----------------------");
                 }
             }
 
