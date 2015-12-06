@@ -16,14 +16,14 @@ public class Schedule implements Serializable{
     private static final long serialVersionUID = 20151204L;
     private static final SimpleDateFormat dateForm;
 
-    private static final long A_DAY_AS_TIME = 86400L;
-    private static final long THREE_DAY_AS_TIME = 259200L;
-    private static final long A_WEEK_AS_TIME = 604800L;
+    private static final long A_DAY_AS_TIME = 86400000L;
+    private static final long THREE_DAY_AS_TIME = 259200000L;
+    private static final long A_WEEK_AS_TIME = 604800000L;
 
     //for TableView
-    private transient final SimpleStringProperty nameProperty;
-    private transient final SimpleStringProperty timeProperty;
-    private transient final SimpleStringProperty priorityProperty;
+    private transient SimpleStringProperty nameProperty;
+    private transient SimpleStringProperty timeProperty;
+    private transient SimpleStringProperty priorityProperty;
 
     //real attributes
     private final String name;
@@ -35,16 +35,12 @@ public class Schedule implements Serializable{
         dateForm = new SimpleDateFormat("HH:mm");
     }
 
-    {
+    public Schedule(String name, Calendar dueDate, Priority priority){
+        this.dueDate = new GregorianCalendar();
+        this.name = name;
         nameProperty = new SimpleStringProperty();
         timeProperty = new SimpleStringProperty();
         priorityProperty = new SimpleStringProperty();
-
-        this.dueDate = new GregorianCalendar();
-    }
-
-    public Schedule(String name, Calendar dueDate, Priority priority){
-        this.name = name;
         nameProperty.set(name);
         setDueDate(dueDate);
         dateForm.setCalendar(dueDate);

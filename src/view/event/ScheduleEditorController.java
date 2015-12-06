@@ -58,7 +58,8 @@ public class ScheduleEditorController implements Initializable{
 
     @FXML
     protected void handleSaveButtonAction(ActionEvent event){
-        // TODO 입력 폼에 대한 예외 처리
+        if(titleTextField.getLength() == 0) return;
+
         scheduleSaveButton.setDisable(true);
         if(!editMode){
             Priority priority = Priority.NONE;
@@ -69,8 +70,9 @@ public class ScheduleEditorController implements Initializable{
             dueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
             dueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             schedule = new Schedule(titleTextField.getText(), dueDate, priority);
+            //System.out.println("new Schedule alarm time: "+schedule.getAlarmTime());
             originDaySchedule.add(schedule);
-            if(schedule.getAlarmTime() > System.currentTimeMillis()) AlarmQueue.getInstance().add(schedule);
+            if(schedule.getAlarmTime() > System.currentTimeMillis()) AlarmQueue.getInstance().put(schedule);
             editMode = true;
         }else{
             AlarmQueue.getInstance().remove(schedule);
@@ -82,7 +84,8 @@ public class ScheduleEditorController implements Initializable{
             newDueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getVisibleRowCount());
             newDueDate.set(Calendar.MINUTE, minuteComboBox.getVisibleRowCount());
             schedule.setDescription(descriptionTextArea.getText());
-            if(schedule.getAlarmTime() > System.currentTimeMillis()) AlarmQueue.getInstance().add(schedule);
+            //System.out.println("new Schedule alarm time: "+schedule.getAlarmTime());
+            if(schedule.getAlarmTime() > System.currentTimeMillis()) AlarmQueue.getInstance().put(schedule);
         }
         scheduleSaveButton.setDisable(false);
     }
@@ -94,11 +97,13 @@ public class ScheduleEditorController implements Initializable{
             hourList.add(i);
         }
         hourComboBox.setItems(FXCollections.observableList(hourList));
+        hourComboBox.getSelectionModel().select(0);
         LinkedList<Integer> minuteList = new LinkedList<>();
         for(int i = 0; i < 60; i++){
             minuteList.add(i);
         }
         minuteComboBox.setItems((FXCollections.observableArrayList(minuteList)));
+        minuteComboBox.getSelectionModel().select(0);
 
         curDate = SharedPreference.editingDate;
         editMode = SharedPreference.editMode;

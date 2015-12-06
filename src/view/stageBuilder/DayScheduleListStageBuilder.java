@@ -33,8 +33,7 @@ public class DayScheduleListStageBuilder {
         dayScheduleListView.setTitle("Schedule List");
         dayScheduleListView.setResizable(false);
         dayScheduleListView.setOnCloseRequest((WindowEvent event)->{
-            if(dayScheduleListController.saveList()) dayScheduleListView.close();
-            else event.consume();
+            dayScheduleListController.saveList();
         });
         return dayScheduleListView;
     }

@@ -53,7 +53,9 @@ public class DayScheduleListController implements Initializable{
     @SuppressWarnings("unchecked")
     public boolean saveList(){
         try {
-            return FileManager.getInstance().writeScheduleFile(scheduleList);
+            boolean ret = FileManager.getInstance().writeScheduleFile(scheduleList);
+            if(!ret) System.err.println("something wrong during saving current list");
+            return ret;
         }catch(IOException ioe){
             System.err.println("Something wrong during saving your schedule list");
             return false;

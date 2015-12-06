@@ -3,12 +3,13 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.lang.String?>
 <VBox fx:controller="view.event.ScheduleEditorController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="318.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="318.0">
          <children>
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="76.0" text="Title" />
-            <TextField fx:id="titleTextField" />
+            <TextField fx:id="titleTextField" promptText="must fill here"/>
          </children>
       </HBox>
       <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="318.0">

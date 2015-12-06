@@ -7,6 +7,7 @@ import util.FileManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -29,7 +30,10 @@ public class AlarmThread extends Thread implements AutoCloseable{
     private AlarmThread(){
         alarmSound = new MediaPlayer(new Media(
                 new File("res" + File.separator + "DingDong.mp3").toURI().toString()));
-        alarmSound.setOnEndOfMedia(()->alarmSound.seek(alarmSound.getStartTime()));
+        alarmSound.setOnEndOfMedia(()->{
+            alarmSound.seek(alarmSound.getStartTime());
+            alarmSound.stop();
+        });
     }
 
     @Override
@@ -39,17 +43,31 @@ public class AlarmThread extends Thread implements AutoCloseable{
         nextDay.set(Calendar.HOUR_OF_DAY, 0);
         nextDay.set(Calendar.MINUTE, 0);
         nextDay.add(Calendar.DAY_OF_MONTH, 1);
+        /*
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
+        System.out.println("next day: "+ dateFormat.format(nextDay.getTime()));
+        */
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
         try {
             while (!this.isInterrupted()) {
-                if(!(alarmQueue.isEmpty()) &&
-                        alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()
-                        ){
-                    // 알람이 울리면 해야 될 일 정의
-                    Schedule top = alarmQueue.poll();
-                    alarmSound.play();
+                //System.out.println("system time: " + System.currentTimeMillis());
+
+                if(!(alarmQueue.isEmpty())){
+                    System.out.println("current top: "+ alarmQueue.peek().getAlarmTime());
+                    if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()) {
+                        // 알람이 울리면 해야 될 일 정의
+                        Schedule top = alarmQueue.poll();
+                        /*
+                        System.out.println("alarm ring!!!");
+                        System.out.println(top.getName());
+                        System.out.println(top.getAlarmTime());
+                        System.out.println("============================");
+                        */
+                        alarmSound.play();
+                    }
                 }
                 if(nextDay.getTimeInMillis() <= System.currentTimeMillis()){
+                    // 다음날로 넘어갔을 때, 해야할 일
                     nextDay.add(Calendar.DAY_OF_MONTH, 1);
                     Calendar oneWeekLater = new GregorianCalendar(nextDay.get(Calendar.YEAR), nextDay.get(Calendar.MONTH), nextDay.get(Calendar.DAY_OF_MONTH));
                     oneWeekLater.add(Calendar.DAY_OF_MONTH, 7);
@@ -62,6 +80,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
                         System.exit(1);
                         return;
                     }
+                    //System.out.println("next day: "+ dateFormat.format(nextDay.getTime()));
                 }
                 Thread.sleep(1000);
             }
