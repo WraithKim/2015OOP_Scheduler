@@ -40,12 +40,9 @@ public class HomeworkListController implements Initializable{
         PortalXmlParser portalParser = new PortalXmlParser();
         FileManager fileManager = FileManager.getInstance();
         //System.out.println("Sync :: loaded Student ID : " + SharedPreference.savedStudentID);
-        if (SharedPreference.savedStudentID.isEmpty()) {
-            System.err.println("Please save your Student ID in Setting");
-            return false;
-        }
         try {
-            String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(SharedPreference.savedStudentID);
+            String savedStudentID = fileManager.readStudentNumber();
+            String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(savedStudentID);
             Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
 
             System.out.println("Sync :: lectureIDList : " + lectureIDXmlInfo);
@@ -59,7 +56,7 @@ public class HomeworkListController implements Initializable{
             System.out.println("After AlarmQueue Length : " + AlarmQueue.getInstance().size());
 
             for (Integer lectureID : lectureIDSet) {
-                String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(SharedPreference.savedStudentID, lectureID);
+                String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(savedStudentID, lectureID);
                 System.out.println("Sync :: homeworkXmlInfo : " + homeworkXmlInfo);
                 List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
 
@@ -69,7 +66,7 @@ public class HomeworkListController implements Initializable{
                 }
             }
             fileManager.writeHomeworkFile(SharedPreference.homeworkList);
-        } catch (IOException e) {
+        }catch(IOException e) {
             System.err.println("Couldn't get homework list. Please check your internet connection or something else");
             try {
                 SharedPreference.homeworkList.stream().filter(homework -> AlarmQueue.getInstance().contains(homework)).forEach(homework -> AlarmQueue.getInstance().remove(homework));
@@ -82,14 +79,18 @@ public class HomeworkListController implements Initializable{
                 System.err.println("Could't get homework list saved in local storage");
                 return false;
             }catch(ClassNotFoundException cnfe){
-                System.err.println("Data has corrupted in Data directory");
+                System.err.println("Data has corrupted in Data directory\n" +
+                        "Maybe your Scheduler version doesn't match with Schedule files.");
                 return false;
             }
+        }catch(ClassNotFoundException cnfe){
+            System.err.println("Data has corrupted in Data directory\n" +
+                    "Maybe your Scheduler version doesn't match with Schedule files.");
+            return false;
         }finally{
             System.out.println("Finally Homework List Length : " + SharedPreference.homeworkList.size());
             System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
         }
-        //homeworkTableView.refresh();
         return true;
     }
 

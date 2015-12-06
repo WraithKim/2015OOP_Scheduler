@@ -57,7 +57,7 @@ public class Scheduler extends Application{
     private void initStudentId() throws Exception{
         // 학생의 학번을 불러옴
         try {
-            SharedPreference.savedStudentID = FileManager.getInstance().readStudentNumber();
+            FileManager.getInstance().readStudentNumber();
         }catch(FileNotFoundException fnfe){
             // 설정 창을 열어서 id를 입력받게 해야함.
             Stage settingView = SettingStageBuilder.getInstance().newUserSettingViewStage();

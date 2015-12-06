@@ -18,8 +18,6 @@ public class SharedPreference {
     /**
      * 공유 객체들
      */
-
-    public static String savedStudentID = EMPTY_STRING;
     public static final ArrayList<Homework> homeworkList = new ArrayList<>();
 
 
@@ -30,7 +28,7 @@ public class SharedPreference {
     /**
      * fxml 파일을 불러올 경로를 저장
      */
-    public static final String viewPackage = "/view/";
+    private static final String viewPackage = "/view/";
     public static final String DayScheduleListView = SharedPreference.viewPackage + "DayScheduleListView.fxml";
     public static final String CalendarView = SharedPreference.viewPackage + "CalendarView.fxml";
     public static final String ScheduleEditorView = SharedPreference.viewPackage + "ScheduleEditorView.fxml";

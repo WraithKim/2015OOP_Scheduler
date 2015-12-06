@@ -201,13 +201,12 @@ public class FileManager {
 	}
 	
 	public String readStudentNumber() throws IOException, ClassNotFoundException {
-		String studentNumber = null;
 		
 		String path = makePath(STUDENT_NUMBER);
 		
            FileInputStream fin = new FileInputStream(path);
-           ObjectInput oi = new ObjectInputStream(fin); 
-           studentNumber = (String)oi.readObject();
+           ObjectInput oi = new ObjectInputStream(fin);
+		String studentNumber = (String)oi.readObject();
 		   oi.close();			   
 		   
 		   return studentNumber;

@@ -38,19 +38,19 @@ public class SettingController implements Initializable{
 
     @FXML
     protected void handleSaveAction(ActionEvent event){
+        String newStudentID = this.settingSIDInputForm.getText();
+        if(newStudentID.length() != 8) return;
         try {
-            String newStudentID = this.settingSIDInputForm.getText();
-            if(newStudentID.length() != 8) return;
-            SharedPreference.savedStudentID = newStudentID;
-            FileManager.getInstance().writeStudentNumber(SharedPreference.savedStudentID);
+            String savedStudentID = newStudentID;
+            FileManager.getInstance().writeStudentNumber(savedStudentID);
 
-            System.out.println("Save Button Clicked :: Saved Content : " + SharedPreference.savedStudentID);
+            System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
         } catch (IOException e) {
             System.out.println("Save Button Clicked :: IOException");
-            SharedPreference.savedStudentID = this.settingSIDInputForm.getText();
-            System.out.println("Save Button Clicked :: Saved Content : " + SharedPreference.savedStudentID);
+            String savedStudentID = this.settingSIDInputForm.getText();
+            System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
             try {
-                FileManager.getInstance().writeStudentNumber(SharedPreference.savedStudentID);
+                FileManager.getInstance().writeStudentNumber(savedStudentID);
             }catch(IOException e2){
                 System.err.println("Something wrong during save StudentID, Please try save again");
             }
