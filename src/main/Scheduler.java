@@ -43,7 +43,8 @@ public class Scheduler extends Application{
             }catch(IOException ioe) {
                 // nothing to do
             }catch(ClassNotFoundException cnfe){
-                System.err.println("Data has corrupted in Data directory");
+                System.err.println("Data has corrupted in Data directory\n" +
+                        "Maybe your Scheduler version doesn't match with Schedule files.");
                 System.exit(1);
                 return;
             }
