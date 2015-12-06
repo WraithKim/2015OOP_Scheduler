@@ -2,6 +2,7 @@ package util;
 
 import schedule.Schedule;
 
+import java.util.Comparator;
 import java.util.concurrent.PriorityBlockingQueue;
 
 /**
@@ -17,6 +18,8 @@ public class AlarmQueue extends PriorityBlockingQueue<Schedule>{
     }
 
     private AlarmQueue() {
-
+        super(10, (o1, o2)->{
+            return Long.compare(o1.getAlarmTime(), o2.getAlarmTime());
+        });
     }
 }

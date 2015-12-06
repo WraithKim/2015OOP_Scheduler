@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 /**
@@ -39,8 +40,12 @@ public class DayScheduleListController implements Initializable{
     private Button addButton;
 
     @FXML
+    private Button editButton;
+
+    @FXML
     private Button deleteButton;
 
+    private Date curDate;
     private ArrayList<Schedule> scheduleList;
 
     // 현재 리스트를 일정에 저장함
@@ -59,6 +64,8 @@ public class DayScheduleListController implements Initializable{
     protected void handleAddButtonAction(ActionEvent event) throws Exception{
         addButton.setDisable(true);
         SharedPreference.editMode = false;
+        SharedPreference.editingDate = curDate;
+        SharedPreference.editingScheduleList = scheduleTableView.getItems();
         Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
         stage.show();
         addButton.setDisable(false);
@@ -66,16 +73,18 @@ public class DayScheduleListController implements Initializable{
 
     @FXML
     protected void handleEditButtonAction(ActionEvent event) throws Exception{
-        //editButton.setDisable(true);
+        editButton.setDisable(true);
         Schedule focusedItem;
-        SharedPreference.editMode = true;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null &&
                 !(focusedItem instanceof Homework)){
+            SharedPreference.editMode = true;
+            SharedPreference.editingDate = curDate;
             SharedPreference.editingSchedule = focusedItem;
+            SharedPreference.editingScheduleList = scheduleTableView.getItems();
+            Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
+            stage.show();
         }
-        Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
-        stage.show();
-        //editButton.setDisable(false);
+        editButton.setDisable(false);
     }
 
     @FXML
@@ -84,8 +93,8 @@ public class DayScheduleListController implements Initializable{
         Schedule focusedItem;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
             scheduleTableView.getItems().remove(focusedItem);
+            AlarmQueue.getInstance().remove(focusedItem);
         }
-        AlarmQueue.getInstance().remove(focusedItem);
         deleteButton.setDisable(false);
     }
 
@@ -96,7 +105,8 @@ public class DayScheduleListController implements Initializable{
         scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
-        dateLabel.setText(dateFormat.format(SharedPreference.curDate));
+        curDate = SharedPreference.curDate;
+        dateLabel.setText(dateFormat.format(curDate));
         scheduleList = SharedPreference.curScheduleList;
         scheduleTableView.setItems(FXCollections.observableArrayList(scheduleList));
     }

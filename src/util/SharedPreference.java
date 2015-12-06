@@ -50,9 +50,10 @@ public class SharedPreference {
     /**
      * ScheduleEditorView를 불러오기 위해 쓸 공유 객체
      */
+    public static Date editingDate = null;
     public static boolean editMode = false;
     public static Schedule editingSchedule = null;
-    public static ObservableList<Schedule> daySchedule = null;
+    public static ObservableList<Schedule> editingScheduleList = null;
 
     /**
      * SharedPreference 클래스의 인스턴스를 초기화합니다. SharedPreference 클래스는 정적 클래스이므로 외부에서 인스턴스화 할 수 없습니다.

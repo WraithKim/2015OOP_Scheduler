@@ -12,10 +12,7 @@ import util.AlarmQueue;
 import util.SharedPreference;
 
 import java.net.URL;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.LinkedList;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by CAUCSE on 2015-12-03.
@@ -25,6 +22,7 @@ import java.util.ResourceBundle;
 public class ScheduleEditorController implements Initializable{
 
     private boolean editMode;
+    private Date curDate;
     private Schedule schedule;
     private ObservableList<Schedule> originDaySchedule;
 
@@ -66,12 +64,13 @@ public class ScheduleEditorController implements Initializable{
             Priority priority = Priority.NONE;
             if(priorityUrgent.isSelected()) priority = Priority.URGENT;
             else if(priorityNoticed.isSelected()) priority = Priority.NOTICED;
-            Calendar dueDate = GregorianCalendar.getInstance();
-            dueDate.setTime(originDaySchedule.get(0).getDueDate().getTime());
-            dueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getVisibleRowCount());
-            dueDate.set(Calendar.MINUTE, minuteComboBox.getVisibleRowCount());
+            Calendar dueDate = new GregorianCalendar();
+            dueDate.setTime(curDate);
+            dueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
+            dueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             schedule = new Schedule(titleTextField.getText(), dueDate, priority);
             originDaySchedule.add(schedule);
+            if(schedule.getAlarmTime() > System.currentTimeMillis()) AlarmQueue.getInstance().add(schedule);
             editMode = true;
         }else{
             AlarmQueue.getInstance().remove(schedule);
@@ -101,9 +100,10 @@ public class ScheduleEditorController implements Initializable{
         }
         minuteComboBox.setItems((FXCollections.observableArrayList(minuteList)));
 
+        curDate = SharedPreference.editingDate;
         editMode = SharedPreference.editMode;
         schedule = SharedPreference.editingSchedule;
-        originDaySchedule = SharedPreference.daySchedule;
+        originDaySchedule = SharedPreference.editingScheduleList;
         if(editMode) {
             titleTextField.setEditable(false);
             titleTextField.setText(schedule.getName());
@@ -112,8 +112,8 @@ public class ScheduleEditorController implements Initializable{
                 case NOTICED: priorityNoticed.setSelected(true); break;
                 case URGENT: priorityUrgent.setSelected(true); break;
             }
-            hourComboBox.setVisibleRowCount(schedule.getDueDate().get(Calendar.HOUR_OF_DAY));
-            minuteComboBox.setVisibleRowCount(schedule.getDueDate().get(Calendar.MINUTE));
+            hourComboBox.getSelectionModel().select(schedule.getDueDate().get(Calendar.HOUR_OF_DAY));
+            minuteComboBox.getSelectionModel().select(schedule.getDueDate().get(Calendar.MINUTE));
             descriptionTextArea.setText(schedule.getDescription());
         }
     }

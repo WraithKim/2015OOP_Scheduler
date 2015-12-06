@@ -13,7 +13,6 @@ import util.PortalXmlParser;
 import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -50,9 +49,9 @@ public class CalendarController {
             SharedPreference.curDate = calendar.getTime();
             // TODO 파일이 없으면 자동으로 리스트를 생성해서 파일을 저장하는 지 확인
             ArrayList<Schedule> scheduleFile = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+            SharedPreference.curScheduleList = scheduleFile;
             if(scheduleFile == null){
                 SharedPreference.curScheduleList = new ArrayList<>();
-                FileManager.getInstance().writeScheduleFile(SharedPreference.curScheduleList);
             }
             // 창 생성
             Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();
