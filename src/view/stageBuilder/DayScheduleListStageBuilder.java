@@ -14,7 +14,6 @@ import view.event.DayScheduleListController;
  * 하루 일정 창을 생성함
  */
 public class DayScheduleListStageBuilder {
-    // TODO 여러 창을 띄웠을 때도 새로운 fxml 파일로 생성하는지 테스트
     private static DayScheduleListStageBuilder ourInstance = new DayScheduleListStageBuilder();
 
     private FXMLLoader fxmlLoader;

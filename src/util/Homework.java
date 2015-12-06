@@ -1,9 +1,11 @@
 package util;
 
+import javafx.beans.property.SimpleStringProperty;
 import schedule.Priority;
 import schedule.Schedule;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -13,18 +15,20 @@ import java.util.Calendar;
  */
 
 public class Homework extends Schedule implements Serializable {
-    // TODO 과제는 수정 불가능
     private static final long serialVersionUID = 20151206L;
-
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
 
     private int totalRelatedStudent;
     private int totalSummitStudent;
     private Calendar homeworkStartCalendar;
+    private transient SimpleStringProperty dateProperty;
 
     public Homework(String name, Calendar dueDate) {
         super(name, dueDate, Priority.NOTICED);
         this.totalRelatedStudent = 0;
         this.totalSummitStudent = 0;
+        dateProperty = new SimpleStringProperty();
+        dateProperty.set(dateFormat.format(getDueDate().getTime()));
     }
 
     public Calendar getHomeworkStartCalendar() {
@@ -49,5 +53,14 @@ public class Homework extends Schedule implements Serializable {
 
     public void setTotalSummitStudent(int totalSummitStudent) {
         this.totalSummitStudent = totalSummitStudent;
+    }
+
+
+    public SimpleStringProperty datePropertyProperty() {
+        if(dateProperty == null){
+            dateProperty = new SimpleStringProperty();
+            dateProperty.set(dateFormat.format(getDueDate().getTime()));
+        }
+        return dateProperty;
     }
 }

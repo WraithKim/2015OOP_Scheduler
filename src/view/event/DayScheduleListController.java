@@ -73,8 +73,7 @@ public class DayScheduleListController implements Initializable{
     protected void handleEditButtonAction(ActionEvent event) throws Exception{
         editButton.setDisable(true);
         Schedule focusedItem;
-        if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null &&
-                !(focusedItem instanceof Homework)){
+        if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
             SharedPreference.editMode = true;
             SharedPreference.editingDate = curDate;
             SharedPreference.editingSchedule = focusedItem;

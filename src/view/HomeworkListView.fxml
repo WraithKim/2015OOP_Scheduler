@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import view.factory.FormattedTableCellFactory ?>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.event.HomeworkListController">
+    <children>
+        <TableView fx:id="scheduleTableView" prefHeight="470.0" prefWidth="251.0">
+            <columns>
+                <TableColumn editable="false" prefWidth="198.0" resizable="false" sortable="false" text="Name">
+                    <cellValueFactory><PropertyValueFactory property="nameProperty" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="dateColumn" editable="false" prefWidth="83.0" resizable="false" sortable="true" sortType="ASCENDING" text="Date">
+                    <cellValueFactory><PropertyValueFactory property="dateProperty" />
+                    </cellValueFactory>
+                    <cellFactory>
+                        <FormattedTableCellFactory alignment="center">
+                        </FormattedTableCellFactory>
+                    </cellFactory>
+                </TableColumn>
+                <TableColumn fx:id="timeColumn" editable="false" prefWidth="83.0" resizable="false" sortable="true" sortType="ASCENDING" text="Time">
+                    <cellValueFactory><PropertyValueFactory property="timeProperty" />
+                    </cellValueFactory>
+                    <cellFactory>
+                        <FormattedTableCellFactory alignment="center">
+                        </FormattedTableCellFactory>
+                    </cellFactory>
+                </TableColumn>
+                <TableColumn editable="false" prefWidth="55.0" resizable="false" sortable="false" text="Priority">
+                    <cellValueFactory><PropertyValueFactory property="priorityProperty" />
+                    </cellValueFactory>
+                    <cellFactory>
+                        <FormattedTableCellFactory alignment="center">
+                        </FormattedTableCellFactory>
+                    </cellFactory>
+                </TableColumn>
+            </columns>
+            <sortOrder>
+                <fx:reference source="timeColumn"/>
+            </sortOrder>
+        </TableView>
+        <Button fx:id="syncButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSyncButtonAction" text="Sync" BorderPane.alignment="CENTER">
+            <VBox.margin>
+                <Insets left="10.0" right="10.0" top="10.0" bottom="10.0"/>
+            </VBox.margin>
+        </Button>
+    </children>
+</VBox>

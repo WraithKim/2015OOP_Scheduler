@@ -30,9 +30,7 @@ public class CalendarController {
     private Button detailButton;
 
     @FXML
-    private Button syncButton;
-
-    private PortalXmlParser portalParser = new PortalXmlParser();
+    private Button homeworkButton;
 
     @FXML
     protected void handleDetailButton(ActionEvent event) throws Exception{
@@ -42,10 +40,7 @@ public class CalendarController {
             Calendar calendar = new GregorianCalendar();
             calendar.setTime(calendarView.getSelectedDate());
             //selectedDate: 현재 선택한 날짜
-            // TODO 지금은 로컬에 저장된 일정리스트만 보여줌.
-            // 나중에 과제 리스트 중 해당 날짜인 것도 저 curScheduleList에 추가해서 넘겨줘야 함.
             SharedPreference.curDate = calendar.getTime();
-            // TODO 파일이 없으면 자동으로 리스트를 생성해서 파일을 저장하는 지 확인
             ArrayList<Schedule> scheduleFile = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
             SharedPreference.curScheduleList = scheduleFile;
             if(scheduleFile == null){
@@ -65,50 +60,7 @@ public class CalendarController {
     }
 
     @FXML
-    protected void handleSyncButtonAction(ActionEvent event){
-        System.out.println("Sync Button :: loaded Student ID : " + SharedPreference.savedStudentID);
-        if (SharedPreference.savedStudentID.isEmpty()) {
-            System.err.println("먼저 학번 설정을 해주세요!");
-            return;
-        }
+    protected void handleHomeworkButton(ActionEvent event) throws Exception{
 
-        syncButton.setDisable(true);
-        try {
-            String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(SharedPreference.savedStudentID);
-            Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
-
-            System.out.println("Sync Button :: lectureIDList : " + lectureIDXmlInfo);
-            System.out.println("Before Homework List Length : " + SharedPreference.homeworkList.size());
-            System.out.println("Before AlarmQueue Length : " + AlarmQueue.getInstance().size());
-
-            SharedPreference.homeworkList.stream().filter(homework -> AlarmQueue.getInstance().contains(homework)).forEach(homework -> AlarmQueue.getInstance().remove(homework));
-            SharedPreference.homeworkList.clear();
-
-            System.out.println("After Homework List Length : " + SharedPreference.homeworkList.size());
-            System.out.println("After AlarmQueue Length : " + AlarmQueue.getInstance().size());
-
-            for (Integer lectureID : lectureIDSet) {
-                String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(SharedPreference.savedStudentID, lectureID);
-                System.out.println("Sync Button :: homeworkXmlInfo : " + homeworkXmlInfo);
-                List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
-
-                for (Schedule schedule : entityHomeworkList) {
-                    SharedPreference.homeworkList.add((Homework) schedule);
-                    AlarmQueue.getInstance().add(schedule);
-                }
-            }
-
-
-            // TODO : 1. 과제리스트 객체에도 저장해야 하고, 알람 큐에도 등록해야함
-            //        2. 기존에 과제가 있었다면 과제리스트는 비운 다음 저장해야 하고, 알람 큐에도 기존 과제를 지워야 함
-
-        } catch (IOException e) {
-            System.err.println("Couldn't get homework list. Please check your internet connection or something else");
-        } finally {
-            System.out.println("Finally Homework List Length : " + SharedPreference.homeworkList.size());
-            System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
-
-            syncButton.setDisable(false);
-        }
     }
 }

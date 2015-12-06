@@ -42,7 +42,6 @@ public class ViewTest extends Application {
             Scene scene = new Scene(root);
 
             // Setting its location with always on top.
-            // TODO : Where is the icon file?
             //primaryStage.getIcons().add(new Image(""));
             primaryStage.setTitle("Calendar");
             primaryStage.setScene(scene);
