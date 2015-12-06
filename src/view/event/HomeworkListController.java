@@ -65,7 +65,7 @@ public class HomeworkListController implements Initializable{
 
                 for (Schedule schedule : entityHomeworkList) {
                     SharedPreference.homeworkList.add((Homework) schedule);
-                    AlarmQueue.getInstance().add(schedule);
+                    AlarmQueue.getInstance().offer(schedule);
                 }
             }
             fileManager.writeHomeworkFile(SharedPreference.homeworkList);
@@ -76,7 +76,7 @@ public class HomeworkListController implements Initializable{
                 SharedPreference.homeworkList.clear();
                 for (Schedule schedule : fileManager.readHomeworkFile()) {
                     SharedPreference.homeworkList.add((Homework) schedule);
-                    AlarmQueue.getInstance().add(schedule);
+                    AlarmQueue.getInstance().offer(schedule);
                 }
             }catch(IOException ioe){
                 System.err.println("Could't get homework list saved in local storage");
