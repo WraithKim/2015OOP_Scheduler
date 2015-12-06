@@ -15,7 +15,7 @@ import java.util.Calendar;
  */
 
 public class Homework extends Schedule implements Serializable {
-    private static final long serialVersionUID = 20151206L;
+    private static final long serialVersionUID = 20151207L;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
     private transient SimpleStringProperty dateProperty;
 

@@ -11,6 +11,8 @@ import java.text.Format;
 
 /**
  * Created by Donghwan on 12/4/2015.
+ *
+ * From JAVA FX Tutorial, 테이블 셀의 포멧과 텍스트 정렬 기준을 설정해주는 클래스
  */
 public class FormattedTableCellFactory<S, T>
         implements Callback<TableColumn<S, T>, TableCell<S, T>> {

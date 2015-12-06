@@ -14,7 +14,7 @@ import java.util.GregorianCalendar;
  */
 public class Schedule implements Serializable{
     private static final long serialVersionUID = 20151207L;
-    private static final SimpleDateFormat dateForm = new SimpleDateFormat("HH:mm");
+    private static final SimpleDateFormat timeForm = new SimpleDateFormat("HH:mm");
 
     private static final long A_DAY_AS_TIME = 86400000L;
     private static final long THREE_DAY_AS_TIME = 259200000L;
@@ -40,7 +40,7 @@ public class Schedule implements Serializable{
         priorityProperty = new SimpleStringProperty();
         nameProperty.set(name);
         setDueDate(dueDate);
-        dateForm.setCalendar(dueDate);
+        timeForm.setCalendar(dueDate);
         setPriority(priority);
     }
 
@@ -60,18 +60,29 @@ public class Schedule implements Serializable{
         return priority;
     }
 
-    public void setPriority(Priority priority) {
-        this.priority = priority;
-        priorityProperty.set(priority.toString());
-    }
-
     public Calendar getDueDate() {
         return dueDate;
     }
 
+    public long getAlarmTime(){
+        switch(priority){
+            case NONE: return dueDate.getTimeInMillis() - A_DAY_AS_TIME;
+            case NOTICED: return dueDate.getTimeInMillis() - THREE_DAY_AS_TIME;
+            case URGENT: return dueDate.getTimeInMillis() - A_WEEK_AS_TIME;
+            default: return 0L;
+        }
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+        if(priorityProperty == null) priorityProperty = new SimpleStringProperty();
+        priorityProperty.set(priority.toString());
+    }
+
     public void setDueDate(Calendar dueDate) {
         this.dueDate.setTime(dueDate.getTime());
-        this.timeProperty.set(dateForm.format(this.dueDate.getTime()));
+        if(timeProperty == null) timeProperty = new SimpleStringProperty();
+        this.timeProperty.set(timeForm.format(this.dueDate.getTime()));
     }
 
     public SimpleStringProperty namePropertyProperty() {
@@ -86,7 +97,7 @@ public class Schedule implements Serializable{
     public SimpleStringProperty timePropertyProperty() {
         if(timeProperty == null){
             timeProperty = new SimpleStringProperty();
-            this.timeProperty.set(dateForm.format(this.dueDate.getTime()));
+            this.timeProperty.set(timeForm.format(this.dueDate.getTime()));
         }
         return timeProperty;
     }
@@ -97,14 +108,5 @@ public class Schedule implements Serializable{
             priorityProperty.set(priority.toString());
         }
         return priorityProperty;
-    }
-
-    public long getAlarmTime(){
-        switch(priority){
-            case NONE: return dueDate.getTimeInMillis() - A_DAY_AS_TIME;
-            case NOTICED: return dueDate.getTimeInMillis() - THREE_DAY_AS_TIME;
-            case URGENT: return dueDate.getTimeInMillis() - A_WEEK_AS_TIME;
-            default: return 0L;
-        }
     }
 }
