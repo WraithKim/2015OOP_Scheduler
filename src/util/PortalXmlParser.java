@@ -126,8 +126,8 @@ public class PortalXmlParser {
                     Calendar homeworkEndCalendar = Calendar.getInstance();
                     Calendar homeworkStartCalendar = Calendar.getInstance();
 
-                    homeworkEndCalendar.setTime(dateFormat.parse(homeworkStartTime));
-                    homeworkStartCalendar.setTime(dateFormat.parse(homeworkEndTime));
+                    homeworkEndCalendar.setTime(dateFormat.parse(homeworkEndTime));
+                    homeworkStartCalendar.setTime(dateFormat.parse(homeworkStartTime));
 
 
                     Homework homeworkInst = new Homework(homeworkName, homeworkEndCalendar);
