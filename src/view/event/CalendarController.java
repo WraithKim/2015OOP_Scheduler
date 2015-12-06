@@ -42,10 +42,18 @@ public class CalendarController {
             calendar.setTime(calendarView.getSelectedDate());
             //selectedDate: 현재 선택한 날짜
             SharedPreference.curDate = calendar.getTime();
-            ArrayList<Schedule> scheduleFile = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
-            SharedPreference.curScheduleList = scheduleFile;
-            if(scheduleFile == null){
-                SharedPreference.curScheduleList = new ArrayList<>();
+            ArrayList<Schedule> scheduleFile = null;
+            try {
+                scheduleFile = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+            }catch(IOException ioe) {
+                // nothing to do
+            }catch(ClassNotFoundException cnfe){
+                System.err.println("Data has corrupted in Data directory\n" +
+                        "Maybe your Scheduler version doesn't match with Schedule files.");
+            }finally {
+                if(scheduleFile == null){
+                    SharedPreference.curScheduleList = new ArrayList<>();
+                }
             }
             // 창 생성
             Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();
