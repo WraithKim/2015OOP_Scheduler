@@ -9,12 +9,15 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import schedule.Schedule;
 import util.AlarmQueue;
+import util.FileManager;
 import util.SharedPreference;
 import util.Homework;
 import view.stageBuilder.ScheduleEditorStageBuilder;
 
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -22,7 +25,7 @@ import java.util.ResourceBundle;
  *
  * 하루 일정 창에 달린 이벤트 리스너
  */
-public class DayScheduleListControl implements Initializable{
+public class DayScheduleListController implements Initializable{
     @FXML
     private Label dateLabel;
 
@@ -37,6 +40,20 @@ public class DayScheduleListControl implements Initializable{
 
     @FXML
     private Button deleteButton;
+
+    private ArrayList<Schedule> scheduleList;
+
+    // 현재 리스트를 일정에 저장함
+    // 지금은 창 종료 이벤트가 호출함
+    @SuppressWarnings("unchecked")
+    public boolean saveList(){
+        try {
+            return FileManager.getInstance().writeScheduleFile(scheduleList);
+        }catch(IOException ioe){
+            System.err.println("Something wrong during saving your schedule list");
+            return false;
+        }
+    }
 
     @FXML
     protected void handleAddButtonAction(ActionEvent event) throws Exception{
@@ -80,6 +97,7 @@ public class DayScheduleListControl implements Initializable{
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
         dateLabel.setText(dateFormat.format(SharedPreference.curDate));
-        scheduleTableView.setItems(FXCollections.observableArrayList(SharedPreference.curScheduleList));
+        scheduleList = SharedPreference.curScheduleList;
+        scheduleTableView.setItems(FXCollections.observableArrayList(scheduleList));
     }
 }

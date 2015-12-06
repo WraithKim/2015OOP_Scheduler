@@ -13,6 +13,7 @@ import util.PortalXmlParser;
 import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -21,7 +22,7 @@ import java.util.*;
  *
  * 달력 창에 달린 이벤트 리스너
  */
-public class CalendarControl {
+public class CalendarController {
     @FXML
     private CalendarView calendarView;
 
@@ -47,7 +48,13 @@ public class CalendarControl {
             // TODO 지금은 로컬에 저장된 일정리스트만 보여줌.
             // 나중에 과제 리스트 중 해당 날짜인 것도 저 curScheduleList에 추가해서 넘겨줘야 함.
             SharedPreference.curDate = calendar.getTime();
-            SharedPreference.curScheduleList = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+            // TODO 파일이 없으면 자동으로 리스트를 생성해서 파일을 저장하는 지 확인
+            ArrayList<Schedule> scheduleFile = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1, calendar.get(Calendar.DAY_OF_MONTH));
+            if(scheduleFile == null){
+                SharedPreference.curScheduleList = new ArrayList<>();
+                FileManager.getInstance().writeScheduleFile(SharedPreference.curScheduleList);
+            }
+            // 창 생성
             Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();
             stage.show();
         }

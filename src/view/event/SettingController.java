@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * <p>
  * 설정 창에 달린 이벤트 리스너
  */
-public class SettingControl implements Initializable{
+public class SettingController implements Initializable{
 
     @FXML
     private RestrictiveTextField settingSIDInputForm;

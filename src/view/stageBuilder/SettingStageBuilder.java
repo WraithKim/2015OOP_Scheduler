@@ -16,6 +16,7 @@ import util.FileManager;
 public class SettingStageBuilder {
     private static SettingStageBuilder ourInstance = new SettingStageBuilder();
 
+    private FXMLLoader fxmlLoader;
     private boolean isCreated = false;
 
     public static SettingStageBuilder getInstance(){
@@ -25,7 +26,8 @@ public class SettingStageBuilder {
     private Stage newSettingViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        Parent root = FXMLLoader.load(getClass().getResource(SharedPreference.SettingView));
+        fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.SettingView));
+        Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage settingView = new Stage();
         settingView.setScene(scene);
@@ -46,7 +48,6 @@ public class SettingStageBuilder {
                     System.exit(1);
                 }
                 isCreated = false;
-                settingView.close();
             });
         }
         return settingView;

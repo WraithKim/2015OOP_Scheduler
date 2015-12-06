@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  *
  * 일정 편집 창에 달린 이벤트 리스너
  */
-public class ScheduleEditorControl implements Initializable{
+public class ScheduleEditorController implements Initializable{
 
     private boolean editMode;
     private Schedule schedule;
@@ -56,9 +56,11 @@ public class ScheduleEditorControl implements Initializable{
     @FXML
     private Button scheduleSaveButton;
 
+
+
     @FXML
     protected void handleSaveButtonAction(ActionEvent event){
-        // TODO 예외 처리
+        // TODO 입력 폼에 대한 예외 처리
         scheduleSaveButton.setDisable(true);
         if(!editMode){
             Priority priority = Priority.NONE;
