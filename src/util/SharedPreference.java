@@ -36,12 +36,6 @@ public class SharedPreference {
     public static final String HomeworkListView = SharedPreference.viewPackage + "HomeworkListView.fxml";
 
     /**
-     * DateScheduleView를 불러오기 위해 쓸 공유 객체
-     */
-    public static Date curDate = null;
-    public static ArrayList<Schedule> curScheduleList = null;
-
-    /**
      * ScheduleEditorView를 불러오기 위해 쓸 공유 객체
      */
     public static Date editingDate = null;

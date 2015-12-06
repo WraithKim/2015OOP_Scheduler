@@ -8,6 +8,10 @@ import javafx.stage.WindowEvent;
 import util.SharedPreference;
 import view.event.DayScheduleListController;
 
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by Donghwan on 12/5/2015.
  *
@@ -22,10 +26,15 @@ public class DayScheduleListStageBuilder {
         return ourInstance;
     }
 
-    public Stage newDayScheduleList() throws Exception{
+    public Stage newDayScheduleList(Date selectedDate) throws Exception{
         fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.DayScheduleListView));
         Parent root = fxmlLoader.load();
         DayScheduleListController dayScheduleListController = fxmlLoader.getController();
+        try {
+            dayScheduleListController.setDate(selectedDate);
+        }catch(ClassNotFoundException cnfe){
+
+        }
         Scene scene = new Scene(root);
         Stage dayScheduleListView = new Stage();
         dayScheduleListView.setScene(scene);

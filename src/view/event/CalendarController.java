@@ -36,26 +36,9 @@ public class CalendarController {
     @FXML
     protected void handleDetailButton(ActionEvent event) throws Exception{
         detailButton.setDisable(true);
-        Date selectedDate = null;
-        if((selectedDate = calendarView.getSelectedDate()) != null){
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTime(calendarView.getSelectedDate());
-            //selectedDate: 현재 선택한 날짜
-            SharedPreference.curDate = calendar.getTime();
-            ArrayList<Schedule> scheduleFile = null;
-            try {
-                scheduleFile = FileManager.getInstance().readScheduleFile(calendar);
-            }catch(IOException ioe) {
-                // nothing to do
-            }catch(ClassNotFoundException cnfe){
-                System.err.println("Data has corrupted in Data directory\n" +
-                        "Maybe your Scheduler version doesn't match with Schedule files.");
-            }finally {
-                if(scheduleFile == null) SharedPreference.curScheduleList = new ArrayList<>();
-                else SharedPreference.curScheduleList = scheduleFile;
-            }
+        if((calendarView.getSelectedDate()) != null){
             // 창 생성
-            Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();
+            Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList(calendarView.getSelectedDate());
             stage.show();
         }
         detailButton.setDisable(false);
