@@ -122,9 +122,9 @@ public class FileManager {
 		if(scheduleList.isEmpty())
 			return false;
 		
-		Schedule e = scheduleList.get(0);
+		Schedule toGetDate = scheduleList.get(0);
 
-		File[] fileList = readFileList(e.getDueDate().get(Calendar.YEAR), e.getDueDate().get(Calendar.MONTH)+1, e.getDueDate().get(Calendar.DATE));
+		File[] fileList = readFileList(toGetDate.getDueDate().get(Calendar.YEAR), toGetDate.getDueDate().get(Calendar.MONTH)+1, toGetDate.getDueDate().get(Calendar.DATE));
 		
 		//기존 folder에 있던 내용 삭제
 		if(fileList != null) {
@@ -133,10 +133,8 @@ public class FileManager {
 			}
 		}		
 		//현재 갖고 있는 내용들 쓰기
-		while (!scheduleList.isEmpty()) {
-			e = scheduleList.get(0);
-			writeEachFile(e);
-			scheduleList.remove(0);
+		for(Schedule elem : scheduleList) {
+			writeEachFile(elem);
 		}
 		
 		return true;
@@ -145,8 +143,6 @@ public class FileManager {
 	public boolean writeHomeworkFile(List<Homework> homeworkList) throws IOException {
 		if(homeworkList.isEmpty())
 			return false;
-		
-		Homework e = homeworkList.get(0);
 		
 		File[] fileList = readHomeworkFileList();
 		
@@ -157,10 +153,8 @@ public class FileManager {
 			}
 		}		
 		//현재 갖고 있는 내용들 쓰기
-		while (!homeworkList.isEmpty()) {
-			e = homeworkList.get(0);
-			writeEachFile(e);
-			homeworkList.remove(0);
+		for(Homework elem : homeworkList) {
+			writeEachFile(elem);
 		}
 		
 		return true;

@@ -5,9 +5,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import view.factory.FormattedTableCellFactory ?>
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="337.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.event.HomeworkListController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.event.HomeworkListController">
     <children>
-        <TableView fx:id="scheduleTableView" prefHeight="470.0" prefWidth="251.0">
+        <TableView fx:id="homeworkTableView" prefHeight="470.0" prefWidth="334.0" >
             <columns>
                 <TableColumn editable="false" prefWidth="198.0" resizable="false" sortable="false" text="Name">
                     <cellValueFactory><PropertyValueFactory property="nameProperty" />

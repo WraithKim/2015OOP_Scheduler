@@ -24,7 +24,7 @@
                 <Button fx:id="detailButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleDetailButton" text="Detail" BorderPane.alignment="CENTER" />
             </center>
             <right>
-                <Button fx:id="syncButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSyncButtonAction" text="Sync" BorderPane.alignment="CENTER">
+                <Button fx:id="homeworkButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleHomeworkButton" text="Homework" BorderPane.alignment="CENTER">
                     <BorderPane.margin>
                         <Insets right="10.0" />
                     </BorderPane.margin>

@@ -1,41 +1,54 @@
 package view.event;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import network.PortalHttpRequest;
 import schedule.Schedule;
-import util.AlarmQueue;
-import util.Homework;
-import util.PortalXmlParser;
-import util.SharedPreference;
+import util.*;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 /**
  * Created by Donghwan on 12/6/2015.
+ *
+ * 과제 리스트 컨트롤러
  */
-public class HomeworkListController {
+public class HomeworkListController implements Initializable{
+    @FXML
+    private TableView<Schedule> homeworkTableView;
+
+    @FXML
+    private TableColumn dateColume;
+
+    @FXML
+    private TableColumn timeColumn;
+
     @FXML
     private Button syncButton;
 
-    @FXML
-    protected void handleSyncButtonAction(ActionEvent event){
+    public boolean sync(){
+        // TODO 나중에 디버그 코드 지워야 함
         PortalXmlParser portalParser = new PortalXmlParser();
-        System.out.println("Sync Button :: loaded Student ID : " + SharedPreference.savedStudentID);
+        FileManager fileManager = FileManager.getInstance();
+        System.out.println("Sync :: loaded Student ID : " + SharedPreference.savedStudentID);
         if (SharedPreference.savedStudentID.isEmpty()) {
             System.err.println("먼저 학번 설정을 해주세요!");
-            return;
+            return false;
         }
-
-        syncButton.setDisable(true);
         try {
             String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(SharedPreference.savedStudentID);
             Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
 
-            System.out.println("Sync Button :: lectureIDList : " + lectureIDXmlInfo);
+            System.out.println("Sync :: lectureIDList : " + lectureIDXmlInfo);
             System.out.println("Before Homework List Length : " + SharedPreference.homeworkList.size());
             System.out.println("Before AlarmQueue Length : " + AlarmQueue.getInstance().size());
 
@@ -47,7 +60,7 @@ public class HomeworkListController {
 
             for (Integer lectureID : lectureIDSet) {
                 String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(SharedPreference.savedStudentID, lectureID);
-                System.out.println("Sync Button :: homeworkXmlInfo : " + homeworkXmlInfo);
+                System.out.println("Sync :: homeworkXmlInfo : " + homeworkXmlInfo);
                 List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
 
                 for (Schedule schedule : entityHomeworkList) {
@@ -55,16 +68,41 @@ public class HomeworkListController {
                     AlarmQueue.getInstance().add(schedule);
                 }
             }
-            // TODO : 1. 과제리스트 객체에도 저장해야 하고, 알람 큐에도 등록해야함
-            //        2. 기존에 과제가 있었다면 과제리스트는 비운 다음 저장해야 하고, 알람 큐에도 기존 과제를 지워야 함
-
+            fileManager.writeHomeworkFile(SharedPreference.homeworkList);
         } catch (IOException e) {
             System.err.println("Couldn't get homework list. Please check your internet connection or something else");
-        } finally {
+            try {
+                SharedPreference.homeworkList.stream().filter(homework -> AlarmQueue.getInstance().contains(homework)).forEach(homework -> AlarmQueue.getInstance().remove(homework));
+                SharedPreference.homeworkList.clear();
+                for (Schedule schedule : fileManager.readHomeworkFile()) {
+                    SharedPreference.homeworkList.add((Homework) schedule);
+                    AlarmQueue.getInstance().add(schedule);
+                }
+            }catch(IOException ioe){
+                System.err.println("Could't get homework list saved in local storage");
+                return false;
+            }catch(ClassNotFoundException cnfe){
+                System.err.println("Data has corrupted in Data directory");
+                return false;
+            }
+        }finally{
             System.out.println("Finally Homework List Length : " + SharedPreference.homeworkList.size());
             System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
-
-            syncButton.setDisable(false);
         }
+        homeworkTableView.refresh();
+        return true;
+    }
+
+    @FXML
+    protected void handleSyncButtonAction(ActionEvent event){
+        syncButton.setDisable(true);
+        sync();
+        syncButton.setDisable(false);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        sync();
+        homeworkTableView.setItems(FXCollections.observableArrayList(SharedPreference.homeworkList));
     }
 }

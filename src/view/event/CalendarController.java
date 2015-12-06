@@ -9,6 +9,7 @@ import network.PortalHttpRequest;
 import schedule.Schedule;
 import util.*;
 import view.stageBuilder.DayScheduleListStageBuilder;
+import view.stageBuilder.HomeworkListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
 
 import java.io.IOException;
@@ -62,5 +63,10 @@ public class CalendarController {
     @FXML
     protected void handleHomeworkButton(ActionEvent event) throws Exception{
 
+        homeworkButton.setDisable(true);
+        // 창 생성
+        Stage stage = HomeworkListStageBuilder.getInstance().newHomeworkListViewStage();
+        if(stage != null) stage.show();
+        homeworkButton.setDisable(false);
     }
 }

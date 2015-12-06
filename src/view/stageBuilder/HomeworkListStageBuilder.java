@@ -5,11 +5,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import util.FileManager;
 import util.SharedPreference;
 
 /**
  * Created by Donghwan on 12/6/2015.
+ *
+ * 과제 리스트 창을 생성하는 클래스
  */
 public class HomeworkListStageBuilder {
     private static HomeworkListStageBuilder ourInstance = new HomeworkListStageBuilder();
@@ -21,17 +22,18 @@ public class HomeworkListStageBuilder {
     private FXMLLoader fxmlLoader;
     private boolean isCreated = false;
 
-    private Stage newHomeworkListViewStage() throws Exception {
+    public Stage newHomeworkListViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.SettingView));
+        fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.HomeworkListView));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-        Stage settingView = new Stage();
-        settingView.setScene(scene);
-        settingView.setAlwaysOnTop(true);
-        settingView.setResizable(false);
-        return settingView;
+        Stage HomeworkListView = new Stage();
+        HomeworkListView.setScene(scene);
+        HomeworkListView.setResizable(false);
+        HomeworkListView.setTitle("Homework List");
+        HomeworkListView.setOnCloseRequest((WindowEvent event)-> isCreated = false);
+        return HomeworkListView;
     }
 
     private HomeworkListStageBuilder() {

@@ -2,6 +2,7 @@ package util;
 
 import javafx.collections.ObservableList;
 import schedule.Schedule;
+import sun.security.provider.SHA;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -40,6 +41,7 @@ public class SharedPreference {
     public static final String CalendarView = SharedPreference.viewPackage+"CalendarView.fxml";
     public static final String ScheduleEditorView = SharedPreference.viewPackage+"ScheduleEditorView.fxml";
     public static final String SettingView = SharedPreference.viewPackage+"SettingView.fxml";
+    public static final String HomeworkListView = SharedPreference.viewPackage+"HomeworkListView.fxml";
 
     /**
      * DateScheduleView를 불러오기 위해 쓸 공유 객체
