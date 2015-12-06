@@ -39,9 +39,9 @@ public class HomeworkListController implements Initializable{
         // TODO 나중에 디버그 코드 지워야 함
         PortalXmlParser portalParser = new PortalXmlParser();
         FileManager fileManager = FileManager.getInstance();
-        System.out.println("Sync :: loaded Student ID : " + SharedPreference.savedStudentID);
+        //System.out.println("Sync :: loaded Student ID : " + SharedPreference.savedStudentID);
         if (SharedPreference.savedStudentID.isEmpty()) {
-            System.err.println("먼저 학번 설정을 해주세요!");
+            System.err.println("Please save your Student ID in Setting");
             return false;
         }
         try {

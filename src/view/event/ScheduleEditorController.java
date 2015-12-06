@@ -70,6 +70,7 @@ public class ScheduleEditorController implements Initializable{
             dueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
             dueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             schedule = new Schedule(titleTextField.getText(), dueDate, priority);
+            schedule.setDescription(descriptionTextArea.getText());
             //System.out.println("new Schedule alarm time: "+schedule.getAlarmTime());
             originDaySchedule.add(schedule);
             AlarmQueue.getInstance().offer(schedule);
@@ -81,8 +82,9 @@ public class ScheduleEditorController implements Initializable{
             else if(priorityNoticed.isSelected()) priority = Priority.NOTICED;
             schedule.setPriority(priority);
             Calendar newDueDate = schedule.getDueDate();
-            newDueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getVisibleRowCount());
-            newDueDate.set(Calendar.MINUTE, minuteComboBox.getVisibleRowCount());
+            newDueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
+            newDueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
+            schedule.setDueDate(newDueDate);
             schedule.setDescription(descriptionTextArea.getText());
             //System.out.println("new Schedule alarm time: "+schedule.getAlarmTime());
             AlarmQueue.getInstance().offer(schedule);

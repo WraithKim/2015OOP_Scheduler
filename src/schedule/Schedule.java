@@ -13,8 +13,8 @@ import java.util.GregorianCalendar;
  * 스케쥴 하나에 관한 클래스
  */
 public class Schedule implements Serializable{
-    private static final long serialVersionUID = 20151204L;
-    private static final SimpleDateFormat dateForm;
+    private static final long serialVersionUID = 20151207L;
+    private static final SimpleDateFormat dateForm = new SimpleDateFormat("HH:mm");
 
     private static final long A_DAY_AS_TIME = 86400000L;
     private static final long THREE_DAY_AS_TIME = 259200000L;
@@ -31,9 +31,6 @@ public class Schedule implements Serializable{
     private Priority priority;
     private Calendar dueDate;
 
-    static{
-        dateForm = new SimpleDateFormat("HH:mm");
-    }
 
     public Schedule(String name, Calendar dueDate, Priority priority){
         this.dueDate = new GregorianCalendar();
