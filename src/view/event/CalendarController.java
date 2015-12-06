@@ -51,9 +51,8 @@ public class CalendarController {
                 System.err.println("Data has corrupted in Data directory\n" +
                         "Maybe your Scheduler version doesn't match with Schedule files.");
             }finally {
-                if(scheduleFile == null){
-                    SharedPreference.curScheduleList = new ArrayList<>();
-                }
+                if(scheduleFile == null) SharedPreference.curScheduleList = new ArrayList<>();
+                else SharedPreference.curScheduleList = scheduleFile;
             }
             // 창 생성
             Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList();

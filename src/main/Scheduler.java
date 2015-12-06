@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import schedule.AlarmThread;
+import schedule.Schedule;
 import util.AlarmQueue;
 import util.SharedPreference;
 import util.FileManager;
@@ -39,7 +40,7 @@ public class Scheduler extends Application{
         FileManager fileManager = FileManager.getInstance();
         for(int i = 0; i < 8; i++){
             try{
-                alarmQueue.addAll(fileManager.readScheduleFile(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH) + 1, cur.get(Calendar.DAY_OF_MONTH)));
+                fileManager.readScheduleFile(cur.get(Calendar.YEAR), cur.get(Calendar.MONTH) + 1, cur.get(Calendar.DAY_OF_MONTH)).forEach(alarmQueue::offer);
             }catch(IOException ioe) {
                 // nothing to do
             }catch(ClassNotFoundException cnfe){
@@ -48,9 +49,7 @@ public class Scheduler extends Application{
                 System.exit(1);
                 return;
             }
-        }
-        while(!(alarmQueue.isEmpty())&&(alarmQueue.peek().getAlarmTime() < cur.getTimeInMillis())){
-            alarmQueue.poll();
+            cur.add(Calendar.DAY_OF_MONTH, 1);
         }
 
         AlarmThread.getInstance().start();
@@ -72,7 +71,6 @@ public class Scheduler extends Application{
         // 스케쥴러 관리 프로그램을 생성하고
         initStudentId();
         initAlarmThread();
-        //AlarmThread.getInstance().start();
 
         // 달력 뷰를 생성
         Parent root = FXMLLoader.load(getClass().getResource(SharedPreference.CalendarView));

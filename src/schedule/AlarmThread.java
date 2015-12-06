@@ -39,15 +39,17 @@ public class AlarmThread extends Thread implements AutoCloseable{
     @Override
     public void run() {
         // 퍼포먼스를 위해 함수 호출을 줄였습니다.
+        AlarmQueue alarmQueue = AlarmQueue.getInstance();
+        FileManager fileManager = FileManager.getInstance();
         Calendar nextDay = GregorianCalendar.getInstance();
         nextDay.set(Calendar.HOUR_OF_DAY, 0);
         nextDay.set(Calendar.MINUTE, 0);
         nextDay.add(Calendar.DAY_OF_MONTH, 1);
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
-        System.out.println("next day: "+ dateFormat.format(nextDay.getTime()));
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
+        //System.out.println("next day: "+ dateFormat.format(nextDay.getTime()));
 
-        AlarmQueue alarmQueue = AlarmQueue.getInstance();
+
         try {
             while (!this.isInterrupted()) {
                 //System.out.println("system time: " + System.currentTimeMillis());
@@ -73,7 +75,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
                     Calendar oneWeekLater = new GregorianCalendar(nextDay.get(Calendar.YEAR), nextDay.get(Calendar.MONTH), nextDay.get(Calendar.DAY_OF_MONTH));
                     oneWeekLater.add(Calendar.DAY_OF_MONTH, 7);
                     try{
-                        alarmQueue.addAll(FileManager.getInstance().readScheduleFile(oneWeekLater.get(Calendar.YEAR), oneWeekLater.get(Calendar.MONTH) + 1, oneWeekLater.get(Calendar.DAY_OF_MONTH)));
+                        alarmQueue.addAll(fileManager.readScheduleFile(oneWeekLater.get(Calendar.YEAR), oneWeekLater.get(Calendar.MONTH) + 1, oneWeekLater.get(Calendar.DAY_OF_MONTH)));
                     }catch(IOException ioe){
                         // nothing to do
                     }catch(ClassNotFoundException cnfe){
