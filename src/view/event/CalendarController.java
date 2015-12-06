@@ -44,7 +44,7 @@ public class CalendarController {
             SharedPreference.curDate = calendar.getTime();
             ArrayList<Schedule> scheduleFile = null;
             try {
-                scheduleFile = FileManager.getInstance().readScheduleFile(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+                scheduleFile = FileManager.getInstance().readScheduleFile(calendar);
             }catch(IOException ioe) {
                 // nothing to do
             }catch(ClassNotFoundException cnfe){

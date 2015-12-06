@@ -72,7 +72,7 @@ public class AlarmThread extends Thread{
                     Calendar oneWeekLater = new GregorianCalendar(nextDay.get(Calendar.YEAR), nextDay.get(Calendar.MONTH), nextDay.get(Calendar.DAY_OF_MONTH));
                     oneWeekLater.add(Calendar.DAY_OF_MONTH, 7);
                     try{
-                        alarmQueue.addAll(fileManager.readScheduleFile(oneWeekLater.get(Calendar.YEAR), oneWeekLater.get(Calendar.MONTH) + 1, oneWeekLater.get(Calendar.DAY_OF_MONTH)));
+                        alarmQueue.addAll(fileManager.readScheduleFile(oneWeekLater));
                     }catch(IOException ioe){
                         // nothing to do
                     }catch(ClassNotFoundException cnfe){
