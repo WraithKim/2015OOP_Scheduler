@@ -31,7 +31,7 @@ public class Scheduler extends Application{
     public Scheduler() throws FileNotFoundException{
     }
 
-    public void initAlarmThread(){
+    private void initAlarmThread(){
         // 현재 시간에서 8일 후까지의 일정을 불러온다.
         // 알람큐에 등록
         Calendar cur = GregorianCalendar.getInstance();

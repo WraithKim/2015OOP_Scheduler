@@ -76,7 +76,7 @@ public class ScheduleEditorController implements Initializable{
     }
 
     @FXML
-    protected void handleSaveButtonAction(ActionEvent event){
+    protected void handleSaveButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
         if(titleTextField.getLength() == 0) return;
         scheduleSaveButton.setDisable(true);
         AlarmQueue alarmQueue = AlarmQueue.getInstance();

@@ -16,7 +16,7 @@ import java.util.Calendar;
 
 public class Homework extends Schedule implements Serializable {
     private static final long serialVersionUID = 20151207L;
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
     private transient SimpleStringProperty dateProperty;
 
     public Homework(String name, Calendar dueDate) {
@@ -26,6 +26,7 @@ public class Homework extends Schedule implements Serializable {
     }
 
     //테이블 뷰가 호출하는 메소드이기 때문에 절대로 지워서는 안됨
+    @SuppressWarnings("unused")
     public SimpleStringProperty datePropertyProperty() {
         if(dateProperty == null){
             dateProperty = new SimpleStringProperty();

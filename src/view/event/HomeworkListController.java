@@ -28,8 +28,9 @@ public class HomeworkListController implements Initializable{
     @FXML
     private TableView<Homework> homeworkTableView;
 
+    @SuppressWarnings("unused")
     @FXML
-    private TableColumn dateColume;
+    private TableColumn dateColumn;
 
     @FXML
     private TableColumn timeColumn;
@@ -37,7 +38,7 @@ public class HomeworkListController implements Initializable{
     @FXML
     private Button syncButton;
 
-    public boolean sync(){
+    private boolean sync(){
         // TODO 나중에 디버그 코드 지워야 함
         PortalXmlParser portalParser = new PortalXmlParser();
         FileManager fileManager = FileManager.getInstance();
@@ -111,7 +112,7 @@ public class HomeworkListController implements Initializable{
     }
 
     @FXML
-    protected void handleSyncButtonAction(ActionEvent event){
+    protected void handleSyncButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
         syncButton.setDisable(true);
         sync();
         syncButton.setDisable(false);

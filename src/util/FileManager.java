@@ -20,7 +20,7 @@ public class FileManager {
 	private static final String HOMEWORK_DIRECTORY = "Homework";
 	private static final String STUDENT_NUMBER = "StudentNumber";
 
-	private static FileManager ourInstance = new FileManager();
+	private static final FileManager ourInstance = new FileManager();
 
 	public static FileManager getInstance(){
 		return ourInstance;
@@ -218,9 +218,7 @@ public class FileManager {
 		return true;
 	}
 	
-	public boolean writeStudentNumber(String studentNumber) throws IOException {
+	public void writeStudentNumber(String studentNumber) throws IOException {
 		writeEachFile(studentNumber);
-		
-		return true;
 	}
 }

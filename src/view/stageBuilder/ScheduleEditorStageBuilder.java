@@ -17,7 +17,7 @@ import java.util.Date;
  * 스케쥴 편집창을 생성
  */
 public class ScheduleEditorStageBuilder {
-    private static ScheduleEditorStageBuilder ourInstance = new ScheduleEditorStageBuilder();
+    private static final ScheduleEditorStageBuilder ourInstance = new ScheduleEditorStageBuilder();
 
     private FXMLLoader fxmlLoader;
 

@@ -65,12 +65,12 @@ public class DayScheduleListController implements Initializable{
             scheduleTableView.setItems(FXCollections.observableArrayList(
                     FileManager.getInstance().readScheduleFile(dateToLoad)));
         }catch(IOException ioe){
-            scheduleTableView.setItems(FXCollections.observableArrayList(new ArrayList<Schedule>()));
+            scheduleTableView.setItems(FXCollections.observableArrayList(new ArrayList<>()));
         }
     }
 
     @FXML
-    protected void handleAddButtonAction(ActionEvent event) throws Exception{
+    protected void handleAddButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
         addButton.setDisable(true);
         Stage stage = ScheduleEditorStageBuilder.getInstance().newAddingScheduleEditor(currentDate, scheduleTableView.getItems());
         stage.show();
@@ -78,7 +78,7 @@ public class DayScheduleListController implements Initializable{
     }
 
     @FXML
-    protected void handleEditButtonAction(ActionEvent event) throws Exception{
+    protected void handleEditButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
         editButton.setDisable(true);
         Schedule focusedItem;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
@@ -89,7 +89,7 @@ public class DayScheduleListController implements Initializable{
     }
 
     @FXML
-    protected void handleDeleteButtonAction(ActionEvent event){
+    protected void handleDeleteButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
         deleteButton.setDisable(true);
         Schedule focusedItem;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){

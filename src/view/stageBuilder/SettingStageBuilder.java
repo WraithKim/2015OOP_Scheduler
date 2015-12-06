@@ -14,9 +14,8 @@ import util.FileManager;
  * 설정 창을 생성하고 창에 대한 설정을 함
  */
 public class SettingStageBuilder {
-    private static SettingStageBuilder ourInstance = new SettingStageBuilder();
+    private static final SettingStageBuilder ourInstance = new SettingStageBuilder();
 
-    private FXMLLoader fxmlLoader;
     private boolean isCreated = false;
 
     public static SettingStageBuilder getInstance(){
@@ -26,7 +25,7 @@ public class SettingStageBuilder {
     private Stage newSettingViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.SettingView));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.SettingView));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage settingView = new Stage();

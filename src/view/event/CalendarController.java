@@ -5,15 +5,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import network.PortalHttpRequest;
-import schedule.Schedule;
-import util.*;
 import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.HomeworkListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
 
-import java.io.IOException;
-import java.util.*;
 
 /**
  * Created by CAUCSE on 2015-12-03.
@@ -34,7 +29,7 @@ public class CalendarController {
     private Button homeworkButton;
 
     @FXML
-    protected void handleDetailButton(ActionEvent event) throws Exception{
+    protected void handleDetailButton(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
         detailButton.setDisable(true);
         if((calendarView.getSelectedDate()) != null){
             // 창 생성
@@ -45,13 +40,13 @@ public class CalendarController {
     }
 
     @FXML
-    protected void handleSettingButtonAction(ActionEvent event) throws Exception{
+    protected void handleSettingButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
         Stage settingView = SettingStageBuilder.getInstance().defaultSettingViewStage();
         if(settingView != null) settingView.show();
     }
 
     @FXML
-    protected void handleHomeworkButton(ActionEvent event) throws Exception{
+    protected void handleHomeworkButton(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
 
         homeworkButton.setDisable(true);
         // 창 생성

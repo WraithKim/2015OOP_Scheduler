@@ -16,9 +16,9 @@ import java.util.GregorianCalendar;
  * 알람을 검사하는 쓰레드
  */
 public class AlarmThread extends Thread{
-    private MediaPlayer alarmSound;
+    private final MediaPlayer alarmSound;
 
-    private static AlarmThread ourInstance = new AlarmThread();
+    private static final AlarmThread ourInstance = new AlarmThread();
 
     public static AlarmThread getInstance(){
         return ourInstance;
@@ -55,8 +55,8 @@ public class AlarmThread extends Thread{
                     //System.out.println("current top: "+ alarmQueue.peek().getAlarmTime());
                     if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()) {
                         // TODO 알람이 울리면 해야 될 일 정의
-                        Schedule top = alarmQueue.poll();
                         /*
+                        Schedule top = alarmQueue.poll();
                         System.out.println("alarm ring!!!");
                         System.out.println(top.getName());
                         System.out.println(top.getAlarmTime());

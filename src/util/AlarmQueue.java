@@ -10,7 +10,7 @@ import java.util.concurrent.PriorityBlockingQueue;
  * 알람 쓰레드에서 가장 앞의 알람을 먼저 보여주는 우선순위 동기화 큐
  */
 public class AlarmQueue extends PriorityBlockingQueue<Schedule>{
-    private static AlarmQueue ourInstance = new AlarmQueue();
+    private static final AlarmQueue ourInstance = new AlarmQueue();
 
     public static AlarmQueue getInstance() {
         return ourInstance;

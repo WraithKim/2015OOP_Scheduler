@@ -13,19 +13,18 @@ import util.Constant;
  * 과제 리스트 창을 생성하는 클래스
  */
 public class HomeworkListStageBuilder {
-    private static HomeworkListStageBuilder ourInstance = new HomeworkListStageBuilder();
+    private static final HomeworkListStageBuilder ourInstance = new HomeworkListStageBuilder();
 
     public static HomeworkListStageBuilder getInstance() {
         return ourInstance;
     }
 
-    private FXMLLoader fxmlLoader;
     private boolean isCreated = false;
 
     public Stage newHomeworkListViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.HomeworkListView));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.HomeworkListView));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage HomeworkListView = new Stage();

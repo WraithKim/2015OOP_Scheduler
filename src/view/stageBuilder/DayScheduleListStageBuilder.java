@@ -16,31 +16,27 @@ import java.util.Date;
  * 하루 일정 창을 생성함
  */
 public class DayScheduleListStageBuilder {
-    private static DayScheduleListStageBuilder ourInstance = new DayScheduleListStageBuilder();
-
-    private FXMLLoader fxmlLoader;
+    private static final DayScheduleListStageBuilder ourInstance = new DayScheduleListStageBuilder();
 
     public static DayScheduleListStageBuilder getInstance(){
         return ourInstance;
     }
 
     public Stage newDayScheduleList(Date selectedDate) throws Exception{
-        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.DayScheduleListView));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.DayScheduleListView));
         Parent root = fxmlLoader.load();
         DayScheduleListController dayScheduleListController = fxmlLoader.getController();
         try {
             dayScheduleListController.setDate(selectedDate);
         }catch(ClassNotFoundException cnfe){
-
+            return null;
         }
         Scene scene = new Scene(root);
         Stage dayScheduleListView = new Stage();
         dayScheduleListView.setScene(scene);
         dayScheduleListView.setTitle("Schedule List");
         dayScheduleListView.setResizable(false);
-        dayScheduleListView.setOnCloseRequest((WindowEvent event)->{
-            dayScheduleListController.saveList();
-        });
+        dayScheduleListView.setOnCloseRequest((WindowEvent event)-> dayScheduleListController.saveList());
         return dayScheduleListView;
     }
 

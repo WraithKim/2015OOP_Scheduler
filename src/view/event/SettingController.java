@@ -38,12 +38,11 @@ public class SettingController implements Initializable{
     // TODO 디버그 코드 지워야 함
 
     @FXML
-    protected void handleSaveAction(ActionEvent event){
+    protected void handleSaveAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
         String newStudentID = this.settingSIDInputForm.getText();
         if(newStudentID.length() != 8) return;
         try {
-            String savedStudentID = newStudentID;
-            FileManager.getInstance().writeStudentNumber(savedStudentID);
+            FileManager.getInstance().writeStudentNumber(newStudentID);
 
             //System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
         } catch (IOException e) {

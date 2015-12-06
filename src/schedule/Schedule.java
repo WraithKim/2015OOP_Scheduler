@@ -29,7 +29,7 @@ public class Schedule implements Serializable{
     private final String name;
     private String description;
     private Priority priority;
-    private Calendar dueDate;
+    private final Calendar dueDate;
 
 
     public Schedule(String name, Calendar dueDate, Priority priority){
@@ -85,6 +85,7 @@ public class Schedule implements Serializable{
         this.timeProperty.set(timeForm.format(this.dueDate.getTime()));
     }
 
+    @SuppressWarnings("unused")
     public SimpleStringProperty namePropertyProperty() {
         if(nameProperty == null){
             nameProperty = new SimpleStringProperty();
@@ -94,6 +95,7 @@ public class Schedule implements Serializable{
     }
 
 
+    @SuppressWarnings("unused")
     public SimpleStringProperty timePropertyProperty() {
         if(timeProperty == null){
             timeProperty = new SimpleStringProperty();
@@ -102,6 +104,7 @@ public class Schedule implements Serializable{
         return timeProperty;
     }
 
+    @SuppressWarnings("unused")
     public SimpleStringProperty priorityPropertyProperty() {
         if(priorityProperty == null){
             priorityProperty = new SimpleStringProperty();

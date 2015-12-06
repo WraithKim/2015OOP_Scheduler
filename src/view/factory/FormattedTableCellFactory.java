@@ -19,18 +19,22 @@ public class FormattedTableCellFactory<S, T>
     private TextAlignment alignment;
     private Format format;
 
+    @SuppressWarnings("unused")
     public TextAlignment getAlignment() {
         return alignment;
     }
 
+    @SuppressWarnings("unused")
     public void setAlignment(TextAlignment alignment) {
         this.alignment = alignment;
     }
 
+    @SuppressWarnings("unused")
     public Format getFormat() {
         return format;
     }
 
+    @SuppressWarnings("unused")
     public void setFormat(Format format) {
         this.format = format;
     }
