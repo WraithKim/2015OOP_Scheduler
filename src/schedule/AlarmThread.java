@@ -16,7 +16,7 @@ import java.util.GregorianCalendar;
  *
  * 알람을 검사하는 쓰레드
  */
-public class AlarmThread extends Thread implements AutoCloseable{
+public class AlarmThread extends Thread{
     private MediaPlayer alarmSound;
 
     private static AlarmThread ourInstance = new AlarmThread();
@@ -24,8 +24,6 @@ public class AlarmThread extends Thread implements AutoCloseable{
     public static AlarmThread getInstance(){
         return ourInstance;
     }
-
-
 
     private AlarmThread(){
         alarmSound = new MediaPlayer(new Media(
@@ -57,7 +55,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
                 if(!(alarmQueue.isEmpty())){
                     //System.out.println("current top: "+ alarmQueue.peek().getAlarmTime());
                     if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()) {
-                        // 알람이 울리면 해야 될 일 정의
+                        // TODO 알람이 울리면 해야 될 일 정의
                         Schedule top = alarmQueue.poll();
                         /*
                         System.out.println("alarm ring!!!");
@@ -90,16 +88,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
                 Thread.sleep(1000);
             }
         }catch(InterruptedException ie){
-            ie.printStackTrace();
+            System.err.println("Thread suddenly interrupted");
         }
-    }
-
-    @Override
-    public void close() throws Exception {
-        if(!(this.isInterrupted())) this.interrupt();
-        if(alarmSound != null) {
-            alarmSound.stop();
-        }
-
     }
 }
