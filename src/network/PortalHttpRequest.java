@@ -1,10 +1,8 @@
 package network;
 
-import util.Restourant;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
 
 /**
  * Created by Lumin on 2015-11-30.
@@ -13,7 +11,7 @@ import java.util.Date;
 public class PortalHttpRequest {
 
     /**
-     *
+     * PortalHttpRequest 인스턴스를 초기화합니다. PortalHttpRequest 클래스는 정적 클래스이므로 인스턴스화 할 수 없습니다.
      */
     private PortalHttpRequest() {
 
@@ -27,8 +25,7 @@ public class PortalHttpRequest {
     public static String getHomeworkLectureIDList(String studentID) throws IOException {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getHomeworkRequestPayload(studentID);
-        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.HomeworkLectureIDList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
-        return requestResult;
+        return HttpRequest.sendHttpPostRequest(RequestList.HomeworkLectureIDList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
     }
 
     /**
@@ -40,17 +37,8 @@ public class PortalHttpRequest {
     public static String getHomeworkList(String studentID, int lectureID) throws IOException {
         PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
         String payLoad = payloadFactory.getHomeworkDetailTimePayload(studentID, lectureID);
-        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
 
-        return requestResult;
-    }
-
-    public static String getMealList(Date timeDate, Restourant restourant) throws IOException {
-        PortalPayloadFactory payloadFactory = new PortalPayloadFactory();
-        String payLoad = payloadFactory.getMealPayload(timeDate, restourant);
-        String requestResult = HttpRequest.sendHttpPostRequest(RequestList.Meal.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
-
-        return requestResult;
+        return HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
     }
 
     /**
@@ -65,14 +53,9 @@ public class PortalHttpRequest {
         /**
          * 과제의 상세 정보를 불러오는 Request입니다.
          */
-        HomeworkList("http://cautis.cau.ac.kr/LMS/LMS/std/lec/sLmsLec070/selectTaskList.do"),
+        HomeworkList("http://cautis.cau.ac.kr/LMS/LMS/std/lec/sLmsLec070/selectTaskList.do");
 
-        /**
-         * 식단 정보를 불러오는 Request입니다.
-         */
-        Meal("http://cautis.cau.ac.kr/TIS/portlet/comm/cPortlet001/selectList.do");
-
-        String mappedUrl;
+        final String mappedUrl;
 
         RequestList(String mappedUrl) {
             this.mappedUrl = mappedUrl;
@@ -80,7 +63,7 @@ public class PortalHttpRequest {
 
         /**
          * 해당 오브젝트에 Mapping 되어있는 Request URL을 가져옵니다.
-         * @return
+         * @return 해당 오브젝트에 맞는 Request URL입니다.
          */
         public String getMappedUrl() {
             return this.mappedUrl;

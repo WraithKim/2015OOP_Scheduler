@@ -2,7 +2,6 @@ package util;
 
 import javafx.collections.ObservableList;
 import schedule.Schedule;
-import sun.security.provider.SHA;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,11 +14,6 @@ public class SharedPreference {
      * 빈 문자열입니다.
      */
     public static final String EMPTY_STRING = "";
-
-    /**
-     * 더미 학번입니다.
-     */
-    public static final String DUMMY_STUDENT_ID = "20000000";
 
     /**
      * 공유 객체들
@@ -37,11 +31,11 @@ public class SharedPreference {
      * fxml 파일을 불러올 경로를 저장
      */
     public static final String viewPackage = "/view/";
-    public static final String DayScheduleListView = SharedPreference.viewPackage+"DayScheduleListView.fxml";
-    public static final String CalendarView = SharedPreference.viewPackage+"CalendarView.fxml";
-    public static final String ScheduleEditorView = SharedPreference.viewPackage+"ScheduleEditorView.fxml";
-    public static final String SettingView = SharedPreference.viewPackage+"SettingView.fxml";
-    public static final String HomeworkListView = SharedPreference.viewPackage+"HomeworkListView.fxml";
+    public static final String DayScheduleListView = SharedPreference.viewPackage + "DayScheduleListView.fxml";
+    public static final String CalendarView = SharedPreference.viewPackage + "CalendarView.fxml";
+    public static final String ScheduleEditorView = SharedPreference.viewPackage + "ScheduleEditorView.fxml";
+    public static final String SettingView = SharedPreference.viewPackage + "SettingView.fxml";
+    public static final String HomeworkListView = SharedPreference.viewPackage + "HomeworkListView.fxml";
 
     /**
      * DateScheduleView를 불러오기 위해 쓸 공유 객체

@@ -89,7 +89,7 @@ public class HomeworkListController implements Initializable{
             System.out.println("Finally Homework List Length : " + SharedPreference.homeworkList.size());
             System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
         }
-        homeworkTableView.refresh();
+        //homeworkTableView.refresh();
         return true;
     }
 
