@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import schedule.Schedule;
 import util.AlarmQueue;
 import util.FileManager;
-import util.SharedPreference;
 import view.stageBuilder.ScheduleEditorStageBuilder;
 
 import java.io.IOException;

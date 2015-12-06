@@ -5,7 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import util.SharedPreference;
+import util.Constant;
 
 /**
  * Created by Donghwan on 12/6/2015.
@@ -25,7 +25,7 @@ public class HomeworkListStageBuilder {
     public Stage newHomeworkListViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.HomeworkListView));
+        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.HomeworkListView));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         Stage HomeworkListView = new Stage();

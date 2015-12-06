@@ -25,6 +25,7 @@ public class Homework extends Schedule implements Serializable {
         dateProperty.set(dateFormat.format(getDueDate().getTime()));
     }
 
+    //테이블 뷰가 호출하는 메소드이기 때문에 절대로 지워서는 안됨
     public SimpleStringProperty datePropertyProperty() {
         if(dateProperty == null){
             dateProperty = new SimpleStringProperty();

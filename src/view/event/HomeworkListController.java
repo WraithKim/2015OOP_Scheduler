@@ -1,6 +1,7 @@
 package view.event;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import util.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -24,7 +26,7 @@ import java.util.Set;
  */
 public class HomeworkListController implements Initializable{
     @FXML
-    private TableView<Schedule> homeworkTableView;
+    private TableView<Homework> homeworkTableView;
 
     @FXML
     private TableColumn dateColume;
@@ -39,42 +41,60 @@ public class HomeworkListController implements Initializable{
         // TODO 나중에 디버그 코드 지워야 함
         PortalXmlParser portalParser = new PortalXmlParser();
         FileManager fileManager = FileManager.getInstance();
-        //System.out.println("Sync :: loaded Student ID : " + SharedPreference.savedStudentID);
+        AlarmQueue alarmQueue = AlarmQueue.getInstance();
+        String savedStudentID = null;
+        //System.out.println("Sync :: loaded Student ID : " + Constant.savedStudentID);
         try {
-            String savedStudentID = fileManager.readStudentNumber();
+            savedStudentID = fileManager.readStudentNumber();
+        }catch(IOException ioe) {
+            System.err.println("Could't get student ID, Please save your ID at Setting");
+        }catch(ClassNotFoundException cnfe) {
+            System.err.println("Data has corrupted in Data directory\n" +
+                    "Maybe your Scheduler version doesn't match with Schedule files.");
+        }
+        if(homeworkTableView.getItems() != null) {
+            //System.out.println("Sync :: lectureIDList : " + lectureIDXmlInfo);
+            //System.out.println("Before Homework List Length : " + Constant.homeworkList.size());
+            //System.out.println("Before AlarmQueue Length : " + AlarmQueue.getInstance().size());
+            ObservableList<Homework> preHomeworkList = homeworkTableView.getItems();
+            preHomeworkList.forEach(alarmQueue::remove);
+        }
+        //System.out.println("After Homework List Length : " + Constant.homeworkList.size());
+        //System.out.println("After AlarmQueue Length : " + AlarmQueue.getInstance().size());
+
+        try {
             String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(savedStudentID);
             Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
-
-            System.out.println("Sync :: lectureIDList : " + lectureIDXmlInfo);
-            System.out.println("Before Homework List Length : " + SharedPreference.homeworkList.size());
-            System.out.println("Before AlarmQueue Length : " + AlarmQueue.getInstance().size());
-
-            SharedPreference.homeworkList.stream().filter(homework -> AlarmQueue.getInstance().contains(homework)).forEach(homework -> AlarmQueue.getInstance().remove(homework));
-            SharedPreference.homeworkList.clear();
-
-            System.out.println("After Homework List Length : " + SharedPreference.homeworkList.size());
-            System.out.println("After AlarmQueue Length : " + AlarmQueue.getInstance().size());
-
+            ArrayList<Homework> newHomeworkList = new ArrayList<>();
             for (Integer lectureID : lectureIDSet) {
                 String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(savedStudentID, lectureID);
-                System.out.println("Sync :: homeworkXmlInfo : " + homeworkXmlInfo);
-                List<Schedule> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
+                //System.out.println("Sync :: homeworkXmlInfo : " + homeworkXmlInfo);
+                List<Homework> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
 
-                for (Schedule schedule : entityHomeworkList) {
-                    SharedPreference.homeworkList.add((Homework) schedule);
-                    AlarmQueue.getInstance().add(schedule);
+                for (Homework homework : entityHomeworkList) {
+                    newHomeworkList.add(homework);
+                    AlarmQueue.getInstance().add(homework);
                 }
             }
-            fileManager.writeHomeworkFile(SharedPreference.homeworkList);
+            homeworkTableView.setItems(FXCollections.observableArrayList(newHomeworkList));
+            try{
+                fileManager.writeHomeworkFile(newHomeworkList);
+            }catch (IOException ioe){
+                System.err.println("Couldn't save your homework, Please try again after deleting existing homework list");
+                return false;
+            }
+            return true;
         }catch(IOException e) {
-            System.err.println("Couldn't get homework list. Please check your internet connection or something else");
+            System.err.println("Couldn't get homework list. Please check you are connected to internet");
+            System.out.println("Try to load homework list in local storage");
             try {
-                SharedPreference.homeworkList.stream().filter(homework -> AlarmQueue.getInstance().contains(homework)).forEach(homework -> AlarmQueue.getInstance().remove(homework));
-                SharedPreference.homeworkList.clear();
-                for (Schedule schedule : fileManager.readHomeworkFile()) {
-                    SharedPreference.homeworkList.add((Homework) schedule);
-                    AlarmQueue.getInstance().add(schedule);
+                ArrayList<Homework> localHomeworkList = new ArrayList<>();
+                for (Homework homework : fileManager.readHomeworkFile()) {
+                    localHomeworkList.add(homework);
+                    AlarmQueue.getInstance().add(homework);
                 }
+                homeworkTableView.setItems(FXCollections.observableArrayList(localHomeworkList));
+                return true;
             }catch(IOException ioe){
                 System.err.println("Could't get homework list saved in local storage");
                 return false;
@@ -83,15 +103,11 @@ public class HomeworkListController implements Initializable{
                         "Maybe your Scheduler version doesn't match with Schedule files.");
                 return false;
             }
-        }catch(ClassNotFoundException cnfe){
-            System.err.println("Data has corrupted in Data directory\n" +
-                    "Maybe your Scheduler version doesn't match with Schedule files.");
-            return false;
-        }finally{
-            System.out.println("Finally Homework List Length : " + SharedPreference.homeworkList.size());
-            System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
         }
-        return true;
+        finally{
+            //System.out.println("Finally Homework List Length : " + Constant.homeworkList.size());
+            //System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
+        }
     }
 
     @FXML
@@ -104,6 +120,5 @@ public class HomeworkListController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         sync();
-        homeworkTableView.setItems(FXCollections.observableArrayList(SharedPreference.homeworkList));
     }
 }

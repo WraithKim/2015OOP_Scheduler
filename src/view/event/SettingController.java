@@ -8,7 +8,6 @@ import util.FileManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import util.SharedPreference;
 
 import java.io.IOException;
 import java.net.URL;

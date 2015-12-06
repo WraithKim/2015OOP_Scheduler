@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import schedule.Schedule;
-import util.SharedPreference;
+import util.Constant;
 import view.event.ScheduleEditorController;
 
 import java.util.Date;
@@ -26,7 +26,7 @@ public class ScheduleEditorStageBuilder {
     }
 
     public Stage newAddingScheduleEditor(Date currentDate, ObservableList<Schedule> originScheduleList) throws Exception{
-        fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.ScheduleEditorView));
+        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ScheduleEditorView));
         Parent root = fxmlLoader.load();
         ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
         scheduleEditorController.setAddableView(currentDate, originScheduleList);
@@ -40,7 +40,7 @@ public class ScheduleEditorStageBuilder {
     }
 
     public Stage newEditingScheduleEditor(Schedule editingSchedule) throws Exception{
-        fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.ScheduleEditorView));
+        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ScheduleEditorView));
         Parent root = fxmlLoader.load();
         ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
         scheduleEditorController.setEditableView(editingSchedule);

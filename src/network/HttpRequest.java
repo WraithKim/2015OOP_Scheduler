@@ -8,7 +8,7 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import util.SharedPreference;
+import util.Constant;
 
 import java.io.IOException;
 import java.net.URI;
@@ -53,7 +53,7 @@ public class HttpRequest {
         } catch (URISyntaxException e) {
             e.printStackTrace();
             System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
-            return SharedPreference.EMPTY_STRING;
+            return Constant.EMPTY_STRING;
         }
     }
 

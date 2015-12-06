@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import schedule.AlarmThread;
 import util.AlarmQueue;
-import util.SharedPreference;
+import util.Constant;
 import util.FileManager;
 import view.stageBuilder.SettingStageBuilder;
 
@@ -72,7 +72,7 @@ public class Scheduler extends Application{
         initAlarmThread();
 
         // 달력 뷰를 생성
-        Parent root = FXMLLoader.load(getClass().getResource(SharedPreference.CalendarView));
+        Parent root = FXMLLoader.load(getClass().getResource(Constant.CalendarView));
         Scene scene = new Scene(root);
 
         primaryStage.setTitle("Calendar");

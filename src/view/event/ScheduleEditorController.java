@@ -9,7 +9,6 @@ import javafx.scene.control.*;
 import schedule.Priority;
 import schedule.Schedule;
 import util.AlarmQueue;
-import util.SharedPreference;
 
 import java.net.URL;
 import java.util.*;

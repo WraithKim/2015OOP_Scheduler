@@ -5,11 +5,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import util.SharedPreference;
+import util.Constant;
 import view.event.DayScheduleListController;
 
-import java.io.IOException;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -27,7 +25,7 @@ public class DayScheduleListStageBuilder {
     }
 
     public Stage newDayScheduleList(Date selectedDate) throws Exception{
-        fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.DayScheduleListView));
+        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.DayScheduleListView));
         Parent root = fxmlLoader.load();
         DayScheduleListController dayScheduleListController = fxmlLoader.getController();
         try {
