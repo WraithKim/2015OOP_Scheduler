@@ -17,7 +17,6 @@ import view.stageBuilder.ScheduleEditorStageBuilder;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
@@ -46,16 +45,13 @@ public class DayScheduleListController implements Initializable{
     private Button deleteButton;
 
     private Date curDate;
-    private ArrayList<Schedule> scheduleList;
 
     // 현재 리스트를 일정에 저장함
     // 지금은 창 종료 이벤트가 호출함
     @SuppressWarnings("unchecked")
     public boolean saveList(){
         try {
-            boolean ret = FileManager.getInstance().writeScheduleFile(scheduleList);
-            if(!ret) System.err.println("something wrong during saving current list");
-            return ret;
+            return FileManager.getInstance().writeScheduleFile(scheduleTableView.getItems().subList(0, scheduleTableView.getItems().size()));
         }catch(IOException ioe){
             System.err.println("Something wrong during saving your schedule list");
             return false;
@@ -109,7 +105,6 @@ public class DayScheduleListController implements Initializable{
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
         curDate = SharedPreference.curDate;
         dateLabel.setText(dateFormat.format(curDate));
-        scheduleList = SharedPreference.curScheduleList;
-        scheduleTableView.setItems(FXCollections.observableArrayList(scheduleList));
+        scheduleTableView.setItems(FXCollections.observableArrayList(SharedPreference.curScheduleList));
     }
 }

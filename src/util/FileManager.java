@@ -1,4 +1,5 @@
 package util;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.io.File;
@@ -10,6 +11,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.lang.String;
+import java.util.List;
 
 import schedule.Schedule;
 
@@ -116,7 +118,7 @@ public class FileManager {
 	
 	//interface 부분, write와 read 제공
 
-	public boolean writeScheduleFile(ArrayList<Schedule> scheduleList) throws IOException {
+	public boolean writeScheduleFile(List<Schedule> scheduleList) throws IOException {
 		if(scheduleList.isEmpty())
 			return false;
 		
@@ -127,7 +129,7 @@ public class FileManager {
 		//기존 folder에 있던 내용 삭제
 		if(fileList != null) {
 			for(File file : fileList){
-				if(!file.delete()) return false;
+				Files.delete(file.toPath());
 			}
 		}		
 		//현재 갖고 있는 내용들 쓰기
@@ -140,7 +142,7 @@ public class FileManager {
 		return true;
 	}
 	
-	public boolean writeHomeworkFile(ArrayList<Homework> homeworkList) throws IOException {
+	public boolean writeHomeworkFile(List<Homework> homeworkList) throws IOException {
 		if(homeworkList.isEmpty())
 			return false;
 		
@@ -151,7 +153,7 @@ public class FileManager {
 		//기존 folder에 있던 내용 삭제
 		if(fileList != null) {
 			for(File file : fileList){
-				if(!file.delete()) return false;
+				Files.delete(file.toPath());
 			}
 		}		
 		//현재 갖고 있는 내용들 쓰기
@@ -195,7 +197,7 @@ public class FileManager {
 			   oi.close();
 		   }
 		}
-		   return resultSet;
+		return resultSet;
 	}
 	
 	public boolean writeStudentNumber(String studentNumber) throws IOException {

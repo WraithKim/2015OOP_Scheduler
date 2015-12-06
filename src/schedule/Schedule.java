@@ -77,27 +77,28 @@ public class Schedule implements Serializable{
         this.timeProperty.set(dateForm.format(this.dueDate.getTime()));
     }
 
-    public String getNameProperty() {
-        return nameProperty.get();
-    }
-
     public SimpleStringProperty namePropertyProperty() {
+        if(nameProperty == null){
+            nameProperty = new SimpleStringProperty();
+            nameProperty.set(name);
+        }
         return nameProperty;
     }
 
-    public String getTimeProperty() {
-        return timeProperty.get();
-    }
 
     public SimpleStringProperty timePropertyProperty() {
+        if(timeProperty == null){
+            timeProperty = new SimpleStringProperty();
+            this.timeProperty.set(dateForm.format(this.dueDate.getTime()));
+        }
         return timeProperty;
     }
 
-    public String getPriorityProperty() {
-        return priorityProperty.get();
-    }
-
     public SimpleStringProperty priorityPropertyProperty() {
+        if(priorityProperty == null){
+            priorityProperty = new SimpleStringProperty();
+            priorityProperty.set(priority.toString());
+        }
         return priorityProperty;
     }
 
