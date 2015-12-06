@@ -1,10 +1,15 @@
 package view.stageBuilder;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import schedule.Schedule;
 import util.SharedPreference;
+import view.event.ScheduleEditorController;
+
+import java.util.Date;
 
 /**
  * Created by Donghwan on 12/5/2015.
@@ -20,13 +25,30 @@ public class ScheduleEditorStageBuilder {
         return ourInstance;
     }
 
-    public Stage newScheduleEditor() throws Exception{
+    public Stage newAddingScheduleEditor(Date currentDate, ObservableList<Schedule> originScheduleList) throws Exception{
         fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.ScheduleEditorView));
         Parent root = fxmlLoader.load();
+        ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
+        scheduleEditorController.setAddableView(currentDate, originScheduleList);
+
         Scene scene = new Scene(root);
         Stage scheduleEditorView = new Stage();
         scheduleEditorView.setScene(scene);
-        scheduleEditorView.setTitle("Schedule Editor");
+        scheduleEditorView.setTitle("New Schedule Add");
+        scheduleEditorView.setResizable(false);
+        return scheduleEditorView;
+    }
+
+    public Stage newEditingScheduleEditor(Schedule editingSchedule) throws Exception{
+        fxmlLoader = new FXMLLoader(getClass().getResource(SharedPreference.ScheduleEditorView));
+        Parent root = fxmlLoader.load();
+        ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
+        scheduleEditorController.setEditableView(editingSchedule);
+
+        Scene scene = new Scene(root);
+        Stage scheduleEditorView = new Stage();
+        scheduleEditorView.setScene(scene);
+        scheduleEditorView.setTitle("Existing Schedule Edit");
         scheduleEditorView.setResizable(false);
         return scheduleEditorView;
     }

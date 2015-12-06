@@ -36,6 +36,8 @@ public class SettingController implements Initializable{
         else settingSaveButton.setDisable(true);
     }
 
+    // TODO 디버그 코드 지워야 함
+
     @FXML
     protected void handleSaveAction(ActionEvent event){
         String newStudentID = this.settingSIDInputForm.getText();
@@ -44,11 +46,11 @@ public class SettingController implements Initializable{
             String savedStudentID = newStudentID;
             FileManager.getInstance().writeStudentNumber(savedStudentID);
 
-            System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
+            //System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
         } catch (IOException e) {
-            System.out.println("Save Button Clicked :: IOException");
+            //System.out.println("Save Button Clicked :: IOException");
             String savedStudentID = this.settingSIDInputForm.getText();
-            System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
+            //System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
             try {
                 FileManager.getInstance().writeStudentNumber(savedStudentID);
             }catch(IOException e2){
@@ -61,7 +63,7 @@ public class SettingController implements Initializable{
     public void initialize(URL location, ResourceBundle resources){
         try {
             String preStudentID = FileManager.getInstance().readStudentNumber();
-            System.out.println("Loaded Content : " + preStudentID);
+            //System.out.println("Loaded Content : " + preStudentID);
             settingSIDInputForm.setText(preStudentID);
         } catch (IOException | ClassNotFoundException e){
             System.err.println("can't find StudentID");

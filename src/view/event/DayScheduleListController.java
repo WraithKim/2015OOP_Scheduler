@@ -73,10 +73,7 @@ public class DayScheduleListController implements Initializable{
     @FXML
     protected void handleAddButtonAction(ActionEvent event) throws Exception{
         addButton.setDisable(true);
-        SharedPreference.editMode = false;
-        SharedPreference.editingDate = currentDate;
-        SharedPreference.editingScheduleList = scheduleTableView.getItems();
-        Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
+        Stage stage = ScheduleEditorStageBuilder.getInstance().newAddingScheduleEditor(currentDate, scheduleTableView.getItems());
         stage.show();
         addButton.setDisable(false);
     }
@@ -86,11 +83,7 @@ public class DayScheduleListController implements Initializable{
         editButton.setDisable(true);
         Schedule focusedItem;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
-            SharedPreference.editMode = true;
-            SharedPreference.editingDate = currentDate;
-            SharedPreference.editingSchedule = focusedItem;
-            SharedPreference.editingScheduleList = scheduleTableView.getItems();
-            Stage stage = ScheduleEditorStageBuilder.getInstance().newScheduleEditor();
+            Stage stage = ScheduleEditorStageBuilder.getInstance().newEditingScheduleEditor(focusedItem);
             stage.show();
         }
         editButton.setDisable(false);

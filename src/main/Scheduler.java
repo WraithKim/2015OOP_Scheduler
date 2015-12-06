@@ -39,7 +39,7 @@ public class Scheduler extends Application{
         FileManager fileManager = FileManager.getInstance();
         for(int i = 0; i < 8; i++){
             try{
-                fileManager.readScheduleFile(cur).forEach(alarmQueue::offer);
+                fileManager.readScheduleFile(cur).forEach(alarmQueue::add);
             }catch(IOException ioe) {
                 // nothing to do
             }catch(ClassNotFoundException cnfe){

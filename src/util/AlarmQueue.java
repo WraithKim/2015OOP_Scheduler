@@ -24,6 +24,8 @@ public class AlarmQueue extends PriorityBlockingQueue<Schedule>{
         });
     }
 
+    // 동기화 큐의 세가지 추가 함수를 오버라이딩 했지만, 우선순위 동기화 큐의 API 문서에 의하면 add를 사용하기를 강조함.
+
     @Override
     public boolean add(Schedule schedule) {
         return schedule.getAlarmTime() > System.currentTimeMillis() && super.add(schedule);

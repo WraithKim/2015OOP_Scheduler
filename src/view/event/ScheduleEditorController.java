@@ -22,8 +22,8 @@ import java.util.*;
 public class ScheduleEditorController implements Initializable{
 
     private boolean editMode;
-    private Date curDate;
-    private Schedule schedule;
+    private Date currentDate;
+    private Schedule editingSchedule;
     private ObservableList<Schedule> originDaySchedule;
 
     @FXML
@@ -54,75 +54,79 @@ public class ScheduleEditorController implements Initializable{
     @FXML
     private Button scheduleSaveButton;
 
+    public void setEditableView(Schedule editingSchedule) {
+        this.editMode = true;
+        this.editingSchedule = editingSchedule;
 
+        titleTextField.setDisable(true);
+        titleTextField.setText(editingSchedule.getName());
+        switch(editingSchedule.getPriority()){
+            case NONE: priorityNone.setSelected(true); break;
+            case NOTICED: priorityNoticed.setSelected(true); break;
+            case URGENT: priorityUrgent.setSelected(true); break;
+        }
+        hourComboBox.getSelectionModel().select(editingSchedule.getDueDate().get(Calendar.HOUR_OF_DAY));
+        minuteComboBox.getSelectionModel().select(editingSchedule.getDueDate().get(Calendar.MINUTE));
+        descriptionTextArea.setText(editingSchedule.getDescription());
+    }
+
+    public void setAddableView(Date currentDate, ObservableList<Schedule> originDaySchedule){
+        this.editMode = false;
+        this.currentDate = currentDate;
+        this.originDaySchedule = originDaySchedule;
+    }
 
     @FXML
     protected void handleSaveButtonAction(ActionEvent event){
         if(titleTextField.getLength() == 0) return;
-
         scheduleSaveButton.setDisable(true);
-        if(!editMode){
-            Priority priority = Priority.NONE;
-            if(priorityUrgent.isSelected()) priority = Priority.URGENT;
-            else if(priorityNoticed.isSelected()) priority = Priority.NOTICED;
-            Calendar dueDate = new GregorianCalendar();
-            dueDate.setTime(curDate);
-            dueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
-            dueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
-            schedule = new Schedule(titleTextField.getText(), dueDate, priority);
-            schedule.setDescription(descriptionTextArea.getText());
-            //System.out.println("new Schedule alarm time: "+schedule.getAlarmTime());
-            originDaySchedule.add(schedule);
-            AlarmQueue.getInstance().offer(schedule);
-            editMode = true;
-        }else{
-            AlarmQueue.getInstance().remove(schedule);
-            Priority priority = Priority.NONE;
-            if(priorityUrgent.isSelected()) priority = Priority.URGENT;
-            else if(priorityNoticed.isSelected()) priority = Priority.NOTICED;
-            schedule.setPriority(priority);
-            Calendar newDueDate = schedule.getDueDate();
+        AlarmQueue alarmQueue = AlarmQueue.getInstance();
+        Priority priority = Priority.NONE;
+        if(priorityUrgent.isSelected()) priority = Priority.URGENT;
+        else if(priorityNoticed.isSelected()) priority = Priority.NOTICED;
+
+        if(editMode){
+            alarmQueue.remove(editingSchedule);
+            editingSchedule.setPriority(priority);
+            Calendar newDueDate = editingSchedule.getDueDate();
             newDueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
             newDueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
-            schedule.setDueDate(newDueDate);
-            schedule.setDescription(descriptionTextArea.getText());
-            //System.out.println("new Schedule alarm time: "+schedule.getAlarmTime());
-            AlarmQueue.getInstance().offer(schedule);
+            editingSchedule.setDueDate(newDueDate);
+            editingSchedule.setDescription(descriptionTextArea.getText());
+            alarmQueue.remove(editingSchedule);
+            alarmQueue.add(editingSchedule);
+            //System.out.println("new Schedule alarm time: "+editingSchedule.getAlarmTime());
+
+        }else{
+            Calendar dueDate = new GregorianCalendar();
+            dueDate.setTime(currentDate);
+            dueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
+            dueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
+            editingSchedule = new Schedule(titleTextField.getText(), dueDate, priority);
+            editingSchedule.setDescription(descriptionTextArea.getText());
+            //System.out.println("new Schedule alarm time: "+editingSchedule.getAlarmTime());
+            originDaySchedule.add(editingSchedule);
+
+            editMode = true;
         }
+        alarmQueue.add(editingSchedule);
         scheduleSaveButton.setDisable(false);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        LinkedList<Integer> hourList = new LinkedList<>();
+        ArrayList<Integer> hourList = new ArrayList<>(24);
         for(int i = 0; i < 24; i++){
             hourList.add(i);
         }
-        hourComboBox.setItems(FXCollections.observableList(hourList));
+        hourComboBox.setItems(FXCollections.observableArrayList(hourList));
         hourComboBox.getSelectionModel().select(0);
-        LinkedList<Integer> minuteList = new LinkedList<>();
+        ArrayList<Integer> minuteList = new ArrayList<>(60);
         for(int i = 0; i < 60; i++){
             minuteList.add(i);
         }
         minuteComboBox.setItems((FXCollections.observableArrayList(minuteList)));
         minuteComboBox.getSelectionModel().select(0);
-
-        curDate = SharedPreference.editingDate;
-        editMode = SharedPreference.editMode;
-        schedule = SharedPreference.editingSchedule;
-        originDaySchedule = SharedPreference.editingScheduleList;
-        if(editMode) {
-            titleTextField.setEditable(false);
-            titleTextField.setText(schedule.getName());
-            switch(schedule.getPriority()){
-                case NONE: priorityNone.setSelected(true); break;
-                case NOTICED: priorityNoticed.setSelected(true); break;
-                case URGENT: priorityUrgent.setSelected(true); break;
-            }
-            hourComboBox.getSelectionModel().select(schedule.getDueDate().get(Calendar.HOUR_OF_DAY));
-            minuteComboBox.getSelectionModel().select(schedule.getDueDate().get(Calendar.MINUTE));
-            descriptionTextArea.setText(schedule.getDescription());
-        }
     }
 
 }
