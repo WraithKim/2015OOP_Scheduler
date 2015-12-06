@@ -186,6 +186,7 @@ public class FileManager {
 		
 		File[] fileList = readHomeworkFileList();
 		
+		if(fileList != null) {
 		   for(File file : fileList) {
 	           FileInputStream fin = new FileInputStream(file.getPath());
 	           ObjectInput oi = new ObjectInputStream(fin); 
@@ -193,7 +194,7 @@ public class FileManager {
 	           resultSet.add(h);
 			   oi.close();
 		   }
-		   		   
+		}
 		   return resultSet;
 	}
 	
