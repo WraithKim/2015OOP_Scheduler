@@ -72,7 +72,7 @@ public class ScheduleEditorController implements Initializable{
             schedule = new Schedule(titleTextField.getText(), dueDate, priority);
             //System.out.println("new Schedule alarm time: "+schedule.getAlarmTime());
             originDaySchedule.add(schedule);
-            if(schedule.getAlarmTime() > System.currentTimeMillis()) AlarmQueue.getInstance().put(schedule);
+            AlarmQueue.getInstance().offer(schedule);
             editMode = true;
         }else{
             AlarmQueue.getInstance().remove(schedule);
@@ -85,7 +85,7 @@ public class ScheduleEditorController implements Initializable{
             newDueDate.set(Calendar.MINUTE, minuteComboBox.getVisibleRowCount());
             schedule.setDescription(descriptionTextArea.getText());
             //System.out.println("new Schedule alarm time: "+schedule.getAlarmTime());
-            if(schedule.getAlarmTime() > System.currentTimeMillis()) AlarmQueue.getInstance().put(schedule);
+            AlarmQueue.getInstance().offer(schedule);
         }
         scheduleSaveButton.setDisable(false);
     }

@@ -20,7 +20,7 @@ import java.util.GregorianCalendar;
 /**
  * Created by Donghwan on 11/29/2015.
  *
- * 스케쥴러 프로그램
+ * 스케쥴러 프로그램을 실행하는 클래스입니다.
  */
 public class Scheduler extends Application{
 
