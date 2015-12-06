@@ -53,7 +53,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
                 //System.out.println("system time: " + System.currentTimeMillis());
 
                 if(!(alarmQueue.isEmpty())){
-                    System.out.println("current top: "+ alarmQueue.peek().getAlarmTime());
+                    //System.out.println("current top: "+ alarmQueue.peek().getAlarmTime());
                     if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()) {
                         // 알람이 울리면 해야 될 일 정의
                         Schedule top = alarmQueue.poll();
