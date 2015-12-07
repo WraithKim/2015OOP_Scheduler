@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.controlsfx.control.Notifications;
+import org.controlsfx.dialog.ExceptionDialog;
 import schedule.Schedule;
 
 import java.io.File;
@@ -75,10 +76,11 @@ public class AlarmThread extends Thread{
                     }catch(IOException ioe){
                         // nothing to do
                     }catch(ClassNotFoundException cnfe){
-                        System.err.println("Data has corrupted in Data directory\n" +
-                                "Maybe your Scheduler version doesn't match with Schedule files.");
-                        System.exit(1);
-                        return;
+                        ExceptionDialog exceptionDialog = new ExceptionDialog(cnfe);
+                        exceptionDialog.setOnCloseRequest(event->{
+                            System.exit(1);
+                        });
+                        exceptionDialog.show();
                     }
                 }
                 Thread.sleep(1000);

@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.NotificationPane;
+import org.controlsfx.dialog.ExceptionDialog;
 import util.Constant;
 import view.event.DayScheduleListController;
 
@@ -42,8 +43,8 @@ public class DayScheduleListStageBuilder {
         try {
             dayScheduleListController.loadScheduleList(selectedDate);
         }catch(ClassNotFoundException cnfe){
-            System.err.println("Data has corrupted in Data directory\n" +
-                    "Maybe your Scheduler version doesn't match with Schedule files.");
+            ExceptionDialog exceptionDialog = new ExceptionDialog(cnfe);
+            exceptionDialog.show();
             return null;
         }
         Scene scene = new Scene(root);

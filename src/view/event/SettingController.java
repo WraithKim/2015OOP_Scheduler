@@ -7,6 +7,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.NotificationPane;
+import org.controlsfx.dialog.ExceptionDialog;
 import util.FileManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -67,7 +68,8 @@ public class SettingController implements Initializable{
             String preStudentID = FileManager.getInstance().readStudentNumber();
             settingSIDInputForm.setText(preStudentID);
         } catch (IOException | ClassNotFoundException e){
-            System.err.println("can't find StudentID");
+            ExceptionDialog exceptionDialog = new ExceptionDialog(e);
+            exceptionDialog.show();
         }
     }
 }

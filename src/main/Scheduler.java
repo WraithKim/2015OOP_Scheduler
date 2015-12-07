@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.NotificationPane;
+import org.controlsfx.dialog.ExceptionDialog;
 import util.AlarmThread;
 import util.AlarmQueue;
 import util.Constant;
@@ -50,10 +51,11 @@ public class Scheduler extends Application{
             }catch(IOException ioe) {
                 // nothing to do
             }catch(ClassNotFoundException cnfe){
-                System.err.println("Data has corrupted in Data directory\n" +
-                        "Maybe your Scheduler version doesn't match with Schedule files.");
-                System.exit(1);
-                return;
+                ExceptionDialog exceptionDialog = new ExceptionDialog(cnfe);
+                exceptionDialog.setOnCloseRequest(event->{
+                    System.exit(1);
+                });
+                exceptionDialog.show();
             }
             cur.add(Calendar.DATE, 1);
         }

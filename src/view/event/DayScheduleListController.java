@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.controlsfx.control.NotificationPane;
+import org.controlsfx.dialog.ExceptionDialog;
 import schedule.Schedule;
 import util.AlarmQueue;
 import util.FileManager;
@@ -58,7 +59,8 @@ public class DayScheduleListController implements Initializable{
         try {
             return FileManager.getInstance().writeScheduleFile(scheduleTableView.getItems().subList(0, scheduleTableView.getItems().size()));
         }catch(IOException ioe){
-            System.err.println("Something wrong during saving your schedule list");
+            ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
+            exceptionDialog.show();
             return false;
         }
     }
@@ -74,7 +76,8 @@ public class DayScheduleListController implements Initializable{
                 scheduleTableView.getItems().add(schedule);
             }
         }catch(IOException ioe){
-            System.err.println("Couldn't load schedule files");
+            ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
+            exceptionDialog.show();
         }
     }
 
