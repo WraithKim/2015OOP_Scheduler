@@ -1,5 +1,6 @@
 package schedule;
 
+import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.controlsfx.control.Notifications;
@@ -59,10 +60,11 @@ public class AlarmThread extends Thread{
                     if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()) {
                         // TODO 알람이 울리면 해야 될 일 정의
                         Schedule top = alarmQueue.poll();
-                        System.out.println("alarm ring!!!");
-                        Notifications.create().title(top.getName()).text("Priority: "+top.getPriority().toString()+"\n"
-                        + "Description: "+top.getDescription().substring(0, top.getDescription().length() > 7 ? 7 : top.getDescription().length()))
-                                .show();
+                        Platform.runLater(()->
+                            Notifications.create().title(top.getName()).text("Priority: "+top.getPriority().toString()+"\n"
+                                    + "Description: "+top.getDescription().substring(0, top.getDescription().length() > 7 ? 7 : top.getDescription().length()))
+                                    .show()
+                        );
                         /*
                         System.out.println("alarm ring!!!");
                         System.out.println(top.getName());

@@ -32,6 +32,9 @@ public class Scheduler extends Application{
     }
 
     private void initAlarmThread(){
+        AlarmThread alarmThread = AlarmThread.getInstance();
+        alarmThread.start();
+
         // 현재 시간에서 특정 기간까지의 일정을 불러온다.
         // 불러오는 기간이 바뀌면 AlarmQueue의 값도 바뀌어야 함
         Calendar cur = GregorianCalendar.getInstance();
@@ -50,8 +53,6 @@ public class Scheduler extends Application{
             }
             cur.add(Calendar.DATE, 1);
         }
-
-        AlarmThread.getInstance().start();
     }
 
     private void initStudentId() throws Exception{
@@ -67,13 +68,14 @@ public class Scheduler extends Application{
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        // 달력 뷰를 생성
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.CalendarView));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+
         // 스케쥴러 관리 프로그램을 생성하고
         initStudentId();
         initAlarmThread();
-
-        // 달력 뷰를 생성
-        Parent root = FXMLLoader.load(getClass().getResource(Constant.CalendarView));
-        Scene scene = new Scene(root);
 
         primaryStage.setTitle("Calendar");
         primaryStage.setScene(scene);
