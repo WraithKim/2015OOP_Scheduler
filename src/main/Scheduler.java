@@ -48,7 +48,7 @@ public class Scheduler extends Application{
                 System.exit(1);
                 return;
             }
-            cur.add(Calendar.DAY_OF_MONTH, 1);
+            cur.add(Calendar.DATE, 1);
         }
 
         AlarmThread.getInstance().start();

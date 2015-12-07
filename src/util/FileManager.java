@@ -68,7 +68,7 @@ public class FileManager {
 	//파일 읽기 관련
 
 	private File[] readFileList(Calendar day) {
-		String path = makePath(String.valueOf(day.get(Calendar.YEAR)), String.valueOf(day.get(Calendar.MONTH)+1), String.valueOf(Calendar.DATE));
+		String path = makePath(String.valueOf(day.get(Calendar.YEAR)), String.valueOf(day.get(Calendar.MONTH)+1), String.valueOf(day.get(Calendar.DATE)));
 		
 		File file = new File(path);
 		return file.listFiles();
@@ -129,6 +129,7 @@ public class FileManager {
 	//파일 읽기 관련
 
 	public ArrayList<Schedule> readScheduleFile(Calendar day) throws IOException, ClassNotFoundException {
+
 		ArrayList<Schedule> resultSet = new ArrayList<>();
 
 		File[] fileList = readFileList(day);

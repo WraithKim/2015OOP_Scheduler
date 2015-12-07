@@ -62,10 +62,11 @@ public class DayScheduleListController implements Initializable{
         Calendar dateToLoad = new GregorianCalendar();
         dateToLoad.setTime(this.currentDate);
         try {
-            scheduleTableView.setItems(FXCollections.observableArrayList(
-                    FileManager.getInstance().readScheduleFile(dateToLoad)));
+            for (Schedule schedule : FileManager.getInstance().readScheduleFile(dateToLoad)){
+                scheduleTableView.getItems().add(schedule);
+            }
         }catch(IOException ioe){
-            scheduleTableView.setItems(FXCollections.observableArrayList(new ArrayList<>()));
+            System.err.println("Couldn't load schedule files");
         }
     }
 
@@ -104,5 +105,6 @@ public class DayScheduleListController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         // GUI 창을 띄우기 직전에 해야할 작업(일종의 GUI 창 생성자)
         scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        scheduleTableView.setItems(FXCollections.observableArrayList(new ArrayList<>()));
     }
 }

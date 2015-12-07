@@ -34,7 +34,7 @@ public class CalendarController {
         if((calendarView.getSelectedDate()) != null){
             // 창 생성
             Stage stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList(calendarView.getSelectedDate());
-            stage.show();
+            if(stage != null) stage.show();
         }
         detailButton.setDisable(false);
     }

@@ -29,6 +29,8 @@ public class DayScheduleListStageBuilder {
         try {
             dayScheduleListController.setDate(selectedDate);
         }catch(ClassNotFoundException cnfe){
+            System.err.println("Data has corrupted in Data directory\n" +
+                    "Maybe your Scheduler version doesn't match with Schedule files.");
             return null;
         }
         Scene scene = new Scene(root);
