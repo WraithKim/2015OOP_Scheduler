@@ -1,7 +1,7 @@
 package schedule;
 
 /**
- * Created by CAUCSE on 2015-12-03.
+ * Created by Donghwan on 2015-12-03.
  *
  * 스케쥴의 우선순위
  */

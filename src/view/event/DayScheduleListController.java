@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * Created by CAUCSE on 2015-12-03.
+ * Created by Donghwan on 2015-12-03.
  *
  * 하루 일정 창에 달린 이벤트 리스너
  */

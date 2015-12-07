@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * Created by CAUCSE on 2015-12-03.
+ * Created by Donghwan on 2015-12-03.
  *
  * 일정 편집 창에 달린 이벤트 리스너
  */
