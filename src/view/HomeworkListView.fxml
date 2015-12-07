@@ -37,7 +37,7 @@
             </TableColumn>
         </columns>
         <sortOrder>
-            <fx:reference source="timeColumn"/>
+            <fx:reference source="dateColumn"/>
         </sortOrder>
     </TableView>
     <Button fx:id="syncButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleSyncButtonAction"
