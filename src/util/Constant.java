@@ -7,6 +7,11 @@ import java.util.Hashtable;
  */
 public interface Constant {
     /**
+     * OS
+     */
+    String OS = System.getProperty("os.name").toLowerCase();
+
+    /**
      * 알람큐가 불러오는 기간
      */
     long loadTermForQueue = 604800000L;
