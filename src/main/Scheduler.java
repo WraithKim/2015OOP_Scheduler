@@ -32,12 +32,12 @@ public class Scheduler extends Application{
     }
 
     private void initAlarmThread(){
-        // 현재 시간에서 8일 후까지의 일정을 불러온다.
-        // 알람큐에 등록
+        // 현재 시간에서 특정 기간까지의 일정을 불러온다.
+        // 불러오는 기간이 바뀌면 AlarmQueue의 값도 바뀌어야 함
         Calendar cur = GregorianCalendar.getInstance();
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
         FileManager fileManager = FileManager.getInstance();
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < Constant.loadTerm; i++){
             try{
                 fileManager.readScheduleFile(cur).forEach(alarmQueue::add);
             }catch(IOException ioe) {

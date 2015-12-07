@@ -55,7 +55,7 @@ public class DayScheduleListController implements Initializable{
         }
     }
 
-    public void setDate(Date currentDate) throws ClassNotFoundException {
+    public void loadScheduleList(Date currentDate) throws ClassNotFoundException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
         this.currentDate = currentDate;
         dateLabel.setText(dateFormat.format(this.currentDate));

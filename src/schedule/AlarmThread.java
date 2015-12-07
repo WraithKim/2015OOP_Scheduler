@@ -2,6 +2,7 @@ package schedule;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import org.controlsfx.control.Notifications;
 import util.AlarmQueue;
 import util.FileManager;
 
@@ -17,6 +18,7 @@ import java.util.GregorianCalendar;
  */
 public class AlarmThread extends Thread{
     private final MediaPlayer alarmSound;
+    private Calendar nextDay;
 
     private static final AlarmThread ourInstance = new AlarmThread();
 
@@ -35,10 +37,11 @@ public class AlarmThread extends Thread{
 
     @Override
     public void run() {
+        // TODO 디버그 코드 제거
         // 퍼포먼스를 위해 함수 호출을 줄였습니다.
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
         FileManager fileManager = FileManager.getInstance();
-        Calendar nextDay = GregorianCalendar.getInstance();
+        nextDay = GregorianCalendar.getInstance();
         nextDay.set(Calendar.HOUR_OF_DAY, 0);
         nextDay.set(Calendar.MINUTE, 0);
         nextDay.add(Calendar.DAY_OF_MONTH, 1);
@@ -55,8 +58,12 @@ public class AlarmThread extends Thread{
                     //System.out.println("current top: "+ alarmQueue.peek().getAlarmTime());
                     if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()) {
                         // TODO 알람이 울리면 해야 될 일 정의
-                        /*
                         Schedule top = alarmQueue.poll();
+                        System.out.println("alarm ring!!!");
+                        Notifications.create().title(top.getName()).text("Priority: "+top.getPriority().toString()+"\n"
+                        + "Description: "+top.getDescription().substring(0, top.getDescription().length() > 7 ? 7 : top.getDescription().length()))
+                                .show();
+                        /*
                         System.out.println("alarm ring!!!");
                         System.out.println(top.getName());
                         System.out.println(top.getAlarmTime());
@@ -89,5 +96,9 @@ public class AlarmThread extends Thread{
         }catch(InterruptedException ie){
             System.err.println("Thread suddenly interrupted");
         }
+    }
+
+    public Calendar getNextDay() {
+        return nextDay;
     }
 }

@@ -5,6 +5,12 @@ package util;
  */
 public interface Constant {
     /**
+     * 알람큐가 불러오는 기간
+     */
+    long loadTermForQueue = 604800000L;
+    long loadTerm = (loadTermForQueue / 1000 / 86400) + 1;
+
+    /**
      * 빈 문자열입니다.
      */
     String EMPTY_STRING = "";

@@ -56,7 +56,7 @@ public class ScheduleEditorController implements Initializable{
     public void setEditableView(Schedule editingSchedule) {
         this.editMode = true;
         this.editingSchedule = editingSchedule;
-
+        AlarmQueue.getInstance().remove(editingSchedule);
         titleTextField.setDisable(true);
         titleTextField.setText(editingSchedule.getName());
         switch(editingSchedule.getPriority()){
@@ -92,8 +92,6 @@ public class ScheduleEditorController implements Initializable{
             newDueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             editingSchedule.setDueDate(newDueDate);
             editingSchedule.setDescription(descriptionTextArea.getText());
-            alarmQueue.remove(editingSchedule);
-            alarmQueue.add(editingSchedule);
             //System.out.println("new Schedule alarm time: "+editingSchedule.getAlarmTime());
 
         }else{

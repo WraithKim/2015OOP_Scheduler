@@ -27,7 +27,7 @@ public class DayScheduleListStageBuilder {
         Parent root = fxmlLoader.load();
         DayScheduleListController dayScheduleListController = fxmlLoader.getController();
         try {
-            dayScheduleListController.setDate(selectedDate);
+            dayScheduleListController.loadScheduleList(selectedDate);
         }catch(ClassNotFoundException cnfe){
             System.err.println("Data has corrupted in Data directory\n" +
                     "Maybe your Scheduler version doesn't match with Schedule files.");

@@ -73,6 +73,30 @@ public class Schedule implements Serializable{
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Schedule schedule = (Schedule) o;
+
+        if (!getName().equals(schedule.getName())) return false;
+        if (getDescription() != null ? !getDescription().equals(schedule.getDescription()) : schedule.getDescription() != null)
+            return false;
+        if (getPriority() != schedule.getPriority()) return false;
+        return !(getDueDate() != null ? !getDueDate().equals(schedule.getDueDate()) : schedule.getDueDate() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getName().hashCode();
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getPriority() != null ? getPriority().hashCode() : 0);
+        result = 31 * result + (getDueDate() != null ? getDueDate().hashCode() : 0);
+        return result;
+    }
+
     public void setPriority(Priority priority) {
         this.priority = priority;
         if(priorityProperty == null) priorityProperty = new SimpleStringProperty();
