@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import util.FileManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,7 +57,8 @@ public class SettingController implements Initializable{
                 System.err.println("Something wrong during save StudentID, Please try save again");
             }
         }
-        ((Stage)settingSaveButton.getScene().getWindow()).close();
+
+        ((Stage)settingSaveButton.getScene().getWindow()).getOnCloseRequest().handle(new WindowEvent(settingSaveButton.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     @Override
