@@ -1,6 +1,6 @@
 package util;
 
-import schedule.AlarmThread;
+import schedule.Homework;
 import schedule.Schedule;
 
 import java.util.concurrent.PriorityBlockingQueue;

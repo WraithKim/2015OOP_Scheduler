@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import network.PortalHttpRequest;
+import schedule.Homework;
 import util.*;
 
 import java.io.IOException;

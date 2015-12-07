@@ -6,7 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import schedule.AlarmThread;
+import util.AlarmThread;
 import util.AlarmQueue;
 import util.Constant;
 import util.FileManager;

@@ -1,11 +1,10 @@
-package schedule;
+package util;
 
 import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import org.controlsfx.control.Notifications;
-import util.AlarmQueue;
-import util.FileManager;
+import schedule.Schedule;
 
 import java.io.File;
 import java.io.IOException;

@@ -32,7 +32,10 @@ public class Schedule implements Serializable{
     private final Calendar dueDate;
 
 
-    public Schedule(String name, Calendar dueDate, Priority priority){
+    public Schedule(String name, Calendar dueDate, Priority priority) throws IllegalArgumentException{
+        if(name == null || name.isEmpty() ||
+                dueDate == null ||
+                priority == null) throw new IllegalArgumentException();
         this.dueDate = new GregorianCalendar();
         this.name = name;
         nameProperty = new SimpleStringProperty();
@@ -97,13 +100,15 @@ public class Schedule implements Serializable{
         return result;
     }
 
-    public void setPriority(Priority priority) {
+    public void setPriority(Priority priority) throws IllegalArgumentException{
+        if(priority == null) throw new IllegalArgumentException();
         this.priority = priority;
         if(priorityProperty == null) priorityProperty = new SimpleStringProperty();
         priorityProperty.set(priority.toString());
     }
 
-    public void setDueDate(Calendar dueDate) {
+    public void setDueDate(Calendar dueDate) throws IllegalArgumentException{
+        if(dueDate == null) throw new IllegalArgumentException();
         this.dueDate.setTime(dueDate.getTime());
         if(timeProperty == null) timeProperty = new SimpleStringProperty();
         this.timeProperty.set(timeForm.format(this.dueDate.getTime()));

@@ -1,8 +1,6 @@
-package util;
+package schedule;
 
 import javafx.beans.property.SimpleStringProperty;
-import schedule.Priority;
-import schedule.Schedule;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
