@@ -43,10 +43,10 @@ public class AlarmThread extends Thread implements AutoCloseable{
         nextDay.set(Calendar.HOUR_OF_DAY, 0);
         nextDay.set(Calendar.MINUTE, 0);
         nextDay.add(Calendar.DAY_OF_MONTH, 1);
-        /*
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd");
         System.out.println("next day: "+ dateFormat.format(nextDay.getTime()));
-        */
+
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
         try {
             while (!this.isInterrupted()) {
@@ -68,6 +68,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
                 }
                 if(nextDay.getTimeInMillis() <= System.currentTimeMillis()){
                     // 다음날로 넘어갔을 때, 해야할 일
+                    //System.out.println("next day update: "+System.currentTimeMillis());
                     nextDay.add(Calendar.DAY_OF_MONTH, 1);
                     Calendar oneWeekLater = new GregorianCalendar(nextDay.get(Calendar.YEAR), nextDay.get(Calendar.MONTH), nextDay.get(Calendar.DAY_OF_MONTH));
                     oneWeekLater.add(Calendar.DAY_OF_MONTH, 7);
@@ -80,6 +81,7 @@ public class AlarmThread extends Thread implements AutoCloseable{
                         System.exit(1);
                         return;
                     }
+                    //System.out.println("updated: "+System.currentTimeMillis());
                     //System.out.println("next day: "+ dateFormat.format(nextDay.getTime()));
                 }
                 Thread.sleep(1000);
