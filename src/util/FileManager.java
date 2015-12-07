@@ -66,6 +66,16 @@ public class FileManager {
 		return true;
 	}
 
+	private String makeSecurity(String str) {
+		char[] result = str.toCharArray();
+
+		for(int i = 0 ; i < result.length; i++) {
+			result[i] = (char)((int)result[i] ^ 1);
+		}
+
+		return String.valueOf(result);
+	}
+
 	//파일 읽기 관련
 
 	private File[] readFileList(Calendar day) {
@@ -113,7 +123,7 @@ public class FileManager {
 		oo.writeObject(homework);
 		oo.flush();
 		oo.close();
-	} 
+	}
 	
 	private void writeEachFile(String studentNumber) throws IOException {	
 		String path = makePath(STUDENT_NUMBER);
@@ -173,7 +183,7 @@ public class FileManager {
 		String studentNumber = (String)oi.readObject();
 		oi.close();
 
-		return studentNumber;
+		return makeSecurity(studentNumber);
 	}
 
 	//파일 쓰기 관련
@@ -221,6 +231,8 @@ public class FileManager {
 	}
 	
 	public void writeStudentNumber(String studentNumber) throws IOException {
+		studentNumber = makeSecurity(studentNumber);
+		
 		writeEachFile(studentNumber);
 	}
 }
