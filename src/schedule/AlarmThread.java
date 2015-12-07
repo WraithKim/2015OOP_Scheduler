@@ -58,7 +58,6 @@ public class AlarmThread extends Thread{
                 if(!(alarmQueue.isEmpty())){
                     //System.out.println("current top: "+ alarmQueue.peek().getAlarmTime());
                     if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()) {
-                        // TODO 알람이 울리면 해야 될 일 정의
                         Schedule top = alarmQueue.poll();
                         Platform.runLater(()->
                             Notifications.create().title(top.getName()).text("Priority: "+top.getPriority().toString()+"\n"

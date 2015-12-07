@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import network.PortalHttpRequest;
-import schedule.Schedule;
 import util.*;
 
 import java.io.IOException;
@@ -53,7 +52,7 @@ public class HomeworkListController implements Initializable{
             System.err.println("Data has corrupted in Data directory\n" +
                     "Maybe your Scheduler version doesn't match with Schedule files.");
         }
-        if(homeworkTableView.getItems() != null) {
+        if(homeworkTableView.getItems() != null) { //기존에 테이블에 저장된 리스트를 알람 큐에서 지우기
             //System.out.println("Sync :: lectureIDList : " + lectureIDXmlInfo);
             //System.out.println("Before Homework List Length : " + Constant.homeworkList.size());
             //System.out.println("Before AlarmQueue Length : " + AlarmQueue.getInstance().size());
@@ -63,32 +62,31 @@ public class HomeworkListController implements Initializable{
         //System.out.println("After Homework List Length : " + Constant.homeworkList.size());
         //System.out.println("After AlarmQueue Length : " + AlarmQueue.getInstance().size());
 
-        try {
+        try { //포탈에서 과제 정보를 받아오기
             String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(savedStudentID);
             Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
             ArrayList<Homework> newHomeworkList = new ArrayList<>();
             for (Integer lectureID : lectureIDSet) {
                 String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(savedStudentID, lectureID);
                 //System.out.println("Sync :: homeworkXmlInfo : " + homeworkXmlInfo);
-                List<Homework> entityHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
+                List<Homework> remoteHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
 
-                for (Homework homework : entityHomeworkList) {
-                    newHomeworkList.add(homework);
+                for (Homework homework : remoteHomeworkList) {
                     AlarmQueue.getInstance().add(homework);
                 }
             }
             homeworkTableView.setItems(FXCollections.observableArrayList(newHomeworkList));
-            try{
+            try{ //포탈에서 받아온 과제를 저장하기
                 fileManager.writeHomeworkFile(newHomeworkList);
             }catch (IOException ioe){
                 System.err.println("Couldn't save your homework, Please try again after deleting existing homework list");
                 return false;
             }
             return true;
-        }catch(IOException e) {
+        }catch(IOException e) { // 포탈에서 과제를 받는 데 발생한 예외
             System.err.println("Couldn't get homework list. Please check you are connected to internet");
             System.out.println("Try to load homework list in local storage");
-            try {
+            try { // 로컬에 저장된 파일을 찾아서 리스트를 만듬
                 ArrayList<Homework> localHomeworkList = new ArrayList<>();
                 for (Homework homework : fileManager.readHomeworkFile()) {
                     localHomeworkList.add(homework);
@@ -96,16 +94,15 @@ public class HomeworkListController implements Initializable{
                 }
                 homeworkTableView.setItems(FXCollections.observableArrayList(localHomeworkList));
                 return true;
-            }catch(IOException ioe){
+            }catch(IOException ioe){ // 로컬에도 저장된 리스트가 없을 때
                 System.err.println("Could't get homework list saved in local storage");
                 return false;
-            }catch(ClassNotFoundException cnfe){
+            }catch(ClassNotFoundException cnfe){ // 직렬화 문제
                 System.err.println("Data has corrupted in Data directory\n" +
                         "Maybe your Scheduler version doesn't match with Schedule files.");
                 return false;
             }
-        }
-        finally{
+        } finally{
             //System.out.println("Finally Homework List Length : " + Constant.homeworkList.size());
             //System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
         }
