@@ -1,5 +1,7 @@
 package util;
 
+import java.util.Hashtable;
+
 /**
  * 프로젝트 진행 시 공통적으로 필요한 상수들을 정의해 놓은 클래스입니다. (정적 클래스)
  */

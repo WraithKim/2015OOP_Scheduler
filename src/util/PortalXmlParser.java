@@ -55,7 +55,7 @@ public class PortalXmlParser {
                 if (detailPlanList.item(1).getAttributes().item(0).getTextContent().equals("과제방")) {
                     String homeworkEndPeriod = detailPlanList.item(2).getAttributes().item(0).getTextContent();
                     homeworkEndPeriod = homeworkEndPeriod.substring(homeworkEndPeriod.lastIndexOf(" ") + 1);
-                    //String lectureName = detailPlanList.item(3).getAttributes().item(0).getTextContent();
+                    String lectureName = detailPlanList.item(3).getAttributes().item(0).getTextContent();
                     int lectureNumber = Integer.parseInt(detailPlanList.item(4).getAttributes().item(0).getTextContent());
                     //String homeworkName = detailPlanList.item(5).getAttributes().item(0).getTextContent();
 
@@ -64,6 +64,8 @@ public class PortalXmlParser {
                     homeworkEndCalendar.setTime(dateFormat.parse(homeworkEndPeriod));
 
                     homeworkLectureIDSet.add(lectureNumber);
+
+                    Homework.putHomeworkLectureName(lectureNumber, lectureName);
 
                     //TODO 디버그 코드 지워야 함
 

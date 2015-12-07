@@ -74,8 +74,9 @@ public class HomeworkListController implements Initializable{
                 List<Homework> remoteHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
 
                 for (Homework homework : remoteHomeworkList) {
-                	newHomeworkList.add(homework);
-                    AlarmQueue.getInstance().add(homework);
+                    Homework renamedHomework = new Homework(Homework.getHomeworkLectureName(lectureID) + "-" + homework.getName(), homework.getDueDate());
+                	newHomeworkList.add(renamedHomework);
+                    AlarmQueue.getInstance().add(renamedHomework);
                 }
             }
             homeworkTableView.setItems(FXCollections.observableArrayList(newHomeworkList));
