@@ -45,9 +45,9 @@ public class HomeworkListController implements Initializable{
         FileManager fileManager = FileManager.getInstance();
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
         String savedStudentID = null;
-        //System.out.println("Sync :: loaded Student ID : " + Constant.savedStudentID);
         try {
             savedStudentID = fileManager.readStudentNumber();
+            System.out.println("Sync :: loaded Student ID : " + savedStudentID);
         }catch(IOException ioe) {
             System.err.println("Could't get student ID, Please save your ID at Setting");
         }catch(ClassNotFoundException cnfe) {
@@ -55,25 +55,26 @@ public class HomeworkListController implements Initializable{
                     "Maybe your Scheduler version doesn't match with Schedule files.");
         }
         if(homeworkTableView.getItems() != null) { //기존에 테이블에 저장된 리스트를 알람 큐에서 지우기
-            //System.out.println("Sync :: lectureIDList : " + lectureIDXmlInfo);
-            //System.out.println("Before Homework List Length : " + Constant.homeworkList.size());
-            //System.out.println("Before AlarmQueue Length : " + AlarmQueue.getInstance().size());
             ObservableList<Homework> preHomeworkList = homeworkTableView.getItems();
+            System.out.println("Before Homework List Length : " + preHomeworkList.size());
+            System.out.println("Before AlarmQueue Length : " + AlarmQueue.getInstance().size());
             preHomeworkList.forEach(alarmQueue::remove);
         }
-        //System.out.println("After Homework List Length : " + Constant.homeworkList.size());
-        //System.out.println("After AlarmQueue Length : " + AlarmQueue.getInstance().size());
+        System.out.println("After Homework List Length : " + homeworkTableView.getItems().size());
+        System.out.println("After AlarmQueue Length : " + AlarmQueue.getInstance().size());
 
         try { //포탈에서 과제 정보를 받아오기
             String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(savedStudentID);
+            System.out.println("Sync :: lectureIDList : " + lectureIDXmlInfo);
             Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
             ArrayList<Homework> newHomeworkList = new ArrayList<>();
             for (Integer lectureID : lectureIDSet) {
                 String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(savedStudentID, lectureID);
-                //System.out.println("Sync :: homeworkXmlInfo : " + homeworkXmlInfo);
+                System.out.println("Sync :: homeworkXmlInfo : " + homeworkXmlInfo);
                 List<Homework> remoteHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
 
                 for (Homework homework : remoteHomeworkList) {
+                	newHomeworkList.add(homework);
                     AlarmQueue.getInstance().add(homework);
                 }
             }
@@ -105,8 +106,8 @@ public class HomeworkListController implements Initializable{
                 return false;
             }
         } finally{
-            //System.out.println("Finally Homework List Length : " + Constant.homeworkList.size());
-            //System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
+            System.out.println("Finally Homework List Length : " + homeworkTableView.getItems().size());
+            System.out.println("Finally AlarmQueue Length : " + AlarmQueue.getInstance().size());
         }
     }
 
