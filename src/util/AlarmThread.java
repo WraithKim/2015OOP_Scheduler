@@ -3,8 +3,15 @@ package util;
 import javafx.application.Platform;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+
+import org.controlsfx.control.NotificationPane;
 import org.controlsfx.control.Notifications;
+
+import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
+
 import schedule.Schedule;
+
+
 
 import java.io.File;
 import java.io.IOException;
@@ -27,8 +34,7 @@ public class AlarmThread extends Thread{
     }
 
     private AlarmThread(){
-        alarmSound = new MediaPlayer(new Media(
-                new File("res" + File.separator + "DingDong.mp3").toURI().toString()));
+        alarmSound = new MediaPlayer(new Media(new File("res" + File.separator + "DingDong.mp3").toURI().toString()));
         alarmSound.setOnEndOfMedia(()->{
             alarmSound.seek(alarmSound.getStartTime());
             alarmSound.stop();
@@ -58,11 +64,14 @@ public class AlarmThread extends Thread{
                     //System.out.println("current top: "+ alarmQueue.peek().getAlarmTime());
                     if(alarmQueue.peek().getAlarmTime() <= System.currentTimeMillis()) {
                         Schedule top = alarmQueue.poll();
-                        Platform.runLater(()->
-                            Notifications.create().title(top.getName()).text("Priority: "+top.getPriority().toString()+"\n"
-                                    + "Description: "+top.getDescription().substring(0, top.getDescription().length() > 7 ? 7 : top.getDescription().length()))
-                                    .show()
-                        );
+                        Platform.runLater(()->{
+                            Notifications n = Notifications.create()
+                            		.title(top.getName())
+                            		.text("Priority: "+top.getPriority().toString()+"\n"+ "Description: "+top.getDescription());
+                            		
+                            n.show();
+                            
+                        });
                         /*
                         System.out.println("alarm ring!!!");
                         System.out.println(top.getName());

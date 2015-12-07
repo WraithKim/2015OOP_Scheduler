@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import util.AlarmThread;
@@ -71,7 +72,7 @@ public class Scheduler extends Application{
         // 달력 뷰를 생성
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.CalendarView));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root, 600, 400, false, SceneAntialiasing.BALANCED);
 
         // 스케쥴러 관리 프로그램을 생성하고
         initStudentId();
@@ -84,7 +85,11 @@ public class Scheduler extends Application{
             // TODO 그냥 끄기 전에 전부 제대로 저장했는지 확인이라도 시켜줘야 할 듯...
             System.exit(0);
         });
-
+        
+        // CSS
+        //this.setUserAgentStylesheet("Scheduler.css");
+        scene.getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
+        
         primaryStage.show();
     }
 }

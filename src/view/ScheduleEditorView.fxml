@@ -7,42 +7,48 @@
       minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="318.0" xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1">
    <HBox alignment="CENTER_LEFT" prefHeight="62.0" prefWidth="318.0">
-      <Label alignment="CENTER" prefHeight="17.0" prefWidth="76.0" text="Title"/>
-      <TextField fx:id="titleTextField" promptText="must fill here"/>
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="76.0" text="Name"/>
+      <TextField fx:id="nameTextField" promptText="must fill here"/>
    </HBox>
    <HBox alignment="CENTER_LEFT" prefHeight="65.0" prefWidth="318.0">
       <fx:define>
          <ToggleGroup fx:id="priorityToggleGroup"/>
       </fx:define>
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="75.0" text="Priority"/>
-      <RadioButton fx:id="priorityNone" mnemonicParsing="false" text="None" toggleGroup="$priorityToggleGroup"
-                   selected="true">
+      <RadioButton fx:id="priorityNone" mnemonicParsing="false" text="None" toggleGroup="$priorityToggleGroup" selected="true">
          <HBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
          </HBox.margin>
+         <tooltip>
+            <Tooltip text="Alarm will ring at one day before due date"/>
+         </tooltip>
       </RadioButton>
-      <RadioButton fx:id="priorityNoticed" mnemonicParsing="false" text="Noticed" toggleGroup="$priorityToggleGroup">
+      <RadioButton fx:id="priorityNoticed" mnemonicParsing="false" text="Noticed" toggleGroup="$priorityToggleGroup" >
          <HBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
          </HBox.margin>
+         <tooltip>
+            <Tooltip text="Alarm will ring at three day before due date"/>
+         </tooltip>
       </RadioButton>
       <RadioButton fx:id="priorityUrgent" mnemonicParsing="false" text="Urgent" toggleGroup="$priorityToggleGroup">
          <HBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
          </HBox.margin>
+         <tooltip>
+            <Tooltip text="Alarm will ring at one week before due date"/>
+         </tooltip>
       </RadioButton>
    </HBox>
    <HBox alignment="CENTER_LEFT" prefHeight="69.0" prefWidth="318.0">
       <Label alignment="CENTER" prefHeight="17.0" prefWidth="74.0" text="Time"/>
-      <ComboBox fx:id="hourComboBox" prefHeight="21.0" prefWidth="105.0">
-      </ComboBox>
+      <ComboBox fx:id="hourComboBox" prefHeight="21.0" prefWidth="105.0"/>
       <Label text=":">
          <HBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
          </HBox.margin>
       </Label>
-      <ComboBox fx:id="minuteComboBox" prefHeight="21.0" prefWidth="105.0">
-      </ComboBox>
+      <ComboBox fx:id="minuteComboBox" prefHeight="21.0" prefWidth="105.0"/>
    </HBox>
    <AnchorPane prefHeight="200.0" prefWidth="200.0">
       <Label layoutX="14.0" layoutY="14.0" text="Description" AnchorPane.leftAnchor="10.0"
@@ -53,6 +59,10 @@
    <AnchorPane prefHeight="64.0" prefWidth="318.0">
       <Button fx:id="scheduleSaveButton" alignment="CENTER_RIGHT" layoutX="252.0" layoutY="20.0"
               mnemonicParsing="false" text="Save" AnchorPane.rightAnchor="14.0"
-              onAction="#handleSaveButtonAction"/>
+              onAction="#handleSaveButtonAction">
+         <tooltip>
+            <Tooltip text="Save this schedule in list"/>
+         </tooltip>
+      </Button>
    </AnchorPane>
 </VBox>
