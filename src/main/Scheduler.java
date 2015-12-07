@@ -1,11 +1,17 @@
 package main;
 
 import javafx.application.Application;
+import javafx.embed.swing.JFXPanel;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import util.AlarmThread;
 import util.AlarmQueue;
@@ -13,10 +19,15 @@ import util.Constant;
 import util.FileManager;
 import view.stageBuilder.SettingStageBuilder;
 
+import java.awt.BorderLayout;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+
 
 /**
  * Created by Donghwan on 11/29/2015.
@@ -24,6 +35,10 @@ import java.util.GregorianCalendar;
  * 스케쥴러 프로그램을 실행하는 클래스입니다.
  */
 public class Scheduler extends Application{
+	
+	
+	private final Delta dragDelta = new Delta();
+	
 
     public static void main(String[] args) {
         launch(args);
@@ -66,14 +81,38 @@ public class Scheduler extends Application{
             if(settingView != null) settingView.show();
         }
     }
+    
+    private void _setDraggable(Stage s, Scene se){
+    	
+    	se.setOnMousePressed(new EventHandler<MouseEvent>() {
+    		  @Override 
+    		  public void handle(MouseEvent mouseEvent) {
+    		    // record a delta distance for the drag and drop operation.
+    		    dragDelta.x = s.getX() - mouseEvent.getScreenX();
+    		    dragDelta.y = s.getY() - mouseEvent.getScreenY();
+    		  }
+    	});
+    	
+    	se.setOnMouseDragged(new EventHandler<MouseEvent>() {
+    		  @Override public void handle(MouseEvent mouseEvent) {
+    		    s.setX(mouseEvent.getScreenX() + dragDelta.x);
+    		    s.setY(mouseEvent.getScreenY() + dragDelta.y);
+    		  }
+    	});
+    	
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         // 달력 뷰를 생성
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.CalendarView));
         Parent root = fxmlLoader.load();
-        Scene scene = new Scene(root, 600, 400, false, SceneAntialiasing.BALANCED);
-
+        
+        // 안티앨리어싱
+        Scene scene = new Scene(root, 600, 500, false, SceneAntialiasing.BALANCED);
+        this._setDraggable(primaryStage, scene);
+        
+        
         // 스케쥴러 관리 프로그램을 생성하고
         initStudentId();
         initAlarmThread();
@@ -89,7 +128,15 @@ public class Scheduler extends Application{
         // CSS
         //this.setUserAgentStylesheet("Scheduler.css");
         scene.getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
+
+        // Utility 설정
+        primaryStage.initStyle(StageStyle.UTILITY);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        scene.setFill(null);
         
         primaryStage.show();
     }
+    
 }
+
+class Delta { double x, y; }

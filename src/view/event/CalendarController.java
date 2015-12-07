@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
+
 import extfx.scene.control.CalendarView;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -12,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.HomeworkListStageBuilder;
@@ -26,6 +28,9 @@ import view.stageBuilder.SettingStageBuilder;
 public class CalendarController implements Initializable {
 
 	@FXML
+	private BorderPane rootPane;
+	
+	@FXML
     private CalendarView calendarView;
 
     @SuppressWarnings("unused")
@@ -34,7 +39,7 @@ public class CalendarController implements Initializable {
 
     @FXML
     private Button homeworkButton;
-
+   
 
     @FXML
     protected void handleSettingButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
@@ -54,7 +59,9 @@ public class CalendarController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-
+		
+		System.out.println(this.calendarView.getId());
+		
 		this.calendarView.selectedDateProperty().addListener((Observable observable)->{
 		        if((calendarView.getSelectedDate()) != null){
 		            // 창 생성
@@ -62,8 +69,9 @@ public class CalendarController implements Initializable {
                     stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList(calendarView.getSelectedDate());
 		            if(stage != null) stage.show();
 		        }
-
 		});
+		
+		rootPane.setStyle("-fx-background:transparent;");
         
 	}
 	
