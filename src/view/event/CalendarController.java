@@ -19,6 +19,7 @@ public class CalendarController {
     @FXML
     private CalendarView calendarView;
 
+    @SuppressWarnings("unused")
     @FXML
     private Button settingButton;
 

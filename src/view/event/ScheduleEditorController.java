@@ -28,6 +28,7 @@ public class ScheduleEditorController implements Initializable{
     @FXML
     private TextField titleTextField;
 
+    @SuppressWarnings("unused")
     @FXML
     private ToggleGroup priorityToggleGroup;
     // 우선순위를 나타내는 라디오버튼을 묶어놓은 그룹

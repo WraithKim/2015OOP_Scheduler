@@ -29,6 +29,7 @@ public class DayScheduleListController implements Initializable{
     @FXML
     private TableView<Schedule> scheduleTableView;
 
+    @SuppressWarnings("unused")
     @FXML
     private TableColumn timeColumn;
 

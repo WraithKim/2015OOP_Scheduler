@@ -31,6 +31,7 @@ public class HomeworkListController implements Initializable{
     @FXML
     private TableColumn dateColumn;
 
+    @SuppressWarnings("unused")
     @FXML
     private TableColumn timeColumn;
 
