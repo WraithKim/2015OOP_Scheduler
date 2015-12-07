@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.controlsfx.control.NotificationPane;
 import schedule.Priority;
 import schedule.Schedule;
 import util.AlarmQueue;
@@ -55,6 +56,12 @@ public class ScheduleEditorController implements Initializable{
     @FXML
     private Button scheduleSaveButton;
 
+    private NotificationPane notificationPane;
+
+    public void setNotificationPane(NotificationPane notificationPane) {
+        this.notificationPane = notificationPane;
+    }
+
     public void setEditableView(Schedule editingSchedule) {
         this.editMode = true;
         this.editingSchedule = editingSchedule;
@@ -77,9 +84,19 @@ public class ScheduleEditorController implements Initializable{
         this.originDaySchedule = originDaySchedule;
     }
 
+    private void printNotificationPane(String string){
+        if(!notificationPane.isShowing()) {
+            notificationPane.setText(string);
+            notificationPane.show();
+        }
+    }
+
     @FXML
     protected void handleSaveButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
-        if(nameTextField.getText().isEmpty()) return;
+        if(nameTextField.getText().isEmpty()){
+            printNotificationPane("Must file name text field");
+            return;
+        }
         scheduleSaveButton.setDisable(true);
         AlarmQueue alarmQueue = AlarmQueue.getInstance();
         Priority priority = Priority.NONE;
@@ -94,7 +111,6 @@ public class ScheduleEditorController implements Initializable{
             newDueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             editingSchedule.setDueDate(newDueDate);
             editingSchedule.setDescription(descriptionTextArea.getText());
-            //System.out.println("new Schedule alarm time: "+editingSchedule.getAlarmTime());
 
         }else{
             Calendar dueDate = new GregorianCalendar();
@@ -103,7 +119,6 @@ public class ScheduleEditorController implements Initializable{
             dueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             editingSchedule = new Schedule(nameTextField.getText(), dueDate, priority);
             editingSchedule.setDescription(descriptionTextArea.getText());
-            //System.out.println("new Schedule alarm time: "+editingSchedule.getAlarmTime());
             originDaySchedule.add(editingSchedule);
         }
         alarmQueue.add(editingSchedule);

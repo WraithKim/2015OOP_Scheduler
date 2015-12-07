@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.controlsfx.control.NotificationPane;
 import util.FileManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +29,12 @@ public class SettingController implements Initializable{
     @FXML
     private Button settingSaveButton;
 
+    private NotificationPane notificationPane;
+
+    public void setNotificationPane(NotificationPane notificationPane) {
+        this.notificationPane = notificationPane;
+    }
+
     @FXML
     protected void handleChangedIDInputForm(KeyEvent event){
         int length = settingSIDInputForm.getLength();
@@ -37,25 +44,18 @@ public class SettingController implements Initializable{
         else settingSaveButton.setDisable(true);
     }
 
-    // TODO 디버그 코드 지워야 함
-
     @FXML
     protected void handleSaveAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
         String newStudentID = this.settingSIDInputForm.getText();
         if(newStudentID.length() != 8) return;
         try {
             FileManager.getInstance().writeStudentNumber(newStudentID);
-
-            //System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
-        } catch (IOException e) {
-            //System.out.println("Save Button Clicked :: IOException");
-            String savedStudentID = this.settingSIDInputForm.getText();
-            //System.out.println("Save Button Clicked :: Saved Content : " + savedStudentID);
-            try {
-                FileManager.getInstance().writeStudentNumber(savedStudentID);
-            }catch(IOException e2){
-                System.err.println("Something wrong during save StudentID, Please try save again");
+        } catch (IOException ioe) {
+            if(!notificationPane.isShowing()) {
+                notificationPane.setText("Something wrong during save StudentID, Please try save again");
+                notificationPane.show();
             }
+            return;
         }
 
         ((Stage)settingSaveButton.getScene().getWindow()).getOnCloseRequest().handle(new WindowEvent(settingSaveButton.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
@@ -65,7 +65,6 @@ public class SettingController implements Initializable{
     public void initialize(URL location, ResourceBundle resources){
         try {
             String preStudentID = FileManager.getInstance().readStudentNumber();
-            //System.out.println("Loaded Content : " + preStudentID);
             settingSIDInputForm.setText(preStudentID);
         } catch (IOException | ClassNotFoundException e){
             System.err.println("can't find StudentID");

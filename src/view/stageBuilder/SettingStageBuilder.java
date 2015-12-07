@@ -5,8 +5,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.controlsfx.control.NotificationPane;
 import util.Constant;
 import util.FileManager;
+import view.event.SettingController;
 
 /**
  * Created by Donghwan on 12/5/2015.
@@ -27,6 +29,10 @@ public class SettingStageBuilder {
         isCreated = true;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.SettingView));
         Parent root = fxmlLoader.load();
+        SettingController settingController = fxmlLoader.getController();
+
+        root = NotificationPaneUpgrader.getInstance().upgrade(root);
+        settingController.setNotificationPane((NotificationPane)root);
         Scene scene = new Scene(root);
         Stage settingView = new Stage();
         settingView.setScene(scene);

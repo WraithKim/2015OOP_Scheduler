@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.controlsfx.control.NotificationPane;
 import util.Constant;
 import view.event.DayScheduleListController;
 
@@ -25,7 +26,8 @@ public class DayScheduleListStageBuilder {
 
     public Stage newDayScheduleList(Date selectedDate){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.DayScheduleListView));
-        Parent root = null;
+
+        Parent root;
         try{
             root = fxmlLoader.load();
         }catch(IOException ioe){
@@ -33,6 +35,10 @@ public class DayScheduleListStageBuilder {
             return null;
         }
         DayScheduleListController dayScheduleListController = fxmlLoader.getController();
+
+        root = NotificationPaneUpgrader.getInstance().upgrade(root);
+        dayScheduleListController.setNotificationPane((NotificationPane)root);
+
         try {
             dayScheduleListController.loadScheduleList(selectedDate);
         }catch(ClassNotFoundException cnfe){

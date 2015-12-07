@@ -57,7 +57,6 @@ public class PortalXmlParser {
                     homeworkEndPeriod = homeworkEndPeriod.substring(homeworkEndPeriod.lastIndexOf(" ") + 1);
                     String lectureName = detailPlanList.item(3).getAttributes().item(0).getTextContent();
                     int lectureNumber = Integer.parseInt(detailPlanList.item(4).getAttributes().item(0).getTextContent());
-                    //String homeworkName = detailPlanList.item(5).getAttributes().item(0).getTextContent();
 
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                     Calendar homeworkEndCalendar = Calendar.getInstance();
@@ -66,15 +65,6 @@ public class PortalXmlParser {
                     homeworkLectureIDSet.add(lectureNumber);
 
                     Homework.putHomeworkLectureName(lectureNumber, lectureName);
-
-                    //TODO 디버그 코드 지워야 함
-
-                    //System.out.println("------------ Homework -----------------------");
-                    //System.out.println("Homework Period : " + homeworkEndPeriod);
-                    //System.out.println("Lecture Name : " + lectureName);
-                    //System.out.println("Lecture Number : " + lectureNumber);
-                    //System.out.println("Homework Name : " + homeworkName);
-                    //System.out.println("------------ Homework End -----------------------");
                 }
             }
 
@@ -119,32 +109,18 @@ public class PortalXmlParser {
 
                 String currentHomeworkStatus = detailHomeworkList.item(5 + pumpIndex).getAttributes().item(0).getTextContent();
                 String homeworkName = detailHomeworkList.item(2).getAttributes().item(0).getTextContent();
-                //String homeworkStartTime = detailHomeworkList.item(3).getAttributes().item(0).getTextContent();
                 String homeworkEndTime = detailHomeworkList.item(4).getAttributes().item(0).getTextContent();
-                //int homeworkSubmitStudentNum = Integer.parseInt(detailHomeworkList.item(7 + pumpIndex).getAttributes().item(0).getTextContent());
-                //int homeworkTotalStudentNum = Integer.parseInt(detailHomeworkList.item(8 + pumpIndex).getAttributes().item(0).getTextContent());
 
                 // detailHomeworkList.item(5) => taskendyn 노드를 불러움
                 if (currentHomeworkStatus.equals("ING")) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
                     Calendar homeworkEndCalendar = Calendar.getInstance();
-                    //Calendar homeworkStartCalendar = Calendar.getInstance();
 
                     homeworkEndCalendar.setTime(dateFormat.parse(homeworkEndTime));
-                    //homeworkStartCalendar.setTime(dateFormat.parse(homeworkStartTime));
 
 
                     Homework homeworkInst = new Homework(homeworkName, homeworkEndCalendar);
                     homeworks.add(homeworkInst);
-
-                    //TODO 디버그 코드 지우기
-                    //System.out.println("------------ Homework -----------------------");
-                    //System.out.println("Homework StartTime : " + homeworkStartTime);
-                    //System.out.println("Homework EndTime : " + homeworkEndTime);
-                    //System.out.println("Homework TotalStudent : " + homeworkTotalStudentNum);
-                    //System.out.println("Homework SubmitStudent : " + homeworkSubmitStudentNum);
-                    //System.out.println("Homework Name : " + homeworkName);
-                    //System.out.println("------------ Homework End -----------------------");
                 }
             }
 

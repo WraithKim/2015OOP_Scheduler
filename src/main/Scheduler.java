@@ -4,22 +4,22 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.NotificationPane;
-import org.controlsfx.control.action.Action;
 import util.AlarmThread;
 import util.AlarmQueue;
 import util.Constant;
 import util.FileManager;
 import view.event.CalendarController;
+import view.stageBuilder.NotificationPaneUpgrader;
 import view.stageBuilder.SettingStageBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
 
 /**
  * Created by Donghwan on 11/29/2015.
@@ -75,33 +75,22 @@ public class Scheduler extends Application{
         // 달력 뷰를 생성
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.CalendarView));
         Parent root = fxmlLoader.load();
-
+        CalendarController calendarController = fxmlLoader.getController();
         // 스케쥴러 관리 프로그램을 생성하고
         initStudentId();
         initAlarmThread();
 
-        NotificationPane notificationPane = new NotificationPane();
-        notificationPane.getActions().addAll(new Action("Sync", ae -> {
-            notificationPane.hide();
-        }));
-        notificationPane.setShowFromTop(true);
-        notificationPane.setCloseButtonVisible(false);
-        notificationPane.setContent(root);
-        CalendarController calendarController = fxmlLoader.getController();
-        calendarController.setNotificationPane(notificationPane);
-        Scene scene = new Scene(notificationPane, 600, 400, false, SceneAntialiasing.BALANCED);
+        root = NotificationPaneUpgrader.getInstance().upgrade(root);
+
+        calendarController.setNotificationPane((NotificationPane)root);
+        Scene scene = new Scene(root);
         primaryStage.setTitle("Calendar");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.setOnCloseRequest((WindowEvent event)->{
-            // TODO 그냥 끄기 전에 전부 제대로 저장했는지 확인이라도 시켜줘야 할 듯...
             System.exit(0);
         });
-        
-        // CSS
-        //this.setUserAgentStylesheet("Scheduler.css");
-        scene.getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
-        
         primaryStage.show();
     }
+    
 }

@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.controlsfx.control.NotificationPane;
 import schedule.Schedule;
 import util.AlarmQueue;
 import util.FileManager;
@@ -43,6 +44,12 @@ public class DayScheduleListController implements Initializable{
     private Button deleteButton;
 
     private Date currentDate;
+
+    private NotificationPane notificationPane;
+
+    public void setNotificationPane(NotificationPane notificationPane) {
+        this.notificationPane = notificationPane;
+    }
 
     // 현재 리스트를 일정에 저장함
     // 지금은 창 종료 이벤트가 호출함
