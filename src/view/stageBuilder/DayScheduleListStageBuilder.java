@@ -8,6 +8,7 @@ import javafx.stage.WindowEvent;
 import util.Constant;
 import view.event.DayScheduleListController;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -22,9 +23,15 @@ public class DayScheduleListStageBuilder {
         return ourInstance;
     }
 
-    public Stage newDayScheduleList(Date selectedDate) throws Exception{
+    public Stage newDayScheduleList(Date selectedDate){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.DayScheduleListView));
-        Parent root = fxmlLoader.load();
+        Parent root = null;
+        try{
+            root = fxmlLoader.load();
+        }catch(IOException ioe){
+            System.err.println("Couldn't load fxml file");
+            return null;
+        }
         DayScheduleListController dayScheduleListController = fxmlLoader.getController();
         try {
             dayScheduleListController.loadScheduleList(selectedDate);

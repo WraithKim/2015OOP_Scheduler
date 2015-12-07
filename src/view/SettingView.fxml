@@ -13,7 +13,7 @@
          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
       </HBox.margin>
    </Label>
-   <RestrictiveTextField fx:id="settingSIDInputForm" prefHeight="25.0" prefWidth="111.0" maxLength="8" restrict="[0-9]"
+   <RestrictiveTextField fx:id="settingSIDInputForm" prefHeight="25.0" prefWidth="111.0" maxLength="8" restrict="[0-9]" promptText="Student ID"
                          onAction="#handleSaveAction" onKeyTyped="#handleChangedIDInputForm">
       <HBox.margin>
          <Insets bottom="10.0" right="10.0" top="10.0"/>
@@ -21,6 +21,9 @@
    </RestrictiveTextField>
    <Button fx:id="settingSaveButton" mnemonicParsing="false" onAction="#handleSaveAction" text="Save"
            defaultButton="true">
+      <tooltip>
+         <Tooltip text="Press Save button to save your student ID"/>
+      </tooltip>
       <HBox.margin>
          <Insets bottom="10.0" right="10.0" top="10.0"/>
       </HBox.margin>
