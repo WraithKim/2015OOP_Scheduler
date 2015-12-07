@@ -111,7 +111,6 @@ public class ScheduleEditorController implements Initializable{
             newDueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             editingSchedule.setDueDate(newDueDate);
             editingSchedule.setDescription(descriptionTextArea.getText());
-
         }else{
             Calendar dueDate = new GregorianCalendar();
             dueDate.setTime(currentDate);
@@ -120,10 +119,12 @@ public class ScheduleEditorController implements Initializable{
             editingSchedule = new Schedule(nameTextField.getText(), dueDate, priority);
             editingSchedule.setDescription(descriptionTextArea.getText());
             originDaySchedule.add(editingSchedule);
+            editMode = true;
+            nameTextField.setDisable(true);
         }
         alarmQueue.add(editingSchedule);
         scheduleSaveButton.setDisable(false);
-        ((Stage)scheduleSaveButton.getScene().getWindow()).close();
+        printNotificationPane("Save successfully");
     }
 
     @Override

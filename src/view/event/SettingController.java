@@ -67,8 +67,10 @@ public class SettingController implements Initializable{
         try {
             String preStudentID = FileManager.getInstance().readStudentNumber();
             settingSIDInputForm.setText(preStudentID);
-        } catch (IOException | ClassNotFoundException e){
-            ExceptionDialog exceptionDialog = new ExceptionDialog(e);
+        }catch (IOException ioe) {
+            //nothing to do
+        }catch(ClassNotFoundException cnfe){
+            ExceptionDialog exceptionDialog = new ExceptionDialog(cnfe);
             exceptionDialog.show();
         }
     }
