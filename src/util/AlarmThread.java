@@ -1,6 +1,7 @@
 package util;
 
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -68,9 +69,12 @@ public class AlarmThread extends Thread{
                             Notifications n = Notifications.create()
                             		.title(top.getName())
                             		.text("Priority: "+top.getPriority().toString()+"\n"+ "Description: "+top.getDescription());
-                            		
+                            if(Constant.OS.contains("mac") ||
+                                    Constant.OS.contains("nix") ||
+                                    Constant.OS.contains("nux") ||
+                                    Constant.OS.contains("aix")) n.position(Pos.TOP_RIGHT);
                             n.show();
-                            
+
                         });
                         /*
                         System.out.println("alarm ring!!!");

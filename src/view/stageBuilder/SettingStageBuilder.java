@@ -47,6 +47,7 @@ public class SettingStageBuilder {
                     System.exit(1);
                 }
                 isCreated = false;
+                settingView.close();
             });
         }
         return settingView;
@@ -56,7 +57,10 @@ public class SettingStageBuilder {
         Stage settingView = newSettingViewStage();
         if(settingView != null){
             settingView.setTitle("Setting");
-            settingView.setOnCloseRequest((WindowEvent event)-> isCreated = false);
+            settingView.setOnCloseRequest((WindowEvent event)-> {
+                isCreated = false;
+                settingView.close();
+            });
         }
         return settingView;
     }
