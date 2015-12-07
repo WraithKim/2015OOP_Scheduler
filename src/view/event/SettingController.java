@@ -4,6 +4,7 @@ import extfx.scene.control.RestrictiveTextField;
 import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import util.FileManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,6 +56,7 @@ public class SettingController implements Initializable{
                 System.err.println("Something wrong during save StudentID, Please try save again");
             }
         }
+        ((Stage)settingSaveButton.getScene().getWindow()).close();
     }
 
     @Override
