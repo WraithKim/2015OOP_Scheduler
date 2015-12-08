@@ -6,14 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import main.Scheduler;
 import extfx.scene.control.CalendarView;
 import extfx.scene.control.DateCell;
 import javafx.beans.Observable;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -22,8 +19,6 @@ import org.controlsfx.dialog.ExceptionDialog;
 
 import util.FileManager;
 import view.stageBuilder.DayScheduleListStageBuilder;
-import view.stageBuilder.SettingStageBuilder;
-
 
 
 /**
@@ -59,32 +54,30 @@ public class CalendarController extends AbstactNotificationController implements
 			
 			@Override
 			public DateCell call(CalendarView arg0) {
-				
-				DateCell dc = new DateCell(){
+
+				return new DateCell(){
 					@Override
 			          protected void updateItem(Date item, boolean empty) {
 			             super.updateItem(item, empty);
-			             
+
 			             Calendar c = Calendar.getInstance();
 			             c.setTime(item);
-			             
+
 			             getStyleClass().removeAll("exist");
-			             
+
 			             if ( FileManager.containScheduleList(c) ){
 			            	 getStyleClass().addAll("exist");
 			             }
-			             
+
 			             if (c.get(Calendar.DAY_OF_WEEK) == 1) {
 			            	 getStyleClass().addAll("sunday");
 			             }
-			             
+
 			             if (c.get(Calendar.DAY_OF_WEEK) == 7) {
 			            	 getStyleClass().addAll("saturday");
 			             }
 			          }
 				};
-				
-				return dc;
 			}
 		});
 		
