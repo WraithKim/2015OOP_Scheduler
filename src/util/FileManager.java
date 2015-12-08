@@ -19,7 +19,7 @@ import schedule.Schedule;
 public class FileManager {
 	private static final String MAIN_DIRECTORY = "Data";
 	private static final String HOMEWORK_DIRECTORY = "Homework";
-	private static final String STUDENT_NUMBER = "StudentNumber";
+	private static final String STUDENT_NUMBER = "StudentInfo";
 
 	private FileManager(){
 	}
