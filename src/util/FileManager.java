@@ -205,20 +205,16 @@ public class FileManager {
 
 	//파일 쓰기 관련
 
-	public static boolean writeScheduleFile(List<Schedule> scheduleList) throws IOException {
-		if(scheduleList.isEmpty())
-			return false;
-		
-		Schedule toGetDate = scheduleList.get(0);
+	public static boolean writeScheduleFile(List<Schedule> scheduleList, Calendar toGetDate) throws IOException {
 
-		File[] fileList = readFileList(toGetDate.getDueDate());
+		File[] fileList = readFileList(toGetDate);
 		
 		//기존 folder에 있던 내용 삭제
 		if(fileList != null) {
 			for(File file : fileList){
 				Files.delete(file.toPath());
 			}
-		}		
+		}
 		//현재 갖고 있는 내용들 쓰기
 		for(Schedule elem : scheduleList) {
 			writeEachFile(elem);
@@ -228,9 +224,6 @@ public class FileManager {
 	}
 	
 	public static boolean writeHomeworkFile(List<Homework> homeworkList) throws IOException {
-		if(homeworkList.isEmpty())
-			return false;
-		
 		File[] fileList = readHomeworkFileList();
 		
 		//기존 folder에 있던 내용 삭제

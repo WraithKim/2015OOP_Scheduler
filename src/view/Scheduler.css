@@ -25,7 +25,7 @@
 }
 
 
-//////////////// Notificiaton
+/* Notificiaton */
 
 
 .notification-bar > .pane {
@@ -41,7 +41,7 @@
 }
 
 
-//////////////////// Notification bar
+/* Notification bar */
 
 .notification-pane {
 	-fx-background-color: transparent;

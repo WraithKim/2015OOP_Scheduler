@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class HomeworkSyncManager {
     public static final HomeworkSyncManager homeworkSyncManager = new HomeworkSyncManager();
-    private ObservableList<Homework> homeworkList = FXCollections.observableArrayList();
+    private final ObservableList<Homework> homeworkList = FXCollections.observableArrayList();
 
     private HomeworkSyncManager(){}
 

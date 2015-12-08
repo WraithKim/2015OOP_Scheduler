@@ -9,7 +9,7 @@ import org.controlsfx.control.NotificationPane;
  * 기존 Pane에 NotificationPane을 씌워주는 클래스
  */
 public class NotificationPaneUpgrader {
-    private static NotificationPaneUpgrader ourInstance = new NotificationPaneUpgrader();
+    private static final NotificationPaneUpgrader ourInstance = new NotificationPaneUpgrader();
 
     public static NotificationPaneUpgrader getInstance() {
         return ourInstance;

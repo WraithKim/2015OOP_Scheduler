@@ -51,8 +51,7 @@ public class Scheduler extends Application{
         });
     }
 
-    public Scheduler() throws FileNotFoundException{
-    }
+    public Scheduler(){}
 
     private static void initAlarmThread(){
         AlarmThread alarmThread = AlarmThread.getInstance();
@@ -243,7 +242,6 @@ public class Scheduler extends Application{
             ExceptionDialog exceptionDialog = new ExceptionDialog(ae);
             exceptionDialog.setOnCloseRequest(event-> System.exit(1));
             exceptionDialog.show();
-            return;
         }
     }
 }
