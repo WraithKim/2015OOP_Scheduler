@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import main.Scheduler;
 import extfx.scene.control.CalendarView;
 import extfx.scene.control.DateCell;
 import javafx.beans.Observable;
@@ -14,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import util.FileManager;
 import util.HomeworkSyncManager;
 import javafx.util.Callback;
 import view.stageBuilder.DayScheduleListStageBuilder;
@@ -54,6 +56,7 @@ public class CalendarController extends AbstactNotificationController implements
         HomeworkSyncManager.homeworkSyncManager.sync(this);
         // 창 생성
         Stage stage = HomeworkListStageBuilder.getInstance().newHomeworkListViewStage();
+        stage.getScene().getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
         if(stage != null) stage.show();
         homeworkButton.setDisable(false);
     }
@@ -82,6 +85,12 @@ public class CalendarController extends AbstactNotificationController implements
 			             Calendar c = Calendar.getInstance();
 			             c.setTime(item);
 			             
+			             getStyleClass().removeAll("exist");
+			             
+			             if ( FileManager.containScheduleList(c) ){
+			            	 getStyleClass().addAll("exist");
+			             }
+			             
 			             if (c.get(Calendar.DAY_OF_WEEK) == 1) {
 			            	 getStyleClass().addAll("sunday");
 			             }
@@ -89,7 +98,6 @@ public class CalendarController extends AbstactNotificationController implements
 			             if (c.get(Calendar.DAY_OF_WEEK) == 7) {
 			            	 getStyleClass().addAll("saturday");
 			             }
-			             
 			          }
 				};
 				

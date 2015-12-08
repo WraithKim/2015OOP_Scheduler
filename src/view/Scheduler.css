@@ -254,3 +254,8 @@
 	-fx-font-weight: bold;
 }
 
+.exist {
+    -fx-background-color: #cce3f4;
+    -fx-text-fill: #FF00FF;
+    -fx-font-weight: bold;
+}
