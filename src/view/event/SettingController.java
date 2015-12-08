@@ -59,10 +59,11 @@ public class SettingController extends AbstactNotificationController implements 
             String preStudentID = FileManager.readStudentNumber();
             settingSIDInputForm.setText(preStudentID);
         }catch (IOException ioe) {
-            //nothing to do
+            settingSaveButton.setDisable(true);
         }catch(ClassNotFoundException cnfe){
             ExceptionDialog exceptionDialog = new ExceptionDialog(cnfe);
             exceptionDialog.show();
+            ((Stage)settingSaveButton.getScene().getWindow()).getOnCloseRequest().handle(new WindowEvent(settingSaveButton.getScene().getWindow(), WindowEvent.WINDOW_CLOSE_REQUEST));
         }
     }
 }
