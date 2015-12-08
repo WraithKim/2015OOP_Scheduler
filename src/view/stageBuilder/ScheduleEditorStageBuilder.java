@@ -10,6 +10,7 @@ import schedule.Schedule;
 import util.Constant;
 import view.event.ScheduleEditorController;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -26,7 +27,7 @@ public class ScheduleEditorStageBuilder {
         return ourInstance;
     }
 
-    public Stage newAddingScheduleEditor(Date currentDate, ObservableList<Schedule> originScheduleList) throws Exception{
+    public Stage newAddingScheduleEditor(Date currentDate, ObservableList<Schedule> originScheduleList) throws IOException{
         fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.ScheduleEditorView.pathInfomation));
         Parent root = fxmlLoader.load();
         ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
@@ -42,7 +43,7 @@ public class ScheduleEditorStageBuilder {
         return scheduleEditorView;
     }
 
-    public Stage newEditingScheduleEditor(Schedule editingSchedule) throws Exception{
+    public Stage newEditingScheduleEditor(Schedule editingSchedule) throws IOException{
         fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.ScheduleEditorView.pathInfomation));
         Parent root = fxmlLoader.load();
         ScheduleEditorController scheduleEditorController = fxmlLoader.getController();

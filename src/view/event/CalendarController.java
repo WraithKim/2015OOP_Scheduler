@@ -1,5 +1,6 @@
 package view.event;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,11 +16,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import util.FileManager;
-import util.HomeworkSyncManager;
 import javafx.util.Callback;
+
+import org.controlsfx.dialog.ExceptionDialog;
+
+import util.FileManager;
 import view.stageBuilder.DayScheduleListStageBuilder;
-import view.stageBuilder.HomeworkListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
 
 
@@ -37,38 +39,19 @@ public class CalendarController extends AbstactNotificationController implements
 	@FXML
     private CalendarView calendarView;
 
-    @SuppressWarnings("unused")
-    @FXML
-    private Button settingButton;
-
-    @FXML
-    private Button homeworkButton;
-
-    @FXML
-    protected void handleSettingButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
-        Stage settingView = SettingStageBuilder.getInstance().defaultSettingViewStage();
-        if(settingView != null) settingView.show();
-    }
-
-    @FXML
-    protected void handleHomeworkButton(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
-        homeworkButton.setDisable(true);
-        HomeworkSyncManager.homeworkSyncManager.sync(this);
-        // 창 생성
-        Stage stage = HomeworkListStageBuilder.getInstance().newHomeworkListViewStage();
-        stage.getScene().getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
-        if(stage != null) stage.show();
-        homeworkButton.setDisable(false);
-    }
-
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		this.calendarView.selectedDateProperty().addListener((Observable observable)->{
 		        if((calendarView.getSelectedDate()) != null){
 		            // 창 생성
 		            Stage stage = null;
-                    stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList(calendarView.getSelectedDate());
-		            if(stage != null) stage.show();
+					try {
+						stage = DayScheduleListStageBuilder.getInstance().newDayScheduleList(calendarView.getSelectedDate());
+						if (stage != null) stage.show();
+					}catch(IOException ioe){
+						ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
+						exceptionDialog.show();
+					}
 		        }
 		});
 		

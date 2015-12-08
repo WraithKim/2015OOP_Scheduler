@@ -25,16 +25,10 @@ public class DayScheduleListStageBuilder {
         return ourInstance;
     }
 
-    public Stage newDayScheduleList(Date selectedDate){
+    public Stage newDayScheduleList(Date selectedDate) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.DayScheduleListView.pathInfomation));
 
-        Parent root;
-        try{
-            root = fxmlLoader.load();
-        }catch(IOException ioe){
-            System.err.println("Couldn't load fxml file");
-            return null;
-        }
+        Parent root = fxmlLoader.load();
         DayScheduleListController dayScheduleListController = fxmlLoader.getController();
 
         root = NotificationPaneUpgrader.getInstance().upgrade(root);
