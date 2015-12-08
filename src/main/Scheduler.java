@@ -26,6 +26,7 @@ import util.FileManager;
 import util.ResourceLoader;
 import view.stageBuilder.SettingStageBuilder;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
@@ -183,7 +184,7 @@ public class Scheduler extends Application{
             }
 
             java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-            ImageIcon image = new ImageIcon(ImageIO.read(ResourceLoader.load("view/icon.png")));
+            ImageIcon image = new ImageIcon(ImageIO.read(ResourceLoader.load("res"+File.separator+"icon.ico")));
             java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image.getImage());
             
             //java.awt.Font defaultFont = java.awt.Font.decode(null);

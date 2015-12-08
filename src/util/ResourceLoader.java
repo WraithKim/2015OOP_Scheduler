@@ -1,5 +1,6 @@
 package util;
 
+import java.io.File;
 import java.io.InputStream;
 
 final public class ResourceLoader {
@@ -8,7 +9,7 @@ final public class ResourceLoader {
 		InputStream input = ResourceLoader.class.getResourceAsStream(path);
 		
 		if( input == null ){
-			input = ResourceLoader.class.getResourceAsStream("/"+path);
+			input = ResourceLoader.class.getResourceAsStream(File.separator+path);
 		}
 		
 		return input;
