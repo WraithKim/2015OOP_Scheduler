@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,7 +11,6 @@ import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 
 import org.controlsfx.control.NotificationPane;
-import org.controlsfx.control.Notifications;
 import org.controlsfx.dialog.ExceptionDialog;
 
 import util.*;
@@ -23,9 +21,9 @@ import util.AlarmThread;
 import util.AlarmQueue;
 import util.Constant;
 import util.FileManager;
-import util.ResourceLoader;
 import view.stageBuilder.SettingStageBuilder;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,7 +31,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -184,9 +181,16 @@ public class Scheduler extends Application{
             }
 
             java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-            ImageIcon image = new ImageIcon(ImageIO.read(ResourceLoader.load("res"+File.separator+"icon.ico")));
-            java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image.getImage());
-            
+            java.awt.TrayIcon trayIcon;
+            try{
+                java.awt.Image image = ImageIO.read(new File("res"+File.separator+"icon.gif").toURI().toURL());
+                trayIcon = new TrayIcon(image, "Scheduler");
+            }catch(IOException ioe){
+                ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
+                exceptionDialog.setOnCloseRequest(event-> System.exit(1));
+                exceptionDialog.show();
+                return;
+            }
             //java.awt.Font defaultFont = java.awt.Font.decode(null);
             java.awt.MenuItem exitItem = new java.awt.MenuItem("Exit");
             
@@ -195,6 +199,7 @@ public class Scheduler extends Application{
                 tray.remove(trayIcon);
             });
 
+            /*
             java.awt.MenuItem settingItem = new java.awt.MenuItem("Setting");
             settingItem.addActionListener(event -> {
                 Platform.runLater(()->{
@@ -207,6 +212,7 @@ public class Scheduler extends Application{
                     }
                 });
             });
+            */
 
 
             java.awt.MenuItem homeworkItem = new java.awt.MenuItem("Homework");
@@ -226,16 +232,18 @@ public class Scheduler extends Application{
             // setup the popup menu for the application.
             final java.awt.PopupMenu popup = new java.awt.PopupMenu();
             popup.add(homeworkItem);
-            popup.add(settingItem);
+            //popup.add(settingItem);
             popup.add(exitItem);
             trayIcon.setPopupMenu(popup);
 
             // add the application tray icon to the system tray.
             tray.add(trayIcon);
             
-        } catch (java.awt.AWTException | IOException e) {
-            System.out.println("Unable to init system tray");
-            e.printStackTrace();
+        } catch (java.awt.AWTException ae) {
+            ExceptionDialog exceptionDialog = new ExceptionDialog(ae);
+            exceptionDialog.setOnCloseRequest(event-> System.exit(1));
+            exceptionDialog.show();
+            return;
         }
     }
 }

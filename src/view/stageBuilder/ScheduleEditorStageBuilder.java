@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.Scheduler;
 import org.controlsfx.control.NotificationPane;
 import schedule.Schedule;
 import util.Constant;
@@ -36,6 +37,7 @@ public class ScheduleEditorStageBuilder {
         root = NotificationPaneUpgrader.getInstance().upgrade(root);
         scheduleEditorController.setNotificationPane((NotificationPane)root);
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
         Stage scheduleEditorView = new Stage();
         scheduleEditorView.setScene(scene);
         scheduleEditorView.setTitle("New Schedule Add");
@@ -56,6 +58,7 @@ public class ScheduleEditorStageBuilder {
         scheduleEditorController.setNotificationPane(notificationPane);
 
         Scene scene = new Scene(notificationPane);
+        scene.getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
         Stage scheduleEditorView = new Stage();
         scheduleEditorView.setScene(scene);
         scheduleEditorView.setTitle("Existing Schedule Edit");
