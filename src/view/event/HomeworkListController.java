@@ -40,7 +40,6 @@ public class HomeworkListController extends AbstactNotificationController implem
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        HomeworkSyncManager.homeworkSyncManager.sync(this);
         homeworkTableView.setItems(HomeworkSyncManager.homeworkSyncManager.getHomeworkList());
     }
 }
