@@ -140,7 +140,7 @@ public class Scheduler extends Application{
             
             _setDraggable(root);
             // 안티앨리어싱
-            Scene scene = new Scene(root, 600, 500, false, SceneAntialiasing.BALANCED);
+            Scene scene = new Scene(root, 600, 450, false, SceneAntialiasing.BALANCED);
             scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
             
             // CSS
@@ -183,7 +183,7 @@ public class Scheduler extends Application{
             }
 
             java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
-            ImageIcon image = new ImageIcon(ImageIO.read(ResourceLoader.load("icon.png")));
+            ImageIcon image = new ImageIcon(ImageIO.read(ResourceLoader.load("view/icon.png")));
             java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image.getImage());
             
             //java.awt.Font defaultFont = java.awt.Font.decode(null);
