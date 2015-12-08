@@ -22,6 +22,7 @@ import util.AlarmThread;
 import util.AlarmQueue;
 import util.Constant;
 import util.FileManager;
+import util.ResourceLoader;
 import view.stageBuilder.SettingStageBuilder;
 
 import java.awt.BorderLayout;
@@ -36,6 +37,8 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -59,6 +62,7 @@ public class Scheduler extends Application{
             @Override
             public void run() {
                 initAndShowGUI();
+                _setIconTray();
             }
         });
     
@@ -203,8 +207,8 @@ public class Scheduler extends Application{
     	se.setOnMousePressed(new EventHandler<javafx.scene.input.MouseEvent>() {
 			@Override
 			public void handle(javafx.scene.input.MouseEvent mouseEvent) {
-				dragDelta.x = mouseEvent.getScreenX();
-    		    dragDelta.y = mouseEvent.getScreenY();
+				dragDelta.x = mouseEvent.getSceneX();
+    		    dragDelta.y = mouseEvent.getSceneY();
 			}
     	});
     	
@@ -216,6 +220,41 @@ public class Scheduler extends Application{
     		  }
     	});
     	
+    }
+    
+    private static void _setIconTray() {
+        try {
+            java.awt.Toolkit.getDefaultToolkit();
+
+            if (!java.awt.SystemTray.isSupported()) {
+                System.out.println("No system tray support, application exiting.");
+                Platform.exit();
+            }
+
+            java.awt.SystemTray tray = java.awt.SystemTray.getSystemTray();
+            ImageIcon image = new ImageIcon(ImageIO.read(ResourceLoader.load("icon.png")));
+            java.awt.TrayIcon trayIcon = new java.awt.TrayIcon(image.getImage());
+            
+            java.awt.Font defaultFont = java.awt.Font.decode(null);
+            java.awt.MenuItem exitItem = new java.awt.MenuItem("Exit");
+            
+            exitItem.addActionListener(event -> {
+                System.exit(0);
+                tray.remove(trayIcon);
+            });
+            
+            // setup the popup menu for the application.
+            final java.awt.PopupMenu popup = new java.awt.PopupMenu();
+            popup.add(exitItem);
+            trayIcon.setPopupMenu(popup);
+
+            // add the application tray icon to the system tray.
+            tray.add(trayIcon);
+            
+        } catch (java.awt.AWTException | IOException e) {
+            System.out.println("Unable to init system tray");
+            e.printStackTrace();
+        }
     }
     
 }

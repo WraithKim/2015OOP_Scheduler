@@ -6,8 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
 import extfx.scene.control.CalendarView;
 import extfx.scene.control.DateCell;
+import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -17,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import util.ResourceLoader;
 import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.HomeworkListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
@@ -100,7 +105,6 @@ public class CalendarController implements Initializable {
 				return dc;
 			}
 		});
-		
 		
 		rootPane.setStyle("-fx-background:transparent;");
         
