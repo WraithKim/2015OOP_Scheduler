@@ -2,11 +2,12 @@ package view.event;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
-
-
 import extfx.scene.control.CalendarView;
+import extfx.scene.control.DateCell;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -15,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.HomeworkListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
@@ -70,6 +72,35 @@ public class CalendarController implements Initializable {
 		            if(stage != null) stage.show();
 		        }
 		});
+		
+		this.calendarView.setDayCellFactory(new Callback<CalendarView, DateCell>() {
+			
+			@Override
+			public DateCell call(CalendarView arg0) {
+				
+				DateCell dc = new DateCell(){
+					@Override
+			          protected void updateItem(Date item, boolean empty) {
+			             super.updateItem(item, empty);
+			             
+			             Calendar c = Calendar.getInstance();
+			             c.setTime(item);
+			             
+			             if (c.get(Calendar.DAY_OF_WEEK) == 1) {
+			            	 getStyleClass().addAll("sunday");
+			             }
+			             
+			             if (c.get(Calendar.DAY_OF_WEEK) == 7) {
+			            	 getStyleClass().addAll("saturday");
+			             }
+			             
+			          }
+				};
+				
+				return dc;
+			}
+		});
+		
 		
 		rootPane.setStyle("-fx-background:transparent;");
         
