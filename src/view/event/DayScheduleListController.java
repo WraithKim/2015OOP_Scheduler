@@ -50,7 +50,9 @@ public class DayScheduleListController extends AbstactNotificationController imp
     @SuppressWarnings("unchecked")
     public boolean saveList(){
         try {
-            return FileManager.writeScheduleFile(scheduleTableView.getItems().subList(0, scheduleTableView.getItems().size()));
+            Calendar calendar = new GregorianCalendar();
+            calendar.setTime(currentDate);
+            return FileManager.writeScheduleFile(scheduleTableView.getItems(), calendar);
         }catch(IOException ioe){
             ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
             exceptionDialog.show();
