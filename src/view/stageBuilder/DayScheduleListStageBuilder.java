@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import main.Scheduler;
 import org.controlsfx.control.NotificationPane;
 import org.controlsfx.dialog.ExceptionDialog;
 import util.Constant;
@@ -42,6 +43,7 @@ public class DayScheduleListStageBuilder {
             return null;
         }
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
         Stage dayScheduleListView = new Stage();
         dayScheduleListView.setScene(scene);
         dayScheduleListView.setTitle("Schedule List");

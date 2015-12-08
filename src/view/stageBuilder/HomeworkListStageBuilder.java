@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import main.Scheduler;
 import org.controlsfx.control.NotificationPane;
 import util.Constant;
 import view.event.HomeworkListController;
@@ -36,6 +37,7 @@ public class HomeworkListStageBuilder {
         homeworkListController.setNotificationPane((NotificationPane)root);
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
         Stage HomeworkListView = new Stage();
         HomeworkListView.setScene(scene);
         HomeworkListView.setResizable(false);
