@@ -21,6 +21,9 @@ public class FileManager {
 	private static final String HOMEWORK_DIRECTORY = "Homework";
 	private static final String STUDENT_NUMBER = "StudentNumber";
 
+	private FileManager(){
+	}
+
 	//내부 메소드
 
 	//path 생성 관련
@@ -129,6 +132,15 @@ public class FileManager {
 	public static void makeDateDirectory(){
 		String path = FileManager.makePath();
 		FileManager.makeDirectory(path);
+	}
+
+	public static boolean containID(){
+		try{
+			readStudentNumber();
+		}catch(IOException | ClassNotFoundException e){
+			return false;
+		}
+		return true;
 	}
 
 	//파일 읽기 관련

@@ -10,6 +10,8 @@ import util.Constant;
 import util.FileManager;
 import view.event.SettingController;
 
+import java.io.IOException;
+
 /**
  * Created by Donghwan on 12/5/2015.
  *
@@ -24,7 +26,7 @@ public class SettingStageBuilder {
         return ourInstance;
     }
 
-    private Stage newSettingViewStage() throws Exception {
+    private Stage newSettingViewStage() throws IOException {
         if(isCreated) return null;
         isCreated = true;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.SettingView.pathInfomation));
@@ -41,7 +43,7 @@ public class SettingStageBuilder {
         return settingView;
     }
 
-    public Stage newUserSettingViewStage() throws Exception{
+    public Stage newUserSettingViewStage() throws IOException{
         Stage settingView = newSettingViewStage();
         if(settingView != null) {
             settingView.setTitle("New Student ID");
@@ -59,7 +61,7 @@ public class SettingStageBuilder {
         return settingView;
     }
 
-    public Stage defaultSettingViewStage() throws Exception{
+    public Stage defaultSettingViewStage() throws IOException{
         Stage settingView = newSettingViewStage();
         if(settingView != null){
             settingView.setTitle("Setting");

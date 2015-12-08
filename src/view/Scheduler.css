@@ -1,0 +1,226 @@
+/* Main Scene CSS */
+
+
+.root {
+	//-fx-background-image: url("background.jpg");
+	-fx-font-family: "NanumGothic", "Dotum";
+	-fx-backgorund-color: transparent;
+}
+
+#rootPane {
+    -fx-border-color: white;
+	-fx-border-style: solid;
+	-fx-border-width: 0;
+	-fx-radius: 10px;
+	-fx-padding:20px;
+	-fx-backgorund-color: transparent;
+}
+
+#buttonPane {
+	-fx-backgorund:transparent;
+}
+
+#calendarView {
+	-fx-background-color:transparent;
+	-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
+}
+
+.notification-bar > .pane {
+	-fx-background-color: rgba(0, 0, 0, 0.8);
+	-fx-background-radius: 10;
+}
+
+.notification-bar > .pane .title,
+.notification-bar > .pane .label {
+	-fx-text-fill: #FFFFFF;
+	-fx-font-size: 13pt;
+	-fx-font-family: "NanumGothic";
+}
+
+
+/******************************************************************************
+ * 
+ * Close button
+ * 
+ *****************************************************************************/
+.notification-bar > .pane .close-button {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 2;
+    -fx-padding: 0 0 0 0;
+    -fx-alignment: center;
+}
+
+.notification-bar > .pane .close-button:hover {
+    -fx-background-color: linear-gradient(#a3a3a3, #8b8b8b 34%, #777777 36%, #777777 63%, #8b8b8b 65%, #adadad);
+}
+
+.notification-bar > .pane .close-button:pressed {
+    -fx-background-color: linear-gradient(#a3a3a3, #8b8b8b 34%, #777777 36%, #777777 63%, #8b8b8b 65%, #adadad);
+}
+
+.notification-bar > .pane .close-button > .graphic {
+    -fx-background-color: #949494;
+    -fx-scale-shape: false;
+    -fx-padding: 4.5 4.5 4.5 4.5; /* Graphic is 9x9 px */
+}
+
+.notification-bar > .pane .close-button:hover > .graphic {
+    -fx-background-color: #fefeff;
+}
+
+.notification-bar > .pane .close-button:pressed > .graphic {
+    -fx-background-color: #cfcfcf;
+}
+
+.notification-bar > .pane .close-button > .graphic {
+    -fx-shape: "M395.992,296.758l1.794-1.794l7.292,7.292l-1.795,1.794 L395.992,296.758z M403.256,294.992l1.794,1.794l-7.292,7.292l-1.794-1.795 L403.256,294.992z";
+}
+
+
+
+/*******************************************************************************
+ *                                                                             *
+ * CalendarView                                                                *
+ *                                                                             *
+ ******************************************************************************/
+
+.calendar-view {
+	-fx-background-color:transparent;
+    //-fx-skin: "extfx.scene.control.skin.CalendarViewSkin";
+}
+
+/* The calendar header, which contains the navigation elements. */
+.calendar-view .header {
+    -fx-background-color:#34B3E0;
+    -fx-padding: 1.0em;
+    -fx-text-color:white;
+}
+
+/* The calendar footer, which contains the today button. It is only visible when the today button is shown */
+.calendar-view .footer {
+    -fx-background-color:transparent;
+    -fx-padding: 0.5em;
+}
+
+/* The buttons in the header and the footer */
+.calendar-view .navigation-button, .calendar-view .today-button {
+    -fx-background:transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+}
+
+.calendar-view .navigation-title {
+    -fx-background-color:transparent;
+    -fx-cursor: hand;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 0px;
+    -fx-font-family: 'System';
+    -fx-font-weight: bold;
+}
+
+/* don't make the title button transparent, when it is disabled in the decades view */
+.calendar-view .navigation-title:disabled {
+    -fx-opacity: 1;
+}
+
+/* The arrow for navigation. SVG is used for it. */
+.calendar-view .navigation-arrow {
+    /*padding determines the size of the arrow; This should match the design size in the SVG */
+    -fx-padding: 5 5 5 5;
+    -fx-padding: 0.5em 0.5em 0.5em 0.5em; /* 2 3.5 2 3.5 */
+    -fx-shape: "M 100 100 L 300 100 L 200 300 z";
+    -fx-background-color: #ffffff;
+}
+
+/* The cell which contain the week day names */
+.calendar-view .weekdays {
+	-fx-border-width: 1 0 0 0;
+	-fx-border-color: white;
+  	
+	-fx-font-size:14px;
+    -fx-background-color: #E3E3E3;
+    -fx-text-fill:#000000;
+    -fx-padding: 8px;
+}
+
+.calendar-view .week-number {
+    -fx-font-size: 2.5em;
+    -fx-padding: 4px;
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * DateCell                                                                    *
+ *                                                                             *
+ ******************************************************************************/
+
+.date-cell {
+    -fx-skin: "extfx.scene.control.skin.DateCellSkin";
+}
+
+.dialog-pane {
+    -fx-background-color: black;
+}
+
+.dialog-pane .label {
+    -fx-text-fill: white;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: black;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-font-style: italic;
+    -fx-font-size: 2em;
+}
+
+
+/* The usual button which either display the day of the current month, or the month in the year view, or the year in the decades view */
+.date-cell .button, .calendar-view .year-view-button, .calendar-view .decades-view-button {
+    -fx-background-color: null;
+    -fx-background-insets: 0, 0, 0, 0;
+    -fx-cursor: hand;
+    -fx-padding: 0.4em;
+    -fx-font-color: #333333;
+    -fx-font-family:"Arial";
+    -fx-font-size:14px;
+    -fx-font-weight: normal;
+    -fx-background-radius: 0;
+    
+    -fx-border-width: 1 1 1 1;
+	-fx-border-color: #FFFFFF;
+}
+
+/* The hover state of the buttons */
+.date-cell .button:hover, .calendar-view .decades-view .button:hover, .calendar-view .year-view .button:hover {
+    -fx-background-color: -fx-cell-hover-color;
+}
+
+/* The day buttons for the previous and next month. */
+.date-cell.other-month .button {
+    -fx-opacity: 0.5;
+    -fx-font-weight: normal;
+}
+
+/* The button which shows the current day. */
+.date-cell.selected .button {
+    -fx-background-color: #34B4E1;
+    -fx-font-color:white;
+}
+
+.sunday {
+    //-fx-background-color: #e5c3c3;
+    -fx-text-fill: red;
+	-fx-font-weight: bold;
+}
+
+.saturday {
+    //-fx-background-color: #bfc5f2;
+    -fx-text-fill: #FF00FF;
+	-fx-font-weight: bold;
+}
+

@@ -5,10 +5,10 @@
 <?import extfx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:controller="view.event.CalendarController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="rootPane" fx:id="rootPane" fx:controller="view.event.CalendarController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <center>
        <CalendarView fx:id="calendarView" id="calendarView" prefHeight="175.0" prefWidth="600.0" BorderPane.alignment="CENTER"/>
-   </center>
+       </center>
     <bottom>
         <BorderPane id="buttonPane" prefHeight="49.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <left>
