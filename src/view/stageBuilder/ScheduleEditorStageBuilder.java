@@ -27,7 +27,7 @@ public class ScheduleEditorStageBuilder {
     }
 
     public Stage newAddingScheduleEditor(Date currentDate, ObservableList<Schedule> originScheduleList) throws Exception{
-        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ScheduleEditorView));
+        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.ScheduleEditorView.pathInfomation));
         Parent root = fxmlLoader.load();
         ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
         scheduleEditorController.setAddableView(currentDate, originScheduleList);
@@ -43,7 +43,7 @@ public class ScheduleEditorStageBuilder {
     }
 
     public Stage newEditingScheduleEditor(Schedule editingSchedule) throws Exception{
-        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ScheduleEditorView));
+        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.ScheduleEditorView.pathInfomation));
         Parent root = fxmlLoader.load();
         ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
         scheduleEditorController.setEditableView(editingSchedule);

@@ -57,7 +57,7 @@ public class ScheduleEditorController extends AbstactNotificationController impl
     public void setEditableView(Schedule editingSchedule) {
         this.editMode = true;
         this.editingSchedule = editingSchedule;
-        AlarmQueue.getInstance().remove(editingSchedule);
+        AlarmQueue.alarmQueue.remove(editingSchedule);
         nameTextField.setDisable(true);
         nameTextField.setText(editingSchedule.getName());
         switch(editingSchedule.getPriority()){
@@ -83,13 +83,12 @@ public class ScheduleEditorController extends AbstactNotificationController impl
             return;
         }
         scheduleSaveButton.setDisable(true);
-        AlarmQueue alarmQueue = AlarmQueue.getInstance();
         Priority priority = Priority.NONE;
         if(priorityUrgent.isSelected()) priority = Priority.URGENT;
         else if(priorityNoticed.isSelected()) priority = Priority.NOTICED;
 
         if(editMode){
-            alarmQueue.remove(editingSchedule);
+            AlarmQueue.alarmQueue.remove(editingSchedule);
             editingSchedule.setPriority(priority);
             Calendar newDueDate = editingSchedule.getDueDate();
             newDueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
@@ -107,7 +106,7 @@ public class ScheduleEditorController extends AbstactNotificationController impl
             editMode = true;
             nameTextField.setDisable(true);
         }
-        alarmQueue.add(editingSchedule);
+        AlarmQueue.alarmQueue.add(editingSchedule);
         scheduleSaveButton.setDisable(false);
         printNotificationPane("Save successfully");
     }

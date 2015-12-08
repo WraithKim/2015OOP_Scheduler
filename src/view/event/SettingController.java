@@ -44,7 +44,7 @@ public class SettingController extends AbstactNotificationController implements 
         String newStudentID = this.settingSIDInputForm.getText();
         if(newStudentID.length() != 8) return;
         try {
-            FileManager.getInstance().writeStudentNumber(newStudentID);
+            FileManager.writeStudentNumber(newStudentID);
         } catch (IOException ioe) {
             printNotificationPane("Something wrong during save StudentID, Please try save again");
             return;
@@ -56,7 +56,7 @@ public class SettingController extends AbstactNotificationController implements 
     @Override
     public void initialize(URL location, ResourceBundle resources){
         try {
-            String preStudentID = FileManager.getInstance().readStudentNumber();
+            String preStudentID = FileManager.readStudentNumber();
             settingSIDInputForm.setText(preStudentID);
         }catch (IOException ioe) {
             //nothing to do

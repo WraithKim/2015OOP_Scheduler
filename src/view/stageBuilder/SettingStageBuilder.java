@@ -27,7 +27,7 @@ public class SettingStageBuilder {
     private Stage newSettingViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.SettingView));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.SettingView.pathInfomation));
         Parent root = fxmlLoader.load();
         SettingController settingController = fxmlLoader.getController();
 
@@ -47,7 +47,7 @@ public class SettingStageBuilder {
             settingView.setTitle("New Student ID");
             settingView.setOnCloseRequest((WindowEvent event) -> {
                 try {
-                    FileManager.getInstance().readStudentNumber();
+                    FileManager.readStudentNumber();
                 } catch (Exception e) {
 
                     System.exit(1);

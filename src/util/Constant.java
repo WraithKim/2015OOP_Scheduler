@@ -25,9 +25,17 @@ public interface Constant {
      * fxml 파일을 불러올 경로
      */
     String viewPackage = "/view/";
-    String DayScheduleListView = Constant.viewPackage + "DayScheduleListView.fxml";
-    String CalendarView = Constant.viewPackage + "CalendarView.fxml";
-    String ScheduleEditorView = Constant.viewPackage + "ScheduleEditorView.fxml";
-    String SettingView = Constant.viewPackage + "SettingView.fxml";
-    String HomeworkListView = Constant.viewPackage + "HomeworkListView.fxml";
+    enum ViewPath {
+        DayScheduleListView(Constant.viewPackage + "DayScheduleListView.fxml"),
+        CalendarView(Constant.viewPackage + "CalendarView.fxml"),
+        ScheduleEditorView(Constant.viewPackage + "ScheduleEditorView.fxml"),
+        SettingView(Constant.viewPackage + "SettingView.fxml"),
+        HomeworkListView(Constant.viewPackage + "HomeworkListView.fxml");
+
+        public final String pathInfomation;
+
+        ViewPath(String pathInfomation) {
+            this.pathInfomation = pathInfomation;
+        }
+    }
 }

@@ -24,10 +24,7 @@ import java.util.*;
  */
 public class PortalXmlParser {
 
-    /**
-     * PortaXmlParser 인스턴스를 초기화합니다.
-     */
-    public PortalXmlParser() {
+    private PortalXmlParser() {
 
     }
 
@@ -37,7 +34,7 @@ public class PortalXmlParser {
      * @param homeworkXmlContent 과제 리스트를 담고 있는 Xml 내용을 가리킵니다.
      * @return 과목 ID들의 Set을 반환합니다.
      */
-    public Map<Integer, String> parseHomeworkLectureIDList(String homeworkXmlContent) {
+    public static Map<Integer, String> parseHomeworkLectureIDList(String homeworkXmlContent) {
         Map<Integer, String> homeworkLectureMap = new HashMap<>();
 
         try {
@@ -86,7 +83,7 @@ public class PortalXmlParser {
      * @param homeworkXmlContent 과제방에 요청한 결과가 담겨있는 Xml을 가리킵니다.
      * @return Homework형 List를 반환합니다.
      */
-    public List<Homework> parseHomeworkList(String homeworkXmlContent) {
+    public static List<Homework> parseHomeworkList(String homeworkXmlContent) {
         List<Homework> homeworks = new ArrayList<>();
 
         try {

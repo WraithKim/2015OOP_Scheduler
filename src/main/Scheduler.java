@@ -40,11 +40,9 @@ public class Scheduler extends Application{
         // 현재 시간에서 특정 기간까지의 일정을 불러온다.
         // 불러오는 기간이 바뀌면 AlarmQueue의 값도 바뀌어야 함
         Calendar cur = GregorianCalendar.getInstance();
-        AlarmQueue alarmQueue = AlarmQueue.getInstance();
-        FileManager fileManager = FileManager.getInstance();
         for(int i = 0; i < Constant.loadTerm; i++){
             try{
-                fileManager.readScheduleFile(cur).forEach(alarmQueue::add);
+                FileManager.readScheduleFile(cur).forEach(AlarmQueue.alarmQueue::add);
             }catch(IOException ioe) {
                 // nothing to do
             }catch(ClassNotFoundException cnfe){
@@ -61,9 +59,10 @@ public class Scheduler extends Application{
     private void initStudentId() throws Exception{
         // 학생의 학번을 불러옴
         try {
-            FileManager.getInstance().readStudentNumber();
+            FileManager.readStudentNumber();
         }catch(FileNotFoundException fnfe){
             // 설정 창을 열어서 id를 입력받게 해야함.
+            FileManager.makeDateDirectory();
             Stage settingView = SettingStageBuilder.getInstance().newUserSettingViewStage();
             if(settingView != null) settingView.show();
         }
@@ -72,7 +71,7 @@ public class Scheduler extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         // 달력 뷰를 생성
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.CalendarView));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.CalendarView.pathInfomation));
         Parent root = fxmlLoader.load();
         CalendarController calendarController = fxmlLoader.getController();
         // 스케쥴러 관리 프로그램을 생성하고
@@ -88,7 +87,7 @@ public class Scheduler extends Application{
             System.exit(0);
         });
         primaryStage.show();
-        HomeworkSyncManager.getInstance().sync(calendarController);
+        HomeworkSyncManager.homeworkSyncManager.sync(calendarController);
     }
     
 }

@@ -34,12 +34,12 @@ public class HomeworkListController extends AbstactNotificationController implem
     @FXML
     protected void handleSyncButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
         syncButton.setDisable(true);
-        HomeworkSyncManager.getInstance().sync(this);
+        HomeworkSyncManager.homeworkSyncManager.sync(this);
         syncButton.setDisable(false);
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        homeworkTableView.setItems(HomeworkSyncManager.getInstance().getHomeworkList());
+        homeworkTableView.setItems(HomeworkSyncManager.homeworkSyncManager.getHomeworkList());
     }
 }

@@ -26,7 +26,7 @@ public class DayScheduleListStageBuilder {
     }
 
     public Stage newDayScheduleList(Date selectedDate){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.DayScheduleListView));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.DayScheduleListView.pathInfomation));
 
         Parent root;
         try{

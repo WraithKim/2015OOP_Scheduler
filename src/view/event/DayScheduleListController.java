@@ -50,7 +50,7 @@ public class DayScheduleListController extends AbstactNotificationController imp
     @SuppressWarnings("unchecked")
     public boolean saveList(){
         try {
-            return FileManager.getInstance().writeScheduleFile(scheduleTableView.getItems().subList(0, scheduleTableView.getItems().size()));
+            return FileManager.writeScheduleFile(scheduleTableView.getItems().subList(0, scheduleTableView.getItems().size()));
         }catch(IOException ioe){
             ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
             exceptionDialog.show();
@@ -65,7 +65,7 @@ public class DayScheduleListController extends AbstactNotificationController imp
         Calendar dateToLoad = new GregorianCalendar();
         dateToLoad.setTime(this.currentDate);
         try {
-            for (Schedule schedule : FileManager.getInstance().readScheduleFile(dateToLoad)){
+            for (Schedule schedule : FileManager.readScheduleFile(dateToLoad)){
                 scheduleTableView.getItems().add(schedule);
             }
         }catch(IOException ioe){
@@ -99,7 +99,7 @@ public class DayScheduleListController extends AbstactNotificationController imp
         Schedule focusedItem;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
             scheduleTableView.getItems().remove(focusedItem);
-            AlarmQueue.getInstance().remove(focusedItem);
+            AlarmQueue.alarmQueue.remove(focusedItem);
         }
         deleteButton.setDisable(false);
     }

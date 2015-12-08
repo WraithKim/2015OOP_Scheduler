@@ -16,10 +16,8 @@ import java.util.Map;
  * 과제 리스트의 동기화를 관리
  */
 public class HomeworkSyncManager {
-    private static HomeworkSyncManager ourInstance = new HomeworkSyncManager();
+    public static final HomeworkSyncManager homeworkSyncManager = new HomeworkSyncManager();
     private ObservableList<Homework> homeworkList = FXCollections.observableArrayList();
-
-    public static HomeworkSyncManager getInstance(){ return ourInstance; }
 
     private HomeworkSyncManager(){}
 
@@ -28,12 +26,9 @@ public class HomeworkSyncManager {
     }
 
     public boolean sync(AbstactNotificationController controller){
-        PortalXmlParser portalParser = new PortalXmlParser();
-        FileManager fileManager = FileManager.getInstance();
-        AlarmQueue alarmQueue = AlarmQueue.getInstance();
         String savedStudentID;
         try {
-            savedStudentID = fileManager.readStudentNumber();
+            savedStudentID = FileManager.readStudentNumber();
         }catch(IOException ioe) {
             controller.printNotificationPane("Could't get student ID, Please save your ID at Setting");
             return false;
@@ -43,24 +38,24 @@ public class HomeworkSyncManager {
             return false;
         }
         //기존에 테이블에 저장된 리스트를 알람 큐에서 지우기
-        homeworkList.forEach(alarmQueue::remove);
+        homeworkList.forEach(AlarmQueue.alarmQueue::remove);
         homeworkList.clear();
 
         try { //포탈에서 과제 정보를 받아오기
             String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(savedStudentID);
-            Map<Integer, String> lectureMap = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
+            Map<Integer, String> lectureMap = PortalXmlParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
             for (Integer lectureID : lectureMap.keySet()) {
                 String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(savedStudentID, lectureID);
-                List<Homework> remoteHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
+                List<Homework> remoteHomeworkList = PortalXmlParser.parseHomeworkList(homeworkXmlInfo);
 
                 for (Homework homework : remoteHomeworkList) {
                     Homework renamedHomework = new Homework(lectureMap.get(lectureID) + "-" + homework.getName(), homework.getDueDate());
                     homeworkList.add(renamedHomework);
-                    AlarmQueue.getInstance().add(renamedHomework);
+                    AlarmQueue.alarmQueue.add(renamedHomework);
                 }
             }
             try{ //포탈에서 받아온 과제를 저장하기t
-                fileManager.writeHomeworkFile(homeworkList);
+                FileManager.writeHomeworkFile(homeworkList);
             }catch (IOException ioe){
                 controller.printNotificationPane("Couldn't save your homework, Please try again after deleting existing homework list");
                 return false;
@@ -71,9 +66,9 @@ public class HomeworkSyncManager {
             controller.printNotificationPane("Couldn't get homework list. Please check you are connected to internet\n" +
                     "Try to load homework list in local storage");
             try { // 로컬에 저장된 파일을 찾아서 리스트를 만듬\
-                for (Homework homework : fileManager.readHomeworkFile()) {
+                for (Homework homework : FileManager.readHomeworkFile()) {
                     homeworkList.add(homework);
-                    AlarmQueue.getInstance().add(homework);
+                    AlarmQueue.alarmQueue.add(homework);
                 }
                 controller.printNotificationPane("Successfully load homework list");
                 return true;

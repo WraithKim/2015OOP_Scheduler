@@ -26,7 +26,7 @@ public class HomeworkListStageBuilder {
     public Stage newHomeworkListViewStage() throws Exception {
         if(isCreated) return null;
         isCreated = true;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.HomeworkListView));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.HomeworkListView.pathInfomation));
         Parent root = fxmlLoader.load();
         HomeworkListController homeworkListController = fxmlLoader.getController();
 

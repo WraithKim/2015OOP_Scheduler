@@ -43,7 +43,7 @@ public class CalendarController extends AbstactNotificationController implements
     @FXML
     protected void handleHomeworkButton(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
         homeworkButton.setDisable(true);
-        HomeworkSyncManager.getInstance().sync(this);
+        HomeworkSyncManager.homeworkSyncManager.sync(this);
         // 창 생성
         Stage stage = HomeworkListStageBuilder.getInstance().newHomeworkListViewStage();
         if(stage != null) stage.show();
