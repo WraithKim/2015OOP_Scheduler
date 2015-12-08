@@ -19,24 +19,16 @@ import schedule.Schedule;
 public class FileManager {
 	private static final String MAIN_DIRECTORY = "Data";
 	private static final String HOMEWORK_DIRECTORY = "Homework";
-	private static final String STUDENT_NUMBER = "StudentNumber";
+	private static final String STUDENT_NUMBER = "StudentInfo";
 
-	private static final FileManager ourInstance = new FileManager();
-
-	public static FileManager getInstance(){
-		return ourInstance;
-	}
-
-	private FileManager() {
-		String path = makePath();
-		makeDirectory(path);
+	private FileManager(){
 	}
 
 	//내부 메소드
 
 	//path 생성 관련
 
-	private String makePath(String... content) {
+	private static String makePath(String... content) {
 		String path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY;
 
 		if(content != null) {
@@ -47,12 +39,12 @@ public class FileManager {
 		return path;
 	}
 
-	private boolean makeDirectory(String path) {
+	private static boolean makeDirectory(String path) {
 		File dir = new File(path);
 		return dir.mkdir();
 	}
 	
-	private boolean makeYearDir(int year) {
+	private static boolean makeYearDir(int year) {
 		String path = makePath(String.valueOf(year));
 		
 		File dir = new File(path);
@@ -66,7 +58,7 @@ public class FileManager {
 		return true;
 	}
 
-	private String makeSecurity(String str) {
+	private static String makeSecurity(String str) {
 		char[] result = str.toCharArray();
 
 		for(int i = 0 ; i < result.length; i++) {
@@ -78,14 +70,14 @@ public class FileManager {
 
 	//파일 읽기 관련
 
-	private File[] readFileList(Calendar day) {
+	private static File[] readFileList(Calendar day) {
 		String path = makePath(String.valueOf(day.get(Calendar.YEAR)), String.valueOf(day.get(Calendar.MONTH)+1), String.valueOf(day.get(Calendar.DATE)));
 		
 		File file = new File(path);
 		return file.listFiles();
 	}
 	
-	private File[] readHomeworkFileList() {
+	private static File[] readHomeworkFileList() {
 		String path = makePath(HOMEWORK_DIRECTORY);
 		
 		File file = new File(path);
@@ -94,7 +86,7 @@ public class FileManager {
 
 	//파일 쓰기 관련
 
-	private void writeEachFile(Schedule schedule) throws IOException{
+	private static void writeEachFile(Schedule schedule) throws IOException{
 		makeYearDir(schedule.getDueDate().get(Calendar.YEAR));
 		String path = makePath(String.valueOf(schedule.getDueDate().get(Calendar.YEAR)), String.valueOf(schedule.getDueDate().get(Calendar.MONTH) + 1),
 				String.valueOf(schedule.getDueDate().get(Calendar.DATE)));
@@ -111,7 +103,7 @@ public class FileManager {
 		oo.close();
 	} 
 	
-	private void writeEachFile(Homework homework) throws IOException{
+	private static void writeEachFile(Homework homework) throws IOException{
 		String path = makePath(HOMEWORK_DIRECTORY);
 		
 		makeDirectory(path);
@@ -125,7 +117,7 @@ public class FileManager {
 		oo.close();
 	}
 	
-	private void writeEachFile(String studentNumber) throws IOException {	
+	private static void writeEachFile(String studentNumber) throws IOException {
 		String path = makePath(STUDENT_NUMBER);
 		
 		FileOutputStream fos = new FileOutputStream(path);
@@ -137,9 +129,34 @@ public class FileManager {
 	
 	//interface 부분
 
+	public static void makeDateDirectory(){
+		String path = FileManager.makePath();
+		FileManager.makeDirectory(path);
+	}
+
+	public static boolean containID(){
+		try{
+			readStudentNumber();
+		}catch(IOException | ClassNotFoundException e){
+			return false;
+		}
+		return true;
+	}
+
+	public static boolean containScheduleList(Calendar day){
+		try{
+			if(readScheduleFile(day).isEmpty()){
+				return false;
+			}
+		}catch(IOException | ClassNotFoundException e){
+			return false;
+		}
+		return true;
+	}
+
 	//파일 읽기 관련
 
-	public ArrayList<Schedule> readScheduleFile(Calendar day) throws IOException, ClassNotFoundException {
+	public static ArrayList<Schedule> readScheduleFile(Calendar day) throws IOException, ClassNotFoundException {
 
 		ArrayList<Schedule> resultSet = new ArrayList<>();
 
@@ -157,7 +174,7 @@ public class FileManager {
 		return resultSet;
 	}
 
-	public ArrayList<Homework> readHomeworkFile() throws IOException, ClassNotFoundException {
+	public static ArrayList<Homework> readHomeworkFile() throws IOException, ClassNotFoundException {
 		ArrayList<Homework> resultSet = new ArrayList<>();
 
 		File[] fileList = readHomeworkFileList();
@@ -174,7 +191,7 @@ public class FileManager {
 		return resultSet;
 	}
 
-	public String readStudentNumber() throws IOException, ClassNotFoundException {
+	public static String readStudentNumber() throws IOException, ClassNotFoundException {
 
 		String path = makePath(STUDENT_NUMBER);
 
@@ -188,7 +205,7 @@ public class FileManager {
 
 	//파일 쓰기 관련
 
-	public boolean writeScheduleFile(List<Schedule> scheduleList) throws IOException {
+	public static boolean writeScheduleFile(List<Schedule> scheduleList) throws IOException {
 		if(scheduleList.isEmpty())
 			return false;
 		
@@ -210,7 +227,7 @@ public class FileManager {
 		return true;
 	}
 	
-	public boolean writeHomeworkFile(List<Homework> homeworkList) throws IOException {
+	public static boolean writeHomeworkFile(List<Homework> homeworkList) throws IOException {
 		if(homeworkList.isEmpty())
 			return false;
 		
@@ -230,7 +247,7 @@ public class FileManager {
 		return true;
 	}
 	
-	public void writeStudentNumber(String studentNumber) throws IOException {
+	public static void writeStudentNumber(String studentNumber) throws IOException {
 		studentNumber = makeSecurity(studentNumber);
 		
 		writeEachFile(studentNumber);

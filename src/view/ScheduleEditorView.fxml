@@ -59,7 +59,7 @@
    <AnchorPane prefHeight="64.0" prefWidth="318.0">
       <Button fx:id="scheduleSaveButton" alignment="CENTER_RIGHT" layoutX="252.0" layoutY="20.0"
               mnemonicParsing="false" text="Save" AnchorPane.rightAnchor="14.0"
-              onAction="#handleSaveButtonAction">
+              onAction="#handleSaveButtonAction" defaultButton="true">
          <tooltip>
             <Tooltip text="Save this schedule in list"/>
          </tooltip>

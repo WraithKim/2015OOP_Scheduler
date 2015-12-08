@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.controlsfx.dialog.ExceptionDialog;
 import schedule.Schedule;
 import util.AlarmQueue;
 import util.FileManager;
@@ -22,7 +23,7 @@ import java.util.*;
  *
  * 하루 일정 창에 달린 이벤트 리스너
  */
-public class DayScheduleListController implements Initializable{
+public class DayScheduleListController extends AbstactNotificationController implements Initializable{
     @FXML
     private Label dateLabel;
 
@@ -49,9 +50,10 @@ public class DayScheduleListController implements Initializable{
     @SuppressWarnings("unchecked")
     public boolean saveList(){
         try {
-            return FileManager.getInstance().writeScheduleFile(scheduleTableView.getItems().subList(0, scheduleTableView.getItems().size()));
+            return FileManager.writeScheduleFile(scheduleTableView.getItems().subList(0, scheduleTableView.getItems().size()));
         }catch(IOException ioe){
-            System.err.println("Something wrong during saving your schedule list");
+            ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
+            exceptionDialog.show();
             return false;
         }
     }
@@ -63,11 +65,12 @@ public class DayScheduleListController implements Initializable{
         Calendar dateToLoad = new GregorianCalendar();
         dateToLoad.setTime(this.currentDate);
         try {
-            for (Schedule schedule : FileManager.getInstance().readScheduleFile(dateToLoad)){
+            for (Schedule schedule : FileManager.readScheduleFile(dateToLoad)){
                 scheduleTableView.getItems().add(schedule);
             }
         }catch(IOException ioe){
-            System.err.println("Couldn't load schedule files");
+            ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
+            exceptionDialog.show();
         }
     }
 
@@ -96,7 +99,7 @@ public class DayScheduleListController implements Initializable{
         Schedule focusedItem;
         if((focusedItem = scheduleTableView.getFocusModel().getFocusedItem()) != null){
             scheduleTableView.getItems().remove(focusedItem);
-            AlarmQueue.getInstance().remove(focusedItem);
+            AlarmQueue.alarmQueue.remove(focusedItem);
         }
         deleteButton.setDisable(false);
     }

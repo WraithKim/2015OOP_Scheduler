@@ -5,6 +5,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.controlsfx.control.NotificationPane;
+import org.controlsfx.dialog.ExceptionDialog;
 import util.Constant;
 import view.event.DayScheduleListController;
 
@@ -23,21 +25,20 @@ public class DayScheduleListStageBuilder {
         return ourInstance;
     }
 
-    public Stage newDayScheduleList(Date selectedDate){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.DayScheduleListView));
-        Parent root = null;
-        try{
-            root = fxmlLoader.load();
-        }catch(IOException ioe){
-            System.err.println("Couldn't load fxml file");
-            return null;
-        }
+    public Stage newDayScheduleList(Date selectedDate) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.DayScheduleListView.pathInfomation));
+
+        Parent root = fxmlLoader.load();
         DayScheduleListController dayScheduleListController = fxmlLoader.getController();
+
+        root = NotificationPaneUpgrader.getInstance().upgrade(root);
+        dayScheduleListController.setNotificationPane((NotificationPane)root);
+
         try {
             dayScheduleListController.loadScheduleList(selectedDate);
         }catch(ClassNotFoundException cnfe){
-            System.err.println("Data has corrupted in Data directory\n" +
-                    "Maybe your Scheduler version doesn't match with Schedule files.");
+            ExceptionDialog exceptionDialog = new ExceptionDialog(cnfe);
+            exceptionDialog.show();
             return null;
         }
         Scene scene = new Scene(root);

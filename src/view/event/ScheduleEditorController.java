@@ -6,7 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import schedule.Priority;
 import schedule.Schedule;
 import util.AlarmQueue;
@@ -19,7 +18,7 @@ import java.util.*;
  *
  * 일정 편집 창에 달린 이벤트 리스너
  */
-public class ScheduleEditorController implements Initializable{
+public class ScheduleEditorController extends AbstactNotificationController implements Initializable{
 
     private boolean editMode;
     private Date currentDate;
@@ -58,7 +57,7 @@ public class ScheduleEditorController implements Initializable{
     public void setEditableView(Schedule editingSchedule) {
         this.editMode = true;
         this.editingSchedule = editingSchedule;
-        AlarmQueue.getInstance().remove(editingSchedule);
+        AlarmQueue.alarmQueue.remove(editingSchedule);
         nameTextField.setDisable(true);
         nameTextField.setText(editingSchedule.getName());
         switch(editingSchedule.getPriority()){
@@ -79,23 +78,23 @@ public class ScheduleEditorController implements Initializable{
 
     @FXML
     protected void handleSaveButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
-        if(nameTextField.getText().isEmpty()) return;
+        if(nameTextField.getText().isEmpty()){
+            printNotificationPane("Must file name text field");
+            return;
+        }
         scheduleSaveButton.setDisable(true);
-        AlarmQueue alarmQueue = AlarmQueue.getInstance();
         Priority priority = Priority.NONE;
         if(priorityUrgent.isSelected()) priority = Priority.URGENT;
         else if(priorityNoticed.isSelected()) priority = Priority.NOTICED;
 
         if(editMode){
-            alarmQueue.remove(editingSchedule);
+            AlarmQueue.alarmQueue.remove(editingSchedule);
             editingSchedule.setPriority(priority);
             Calendar newDueDate = editingSchedule.getDueDate();
             newDueDate.set(Calendar.HOUR_OF_DAY, hourComboBox.getSelectionModel().getSelectedIndex());
             newDueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             editingSchedule.setDueDate(newDueDate);
             editingSchedule.setDescription(descriptionTextArea.getText());
-            //System.out.println("new Schedule alarm time: "+editingSchedule.getAlarmTime());
-
         }else{
             Calendar dueDate = new GregorianCalendar();
             dueDate.setTime(currentDate);
@@ -103,12 +102,13 @@ public class ScheduleEditorController implements Initializable{
             dueDate.set(Calendar.MINUTE, minuteComboBox.getSelectionModel().getSelectedIndex());
             editingSchedule = new Schedule(nameTextField.getText(), dueDate, priority);
             editingSchedule.setDescription(descriptionTextArea.getText());
-            //System.out.println("new Schedule alarm time: "+editingSchedule.getAlarmTime());
             originDaySchedule.add(editingSchedule);
+            editMode = true;
+            nameTextField.setDisable(true);
         }
-        alarmQueue.add(editingSchedule);
+        AlarmQueue.alarmQueue.add(editingSchedule);
         scheduleSaveButton.setDisable(false);
-        ((Stage)scheduleSaveButton.getScene().getWindow()).close();
+        printNotificationPane("Save successfully");
     }
 
     @Override

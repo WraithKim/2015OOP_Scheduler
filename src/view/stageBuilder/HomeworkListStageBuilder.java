@@ -5,7 +5,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.controlsfx.control.NotificationPane;
 import util.Constant;
+import view.event.HomeworkListController;
+
+import java.io.IOException;
 
 /**
  * Created by Donghwan on 12/6/2015.
@@ -21,11 +25,16 @@ public class HomeworkListStageBuilder {
 
     private boolean isCreated = false;
 
-    public Stage newHomeworkListViewStage() throws Exception {
+    public Stage newHomeworkListViewStage() throws IOException {
         if(isCreated) return null;
         isCreated = true;
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.HomeworkListView));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.HomeworkListView.pathInfomation));
         Parent root = fxmlLoader.load();
+        HomeworkListController homeworkListController = fxmlLoader.getController();
+
+        root = NotificationPaneUpgrader.getInstance().upgrade(root);
+        homeworkListController.setNotificationPane((NotificationPane)root);
+
         Scene scene = new Scene(root);
         Stage HomeworkListView = new Stage();
         HomeworkListView.setScene(scene);

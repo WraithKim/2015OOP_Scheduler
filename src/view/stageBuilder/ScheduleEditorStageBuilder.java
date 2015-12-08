@@ -5,10 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.controlsfx.control.NotificationPane;
 import schedule.Schedule;
 import util.Constant;
 import view.event.ScheduleEditorController;
 
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -25,12 +27,14 @@ public class ScheduleEditorStageBuilder {
         return ourInstance;
     }
 
-    public Stage newAddingScheduleEditor(Date currentDate, ObservableList<Schedule> originScheduleList) throws Exception{
-        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ScheduleEditorView));
+    public Stage newAddingScheduleEditor(Date currentDate, ObservableList<Schedule> originScheduleList) throws IOException{
+        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.ScheduleEditorView.pathInfomation));
         Parent root = fxmlLoader.load();
         ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
         scheduleEditorController.setAddableView(currentDate, originScheduleList);
 
+        root = NotificationPaneUpgrader.getInstance().upgrade(root);
+        scheduleEditorController.setNotificationPane((NotificationPane)root);
         Scene scene = new Scene(root);
         Stage scheduleEditorView = new Stage();
         scheduleEditorView.setScene(scene);
@@ -39,13 +43,19 @@ public class ScheduleEditorStageBuilder {
         return scheduleEditorView;
     }
 
-    public Stage newEditingScheduleEditor(Schedule editingSchedule) throws Exception{
-        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ScheduleEditorView));
+    public Stage newEditingScheduleEditor(Schedule editingSchedule) throws IOException{
+        fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.ScheduleEditorView.pathInfomation));
         Parent root = fxmlLoader.load();
         ScheduleEditorController scheduleEditorController = fxmlLoader.getController();
         scheduleEditorController.setEditableView(editingSchedule);
 
-        Scene scene = new Scene(root);
+        NotificationPane notificationPane = new NotificationPane();
+        notificationPane.setContent(root);
+        notificationPane.setShowFromTop(true);
+        notificationPane.setCloseButtonVisible(true);
+        scheduleEditorController.setNotificationPane(notificationPane);
+
+        Scene scene = new Scene(notificationPane);
         Stage scheduleEditorView = new Stage();
         scheduleEditorView.setScene(scene);
         scheduleEditorView.setTitle("Existing Schedule Edit");
