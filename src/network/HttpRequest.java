@@ -55,7 +55,6 @@ public class HttpRequest {
             String content = EntityUtils.toString(entity);
 
             content = new String(content.getBytes(interpretEncoding));
-            System.out.println(content);
             return content;
         } catch (URISyntaxException e) {
             e.printStackTrace();

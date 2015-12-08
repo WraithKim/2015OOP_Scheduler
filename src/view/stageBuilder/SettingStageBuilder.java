@@ -53,7 +53,6 @@ public class SettingStageBuilder {
                 try {
                     FileManager.readStudentNumber();
                 } catch (Exception e) {
-
                     System.exit(1);
                 }
                 isCreated = false;
