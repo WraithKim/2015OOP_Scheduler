@@ -135,7 +135,7 @@ public class PortalXmlParser {
         return homeworks;
     }
 
-    public boolean parseLoginResult(String loginXmlContent) {
+    public static boolean parseLoginResult(String loginXmlContent) {
         try {
             InputSource inputSource = new InputSource(new StringReader(loginXmlContent));
             Document homeworkDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
