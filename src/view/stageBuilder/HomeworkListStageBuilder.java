@@ -9,6 +9,8 @@ import org.controlsfx.control.NotificationPane;
 import util.Constant;
 import view.event.HomeworkListController;
 
+import java.io.IOException;
+
 /**
  * Created by Donghwan on 12/6/2015.
  *
@@ -23,7 +25,7 @@ public class HomeworkListStageBuilder {
 
     private boolean isCreated = false;
 
-    public Stage newHomeworkListViewStage() throws Exception {
+    public Stage newHomeworkListViewStage() throws IOException {
         if(isCreated) return null;
         isCreated = true;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constant.ViewPath.HomeworkListView.pathInfomation));

@@ -10,6 +10,7 @@ import schedule.Schedule;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -43,7 +44,7 @@ public class AlarmThread extends Thread{
         nextDay.set(Calendar.HOUR_OF_DAY, 0);
         nextDay.set(Calendar.MINUTE, 0);
         nextDay.add(Calendar.DAY_OF_MONTH, 1);
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd");
 
         try {
             while (!this.isInterrupted()) {
@@ -53,7 +54,9 @@ public class AlarmThread extends Thread{
                         Platform.runLater(()->{
                             Notifications n = Notifications.create()
                             		.title(top.getName())
-                            		.text("Priority: "+top.getPriority().toString()+"\n"+ "Description: "+top.getDescription());
+                            		.text("Priority: "+top.getPriority().toString()+"\n"+
+                                            "Due Date: "+ simpleDateFormat.format(top.getDueDate().getTime()) +"\n"+
+                                            "Description: "+top.getDescription());
                             if(Constant.OS.contains("mac") ||
                                     Constant.OS.contains("nix") ||
                                     Constant.OS.contains("nux") ||

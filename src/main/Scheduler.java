@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -11,10 +12,12 @@ import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
 
 import org.controlsfx.control.NotificationPane;
+import org.controlsfx.control.Notifications;
 import org.controlsfx.dialog.ExceptionDialog;
 
 import util.*;
 import view.event.CalendarController;
+import view.stageBuilder.HomeworkListStageBuilder;
 import view.stageBuilder.NotificationPaneUpgrader;
 import util.AlarmThread;
 import util.AlarmQueue;
@@ -190,9 +193,39 @@ public class Scheduler extends Application{
                 System.exit(0);
                 tray.remove(trayIcon);
             });
+
+            java.awt.MenuItem settingItem = new java.awt.MenuItem("Setting");
+            settingItem.addActionListener(event -> {
+                Platform.runLater(()->{
+                    try {
+                        Stage settingView = SettingStageBuilder.getInstance().defaultSettingViewStage();
+                        if (settingView != null) settingView.show();
+                    }catch(IOException ioe){
+                        ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
+                        exceptionDialog.show();
+                    }
+                });
+            });
+
+
+            java.awt.MenuItem homeworkItem = new java.awt.MenuItem("Homework");
+            homeworkItem.addActionListener(event -> {
+                Platform.runLater(()->{
+                    // 창 생성
+                    try {
+                        Stage stage = HomeworkListStageBuilder.getInstance().newHomeworkListViewStage();
+                        if(stage != null) stage.show();
+                    }catch(IOException ioe){
+                        ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
+                        exceptionDialog.show();
+                    }
+                });
+            });
             
             // setup the popup menu for the application.
             final java.awt.PopupMenu popup = new java.awt.PopupMenu();
+            popup.add(homeworkItem);
+            popup.add(settingItem);
             popup.add(exitItem);
             trayIcon.setPopupMenu(popup);
 
