@@ -2,17 +2,23 @@ package network;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import util.Constant;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Lumin on 2015-11-29.
@@ -49,6 +55,7 @@ public class HttpRequest {
             String content = EntityUtils.toString(entity);
 
             content = new String(content.getBytes(interpretEncoding));
+            System.out.println(content);
             return content;
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -57,5 +64,42 @@ public class HttpRequest {
         }
     }
 
+    public static String sendHttpPostRequest(String urlToSend, Map<String, String> formData, String interpretEncoding) throws IOException {
+        try {
+            URI targetUri = new URI(urlToSend);
+
+            targetUri = new URIBuilder(targetUri).build();
+            HttpPost postObject = new HttpPost(targetUri);
+            postObject.setEntity(new UrlEncodedFormEntity(fetchNameValuePair(formData)));
+
+            HttpClient client = HttpClientBuilder.create().build();
+            HttpResponse response = client.execute(postObject);
+            HttpEntity entity = response.getEntity();
+            String content = EntityUtils.toString(entity);
+
+            content = new String(content.getBytes(interpretEncoding));
+            System.out.println(content);
+            return content;
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            System.out.println("HttpRequest::sendHttpPostRequest - Uri를 올바르게 생성할 수 없습니다.");
+            return Constant.EMPTY_STRING;
+        }
+    }
+
+    /**
+     * 주어진 Name/Value Map으로부터, Name/Value Pair의 리스트를 만듭니다.
+     * @param parameter 리스트를 만들 Name/Value Map입니다.
+     * @return 만들어진 Name/Value Pair 리스트입니다.
+     */
+    private static List<NameValuePair> fetchNameValuePair(Map<String, String> parameter) {
+        List<NameValuePair> nameValuePairs = new ArrayList<>();
+
+        for (String mapKey : parameter.keySet()) {
+            nameValuePairs.add(new BasicNameValuePair(mapKey, parameter.get(mapKey)));
+        }
+
+        return nameValuePairs;
+    }
 }
 

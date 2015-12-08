@@ -1,6 +1,7 @@
 package util;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -162,4 +163,23 @@ public class PortalXmlParser {
         return homeworks;
     }
 
+    public boolean parseLoginResult(String loginXmlContent) {
+        try {
+            InputSource inputSource = new InputSource(new StringReader(loginXmlContent));
+            Document homeworkDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(inputSource);
+            XPath xmlPath = XPathFactory.newInstance().newXPath();
+
+            // vector id = plan을 담는 노드를 탐색
+            NodeList loginResultNode = (NodeList) xmlPath.compile("html/body/div/form/input[@name='callsrc']").evaluate(homeworkDocument, XPathConstants.NODESET);
+
+            for (int i = 0; i < loginResultNode.getLength(); i++) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
