@@ -37,8 +37,8 @@ public class PortalXmlParser {
      * @param homeworkXmlContent 과제 리스트를 담고 있는 Xml 내용을 가리킵니다.
      * @return 과목 ID들의 Set을 반환합니다.
      */
-    public Set<Integer> parseHomeworkLectureIDList(String homeworkXmlContent) {
-        Set<Integer> homeworkLectureIDSet = new TreeSet<>();
+    public Map<Integer, String> parseHomeworkLectureIDList(String homeworkXmlContent) {
+        Map<Integer, String> homeworkLectureMap = new HashMap<>();
 
         try {
             InputSource inputSource = new InputSource(new StringReader(homeworkXmlContent));
@@ -62,9 +62,7 @@ public class PortalXmlParser {
                     Calendar homeworkEndCalendar = Calendar.getInstance();
                     homeworkEndCalendar.setTime(dateFormat.parse(homeworkEndPeriod));
 
-                    homeworkLectureIDSet.add(lectureNumber);
-
-                    Homework.putHomeworkLectureName(lectureNumber, lectureName);
+                    homeworkLectureMap.put(lectureNumber, lectureName);
                 }
             }
 
@@ -79,7 +77,7 @@ public class PortalXmlParser {
             System.out.println("PortalXmlParser::parseHomeworkLectureIDList - XPath에서 실행하는 표현식이 올바르지 않습니다.");
         }
 
-        return homeworkLectureIDSet;
+        return homeworkLectureMap;
     }
 
     /**

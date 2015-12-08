@@ -15,10 +15,7 @@ import util.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Donghwan on 12/6/2015.
@@ -76,14 +73,14 @@ public class HomeworkListController implements Initializable{
 
         try { //포탈에서 과제 정보를 받아오기
             String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(savedStudentID);
-            Set<Integer> lectureIDSet = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
+            Map<Integer, String> lectureMap = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
             ArrayList<Homework> newHomeworkList = new ArrayList<>();
-            for (Integer lectureID : lectureIDSet) {
+            for (Integer lectureID : lectureMap.keySet()) {
                 String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(savedStudentID, lectureID);
                 List<Homework> remoteHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
 
                 for (Homework homework : remoteHomeworkList) {
-                    Homework renamedHomework = new Homework(Homework.getHomeworkLectureName(lectureID) + "-" + homework.getName(), homework.getDueDate());
+                    Homework renamedHomework = new Homework(lectureMap.get(lectureID) + "-" + homework.getName(), homework.getDueDate());
                 	newHomeworkList.add(renamedHomework);
                     AlarmQueue.getInstance().add(renamedHomework);
                 }
