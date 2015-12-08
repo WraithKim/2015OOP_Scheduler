@@ -119,6 +119,7 @@ public class PortalXmlParser {
 
                     Homework homeworkInst = new Homework(homeworkName, homeworkEndCalendar);
                     homeworks.add(homeworkInst);
+
                 }
             }
 
