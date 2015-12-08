@@ -45,5 +45,8 @@
         <VBox.margin>
             <Insets left="10.0" right="10.0" top="10.0" bottom="10.0"/>
         </VBox.margin>
+        <tooltip>
+            <Tooltip text="Sync homework list with CAU portal, if sync failed, it will load latest local backup."/>
+        </tooltip>
     </Button>
 </VBox>

@@ -22,7 +22,7 @@
    <Button fx:id="settingSaveButton" mnemonicParsing="false" onAction="#handleSaveAction" text="Save"
            defaultButton="true">
       <tooltip>
-         <Tooltip text="Press Save button to save your student ID"/>
+         <Tooltip text="Save your student ID"/>
       </tooltip>
       <HBox.margin>
          <Insets bottom="10.0" right="10.0" top="10.0"/>

@@ -16,6 +16,9 @@
                     <BorderPane.margin>
                         <Insets left="10.0" />
                     </BorderPane.margin>
+                    <tooltip>
+                        <Tooltip text="Open Setting window"/>
+                    </tooltip>
                 </Button>
             </left>
             <right>
@@ -23,6 +26,9 @@
                     <BorderPane.margin>
                         <Insets right="10.0" />
                     </BorderPane.margin>
+                    <tooltip>
+                        <Tooltip text="Show homework list from CAU Portal"/>
+                    </tooltip>
                 </Button>
             </right>
 
