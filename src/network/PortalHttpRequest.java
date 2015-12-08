@@ -41,6 +41,7 @@ public class PortalHttpRequest {
         return HttpRequest.sendHttpPostRequest(RequestList.HomeworkList.getMappedUrl(), payLoad, StandardCharsets.ISO_8859_1.toString());
     }
 
+
     /**
      * 요청할 수 있는 Request의 목록을 나열하는 열거형입니다.
      */

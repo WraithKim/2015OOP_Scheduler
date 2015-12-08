@@ -2,17 +2,23 @@ package network;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import util.Constant;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Lumin on 2015-11-29.
@@ -49,6 +55,7 @@ public class HttpRequest {
             String content = EntityUtils.toString(entity);
 
             content = new String(content.getBytes(interpretEncoding));
+            System.out.println(content);
             return content;
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -56,6 +63,5 @@ public class HttpRequest {
             return Constant.EMPTY_STRING;
         }
     }
-
 }
 
