@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import network.PortalHttpRequest;
-import org.controlsfx.control.NotificationPane;
 import schedule.Homework;
 import util.*;
 
@@ -22,7 +21,7 @@ import java.util.*;
  *
  * 과제 리스트 컨트롤러
  */
-public class HomeworkListController implements Initializable{
+public class HomeworkListController extends AbstactNotificationController implements Initializable{
     @FXML
     private TableView<Homework> homeworkTableView;
 
@@ -36,20 +35,6 @@ public class HomeworkListController implements Initializable{
 
     @FXML
     private Button syncButton;
-
-    private NotificationPane notificationPane;
-
-    public void setNotificationPane(NotificationPane notificationPane) {
-        this.notificationPane = notificationPane;
-    }
-
-    private void printNotificationPane(String string){
-        if(notificationPane.isShowing()) {
-            notificationPane.hide();
-        }
-        notificationPane.setText(string);
-        notificationPane.show();
-    }
 
     public boolean sync(){
         PortalXmlParser portalParser = new PortalXmlParser();
@@ -66,28 +51,29 @@ public class HomeworkListController implements Initializable{
                         "Maybe your Scheduler version doesn't match with Schedule files.");
             return false;
         }
-        if(homeworkTableView.getItems() != null) { //기존에 테이블에 저장된 리스트를 알람 큐에서 지우기
-            ObservableList<Homework> preHomeworkList = homeworkTableView.getItems();
-            preHomeworkList.forEach(alarmQueue::remove);
+        ObservableList<Homework> homeworkList = homeworkTableView.getItems();
+        if(homeworkList != null) { //기존에 테이블에 저장된 리스트를 알람 큐에서 지우기
+            homeworkList.forEach(alarmQueue::remove);
+            homeworkList.clear();
+        }else{
+            homeworkList = FXCollections.observableArrayList();
         }
 
         try { //포탈에서 과제 정보를 받아오기
             String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(savedStudentID);
             Map<Integer, String> lectureMap = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
-            ArrayList<Homework> newHomeworkList = new ArrayList<>();
             for (Integer lectureID : lectureMap.keySet()) {
                 String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(savedStudentID, lectureID);
                 List<Homework> remoteHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
 
                 for (Homework homework : remoteHomeworkList) {
                     Homework renamedHomework = new Homework(lectureMap.get(lectureID) + "-" + homework.getName(), homework.getDueDate());
-                	newHomeworkList.add(renamedHomework);
+                    homeworkList.add(renamedHomework);
                     AlarmQueue.getInstance().add(renamedHomework);
                 }
             }
-            homeworkTableView.setItems(FXCollections.observableArrayList(newHomeworkList));
-            try{ //포탈에서 받아온 과제를 저장하기
-                fileManager.writeHomeworkFile(newHomeworkList);
+            try{ //포탈에서 받아온 과제를 저장하기t
+                fileManager.writeHomeworkFile(homeworkList);
             }catch (IOException ioe){
                 printNotificationPane("Couldn't save your homework, Please try again after deleting existing homework list");
                 return false;

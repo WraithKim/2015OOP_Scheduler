@@ -3,8 +3,6 @@ package view.event;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
-
 import extfx.scene.control.CalendarView;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
@@ -12,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import org.controlsfx.control.NotificationPane;
 import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.HomeworkListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
@@ -24,7 +21,7 @@ import view.stageBuilder.SettingStageBuilder;
  *
  * 달력 창에 달린 이벤트 리스너
  */
-public class CalendarController implements Initializable {
+public class CalendarController extends AbstactNotificationController implements Initializable {
 	
 	@FXML
     private CalendarView calendarView;
@@ -35,12 +32,6 @@ public class CalendarController implements Initializable {
 
     @FXML
     private Button homeworkButton;
-
-    private NotificationPane notificationPane;
-
-    public void setNotificationPane(NotificationPane notificationPane){
-        this.notificationPane = notificationPane;
-    }
 
     @FXML
     protected void handleSettingButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{

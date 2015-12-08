@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import org.controlsfx.control.NotificationPane;
 import org.controlsfx.dialog.ExceptionDialog;
 import schedule.Schedule;
 import util.AlarmQueue;
@@ -24,7 +23,7 @@ import java.util.*;
  *
  * 하루 일정 창에 달린 이벤트 리스너
  */
-public class DayScheduleListController implements Initializable{
+public class DayScheduleListController extends AbstactNotificationController implements Initializable{
     @FXML
     private Label dateLabel;
 
@@ -45,12 +44,6 @@ public class DayScheduleListController implements Initializable{
     private Button deleteButton;
 
     private Date currentDate;
-
-    private NotificationPane notificationPane;
-
-    public void setNotificationPane(NotificationPane notificationPane) {
-        this.notificationPane = notificationPane;
-    }
 
     // 현재 리스트를 일정에 저장함
     // 지금은 창 종료 이벤트가 호출함

@@ -22,19 +22,13 @@ import java.util.ResourceBundle;
  * <p>
  * 설정 창에 달린 이벤트 리스너
  */
-public class SettingController implements Initializable{
+public class SettingController extends AbstactNotificationController implements Initializable{
 
     @FXML
     private RestrictiveTextField settingSIDInputForm;
 
     @FXML
     private Button settingSaveButton;
-
-    private NotificationPane notificationPane;
-
-    public void setNotificationPane(NotificationPane notificationPane) {
-        this.notificationPane = notificationPane;
-    }
 
     @FXML
     protected void handleChangedIDInputForm(KeyEvent event){
@@ -52,10 +46,7 @@ public class SettingController implements Initializable{
         try {
             FileManager.getInstance().writeStudentNumber(newStudentID);
         } catch (IOException ioe) {
-            if(!notificationPane.isShowing()) {
-                notificationPane.setText("Something wrong during save StudentID, Please try save again");
-                notificationPane.show();
-            }
+            printNotificationPane("Something wrong during save StudentID, Please try save again");
             return;
         }
 

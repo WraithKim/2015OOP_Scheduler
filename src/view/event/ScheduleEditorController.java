@@ -6,8 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
-import org.controlsfx.control.NotificationPane;
 import schedule.Priority;
 import schedule.Schedule;
 import util.AlarmQueue;
@@ -20,7 +18,7 @@ import java.util.*;
  *
  * 일정 편집 창에 달린 이벤트 리스너
  */
-public class ScheduleEditorController implements Initializable{
+public class ScheduleEditorController extends AbstactNotificationController implements Initializable{
 
     private boolean editMode;
     private Date currentDate;
@@ -56,12 +54,6 @@ public class ScheduleEditorController implements Initializable{
     @FXML
     private Button scheduleSaveButton;
 
-    private NotificationPane notificationPane;
-
-    public void setNotificationPane(NotificationPane notificationPane) {
-        this.notificationPane = notificationPane;
-    }
-
     public void setEditableView(Schedule editingSchedule) {
         this.editMode = true;
         this.editingSchedule = editingSchedule;
@@ -82,13 +74,6 @@ public class ScheduleEditorController implements Initializable{
         this.editMode = false;
         this.currentDate = currentDate;
         this.originDaySchedule = originDaySchedule;
-    }
-
-    private void printNotificationPane(String string){
-        if(!notificationPane.isShowing()) {
-            notificationPane.setText(string);
-            notificationPane.show();
-        }
     }
 
     @FXML
