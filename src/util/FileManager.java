@@ -134,9 +134,11 @@ public class FileManager {
 		FileManager.makeDirectory(path);
 	}
 
-	public static boolean containID(){
+	public static boolean containScheduleList(Calendar day){
 		try{
-			readStudentNumber();
+			if(readScheduleFile(day).isEmpty()){
+				return false;
+			}
 		}catch(IOException | ClassNotFoundException e){
 			return false;
 		}

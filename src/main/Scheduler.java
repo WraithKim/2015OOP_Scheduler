@@ -4,12 +4,15 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.SceneAntialiasing;
 import javafx.stage.Stage;
+
 import org.controlsfx.control.NotificationPane;
 import org.controlsfx.dialog.ExceptionDialog;
+
 import util.*;
 import view.event.CalendarController;
 import view.stageBuilder.NotificationPaneUpgrader;
@@ -19,10 +22,12 @@ import util.Constant;
 import util.FileManager;
 import util.ResourceLoader;
 import view.stageBuilder.SettingStageBuilder;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -112,8 +117,8 @@ public class Scheduler extends Application{
     private static void initFX(JFXPanel fxPanel) {
         Scene scene = createScene();
         if(scene == null) System.exit(1);
+        //_setDraggable(scene);
         fxPanel.setScene(scene);
-        _setDraggable(scene);
     }
     
     private static Scene createScene() {
@@ -129,12 +134,16 @@ public class Scheduler extends Application{
             CalendarController calendarController = fxmlLoader.getController();
             root = NotificationPaneUpgrader.getInstance().upgrade(root);
             calendarController.setNotificationPane((NotificationPane)root);
+            
+            _setDraggable(root);
             // 안티앨리어싱
             Scene scene = new Scene(root, 600, 500, false, SceneAntialiasing.BALANCED);
             scene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+            
             // CSS
             scene.getStylesheets().add(Scheduler.class.getResource("/view/Scheduler.css").toExternalForm());
             HomeworkSyncManager.homeworkSyncManager.sync(calendarController);
+            
             return scene;
         } catch (IOException ioe) {
             ExceptionDialog exceptionDialog = new ExceptionDialog(ioe);
@@ -147,7 +156,7 @@ public class Scheduler extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {}
 
-    private static void _setDraggable(Scene se){
+    private static void _setDraggable(Node se){
     	
     	se.setOnMousePressed(mouseEvent -> {
 				dragDelta.x = mouseEvent.getSceneX();

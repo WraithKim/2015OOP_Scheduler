@@ -1,6 +1,5 @@
 /* Main Scene CSS */
 
-
 .root {
 	//-fx-background-image: url("background.jpg");
 	-fx-font-family: "NanumGothic", "Dotum";
@@ -8,7 +7,7 @@
 }
 
 #rootPane {
-    -fx-border-color: white;
+    	-fx-border-color: white;
 	-fx-border-style: solid;
 	-fx-border-width: 0;
 	-fx-radius: 10px;
@@ -25,6 +24,10 @@
 	-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 0.0, 0.0);
 }
 
+
+//////////////// Notificiaton
+
+
 .notification-bar > .pane {
 	-fx-background-color: rgba(0, 0, 0, 0.8);
 	-fx-background-radius: 10;
@@ -36,6 +39,33 @@
 	-fx-font-size: 13pt;
 	-fx-font-family: "NanumGothic";
 }
+
+
+//////////////////// Notification bar
+
+.notification-pane {
+	-fx-background-color: transparent;
+}
+
+.notification-pane .notification-bar > .pane {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+    -fx-margin: 300px;
+    -fx-padding: 0 20 0 20;
+}
+
+.notification-pane.top .notification-bar > .pane {
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+    -fx-margin: 300px;
+    -fx-padding: 0 20 0 20;
+    -fx-background-insets: 0 0 0 0, 0 0 1 0, 0 0 2 0;
+}
+
+.notification-pane .notification-bar > .pane .label {
+    -fx-background-color: transparent;
+    -fx-font-size: 1.166667em; /*15px;*/
+    -fx-text-fill: #FFFFFF;
+}
+
 
 
 /******************************************************************************
