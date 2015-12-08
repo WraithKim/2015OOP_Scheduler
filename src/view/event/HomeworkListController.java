@@ -1,18 +1,13 @@
 package view.event;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import network.PortalHttpRequest;
 import schedule.Homework;
 import util.*;
-
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -36,81 +31,15 @@ public class HomeworkListController extends AbstactNotificationController implem
     @FXML
     private Button syncButton;
 
-    public boolean sync(){
-        PortalXmlParser portalParser = new PortalXmlParser();
-        FileManager fileManager = FileManager.getInstance();
-        AlarmQueue alarmQueue = AlarmQueue.getInstance();
-        String savedStudentID;
-        try {
-            savedStudentID = fileManager.readStudentNumber();
-        }catch(IOException ioe) {
-            printNotificationPane("Could't get student ID, Please save your ID at Setting");
-            return false;
-        }catch(ClassNotFoundException cnfe) {
-            printNotificationPane("Data has corrupted in Data directory\n" +
-                        "Maybe your Scheduler version doesn't match with Schedule files.");
-            return false;
-        }
-        ObservableList<Homework> homeworkList = homeworkTableView.getItems();
-        if(homeworkList != null) { //기존에 테이블에 저장된 리스트를 알람 큐에서 지우기
-            homeworkList.forEach(alarmQueue::remove);
-            homeworkList.clear();
-        }else{
-            homeworkList = FXCollections.observableArrayList();
-        }
-
-        try { //포탈에서 과제 정보를 받아오기
-            String lectureIDXmlInfo = PortalHttpRequest.getHomeworkLectureIDList(savedStudentID);
-            Map<Integer, String> lectureMap = portalParser.parseHomeworkLectureIDList(lectureIDXmlInfo);
-            for (Integer lectureID : lectureMap.keySet()) {
-                String homeworkXmlInfo = PortalHttpRequest.getHomeworkList(savedStudentID, lectureID);
-                List<Homework> remoteHomeworkList = portalParser.parseHomeworkList(homeworkXmlInfo);
-
-                for (Homework homework : remoteHomeworkList) {
-                    Homework renamedHomework = new Homework(lectureMap.get(lectureID) + "-" + homework.getName(), homework.getDueDate());
-                    homeworkList.add(renamedHomework);
-                    AlarmQueue.getInstance().add(renamedHomework);
-                }
-            }
-            try{ //포탈에서 받아온 과제를 저장하기t
-                fileManager.writeHomeworkFile(homeworkList);
-            }catch (IOException ioe){
-                printNotificationPane("Couldn't save your homework, Please try again after deleting existing homework list");
-                return false;
-            }
-            printNotificationPane("Successfully load homework list");
-            return true;
-        }catch(IOException e) { // 포탈에서 과제를 받는 데 발생한 예외
-            printNotificationPane("Couldn't get homework list. Please check you are connected to internet\n" +
-                        "Try to load homework list in local storage");
-            try { // 로컬에 저장된 파일을 찾아서 리스트를 만듬
-                ArrayList<Homework> localHomeworkList = new ArrayList<>();
-                for (Homework homework : fileManager.readHomeworkFile()) {
-                    localHomeworkList.add(homework);
-                    AlarmQueue.getInstance().add(homework);
-                }
-                homeworkTableView.setItems(FXCollections.observableArrayList(localHomeworkList));
-                printNotificationPane("Successfully load homework list");
-                return true;
-            }catch(IOException ioe){ // 로컬에도 저장된 리스트가 없을 때
-                printNotificationPane("Could't get homework list saved in local storage");
-
-                return false;
-            }catch(ClassNotFoundException cnfe){ // 직렬화 문제
-                printNotificationPane("Data has corrupted in Data directory\n" +
-                            "Maybe your Scheduler version doesn't match with Schedule files.");
-                return false;
-            }
-        }
-    }
-
     @FXML
     protected void handleSyncButtonAction(@SuppressWarnings("UnusedParameters") ActionEvent event){
         syncButton.setDisable(true);
-        sync();
+        HomeworkSyncManager.getInstance().sync(this);
         syncButton.setDisable(false);
     }
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {}
+    public void initialize(URL location, ResourceBundle resources) {
+        homeworkTableView.setItems(HomeworkSyncManager.getInstance().getHomeworkList());
+    }
 }

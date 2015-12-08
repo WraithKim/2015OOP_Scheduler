@@ -8,10 +8,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.controlsfx.control.NotificationPane;
 import org.controlsfx.dialog.ExceptionDialog;
-import util.AlarmThread;
-import util.AlarmQueue;
-import util.Constant;
-import util.FileManager;
+import util.*;
 import view.event.CalendarController;
 import view.stageBuilder.NotificationPaneUpgrader;
 import view.stageBuilder.SettingStageBuilder;
@@ -81,9 +78,7 @@ public class Scheduler extends Application{
         // 스케쥴러 관리 프로그램을 생성하고
         initStudentId();
         initAlarmThread();
-
         root = NotificationPaneUpgrader.getInstance().upgrade(root);
-
         calendarController.setNotificationPane((NotificationPane)root);
         Scene scene = new Scene(root);
         primaryStage.setTitle("Calendar");
@@ -93,6 +88,7 @@ public class Scheduler extends Application{
             System.exit(0);
         });
         primaryStage.show();
+        HomeworkSyncManager.getInstance().sync(calendarController);
     }
     
 }

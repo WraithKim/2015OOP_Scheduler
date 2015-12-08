@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import util.HomeworkSyncManager;
 import view.stageBuilder.DayScheduleListStageBuilder;
 import view.stageBuilder.HomeworkListStageBuilder;
 import view.stageBuilder.SettingStageBuilder;
@@ -41,8 +42,8 @@ public class CalendarController extends AbstactNotificationController implements
 
     @FXML
     protected void handleHomeworkButton(@SuppressWarnings("UnusedParameters") ActionEvent event) throws Exception{
-
         homeworkButton.setDisable(true);
+        HomeworkSyncManager.getInstance().sync(this);
         // 창 생성
         Stage stage = HomeworkListStageBuilder.getInstance().newHomeworkListViewStage();
         if(stage != null) stage.show();

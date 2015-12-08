@@ -39,7 +39,6 @@ public class HomeworkListStageBuilder {
         HomeworkListView.setResizable(false);
         HomeworkListView.setTitle("Homework List");
         HomeworkListView.setOnCloseRequest((WindowEvent event)-> isCreated = false);
-        homeworkListController.sync();
         return HomeworkListView;
     }
 
