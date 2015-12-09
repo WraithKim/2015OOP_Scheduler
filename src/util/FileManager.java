@@ -29,7 +29,7 @@ public class FileManager {
 	//path 생성 관련
 
 	private static String makePath(String... content) {
-		String path = System.getProperty("user.dir") + File.separator + MAIN_DIRECTORY;
+		String path = MAIN_DIRECTORY;
 
 		if(content != null) {
 			for(String fileName : content) {
