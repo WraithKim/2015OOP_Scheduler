@@ -134,7 +134,7 @@
 }
 
 /* The buttons in the header and the footer */
-.calendar-view .navigation-button, .calendar-view .today-button {
+.calendar-view .navigation-button, .calendar-view {
     -fx-background:transparent;
     -fx-cursor: hand;
     -fx-text-fill: white;
@@ -254,8 +254,13 @@
 	-fx-font-weight: bold;
 }
 
+
+.today {
+    -fx-background-color: #b4e3c4;
+}
+
 .exist {
-    -fx-background-color: #cce3f4;
+    -fx-background-color: #67fc9b;
     -fx-text-fill: #FF00FF;
     -fx-font-weight: bold;
 }

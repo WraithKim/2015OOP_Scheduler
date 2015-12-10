@@ -28,6 +28,9 @@ import view.stageBuilder.DayScheduleListStageBuilder;
  */
 public class CalendarController extends AbstactNotificationController implements Initializable {
 	
+	private Calendar c = Calendar.getInstance();
+	private Calendar today = Calendar.getInstance();
+	
 	@FXML
 	private BorderPane rootPane;
 	
@@ -60,15 +63,19 @@ public class CalendarController extends AbstactNotificationController implements
 			          protected void updateItem(Date item, boolean empty) {
 			             super.updateItem(item, empty);
 
-			             Calendar c = Calendar.getInstance();
 			             c.setTime(item);
-
+			             
+			             getStyleClass().removeAll("today");
 			             getStyleClass().removeAll("exist");
-
+			             
+			             if ( c.get(Calendar.YEAR) == today.get(Calendar.YEAR) && c.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR) ){
+			            	 getStyleClass().addAll("today");
+			             }
+			             
 			             if ( FileManager.containScheduleList(c) ){
 			            	 getStyleClass().addAll("exist");
 			             }
-
+			             
 			             if (c.get(Calendar.DAY_OF_WEEK) == 1) {
 			            	 getStyleClass().addAll("sunday");
 			             }

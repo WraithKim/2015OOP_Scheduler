@@ -55,16 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="util.ResourceLoader" project="2015OOP_Scheduler" 
-    file="/2015OOP_Scheduler/src/util/ResourceLoader.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="342" y="314"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="8" language="java" name="util.PortalXmlParser" project="2015OOP_Scheduler" 
+  <class id="7" language="java" name="util.PortalXmlParser" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/util/PortalXmlParser.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="761" y="164"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,7 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="main.Scheduler" project="2015OOP_Scheduler" 
+  <class id="8" language="java" name="main.Scheduler" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/main/Scheduler.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="514" y="238"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -82,7 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="util.AlarmQueue" project="2015OOP_Scheduler" 
+  <class id="9" language="java" name="util.AlarmQueue" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/util/AlarmQueue.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="684" y="332"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,7 +82,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="util.FileManager" project="2015OOP_Scheduler" 
+  <class id="10" language="java" name="util.FileManager" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/util/FileManager.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1067" y="334"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -100,7 +91,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="12" language="java" name="util.Constant" project="2015OOP_Scheduler" 
+  <interface id="11" language="java" name="util.Constant" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/util/Constant.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="837" y="528"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -109,7 +100,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="13" language="java" name="network.PortalPayloadFactory" project="2015OOP_Scheduler" 
+  <class id="12" language="java" name="network.PortalPayloadFactory" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/network/PortalPayloadFactory.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1364" y="162"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -118,7 +109,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="util.HomeworkSyncManager" project="2015OOP_Scheduler" 
+  <class id="13" language="java" name="util.HomeworkSyncManager" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/util/HomeworkSyncManager.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1767" y="477"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -127,7 +118,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="network.PortalHttpRequest" project="2015OOP_Scheduler" 
+  <class id="14" language="java" name="network.PortalHttpRequest" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/network/PortalHttpRequest.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="2030" y="162"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -136,7 +127,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="util.AlarmThread" project="2015OOP_Scheduler" 
+  <class id="15" language="java" name="util.AlarmThread" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/util/AlarmThread.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1683" y="189"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -145,7 +136,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="17" language="java" name="schedule.Priority" project="2015OOP_Scheduler" 
+  <enumeration id="16" language="java" name="schedule.Priority" project="2015OOP_Scheduler" 
     file="/2015OOP_Scheduler/src/schedule/Priority.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1109" y="743"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -154,64 +145,64 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <association id="18">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="19" name="dragDelta"/>      
-      <multiplicity id="20" minimum="0" maximum="1"/>    
+  <association id="17">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="18" name="dragDelta"/>      
+      <multiplicity id="19" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="21">    
+  <generalization id="20">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="6"/>  
   </generalization>  
-  <association id="22">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="23" name="alarmQueue"/>      
-      <multiplicity id="24" minimum="0" maximum="1"/>    
+  <association id="21">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="22" name="alarmQueue"/>      
+      <multiplicity id="23" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
+    <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="25">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="26" name="homeworkSyncManager"/>      
-      <multiplicity id="27" minimum="0" maximum="1"/>    
+  <association id="24">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="25" name="homeworkSyncManager"/>      
+      <multiplicity id="26" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
+    <end type="TARGET" refId="13" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="28">    
-    <end type="SOURCE" refId="16" navigable="false">      
-      <attribute id="29" name="ourInstance"/>      
-      <multiplicity id="30" minimum="0" maximum="1"/>    
+  <association id="27">    
+    <end type="SOURCE" refId="15" navigable="false">      
+      <attribute id="28" name="ourInstance"/>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
+    <end type="TARGET" refId="15" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="31">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="32" name="homeworkList"/>      
-      <multiplicity id="33" minimum="0" maximum="2147483647"/>    
+  <association id="30">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="31" name="homeworkList"/>      
+      <multiplicity id="32" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="34">    
+  <association id="33">    
     <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="35" name="priority"/>      
-      <multiplicity id="36" minimum="0" maximum="1"/>    
+      <attribute id="34" name="priority"/>      
+      <multiplicity id="35" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
+    <end type="TARGET" refId="16" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <nesting id="37">    
-    <end type="SOURCE" refId="15"/>    
+  <nesting id="36">    
+    <end type="SOURCE" refId="14"/>    
     <end type="TARGET" refId="2"/>  
   </nesting>  
-  <nesting id="38">    
-    <end type="SOURCE" refId="12"/>    
+  <nesting id="37">    
+    <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="4"/>  
   </nesting>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
