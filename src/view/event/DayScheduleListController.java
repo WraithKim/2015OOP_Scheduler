@@ -11,6 +11,7 @@ import org.controlsfx.dialog.ExceptionDialog;
 import schedule.Schedule;
 import util.AlarmQueue;
 import util.FileManager;
+import util.HomeworkSyncManager;
 import view.stageBuilder.ScheduleEditorStageBuilder;
 
 import java.io.IOException;
@@ -111,6 +112,6 @@ public class DayScheduleListController extends AbstactNotificationController imp
     public void initialize(URL location, ResourceBundle resources) {
         // GUI 창을 띄우기 직전에 해야할 작업(일종의 GUI 창 생성자)
         scheduleTableView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        scheduleTableView.setItems(FXCollections.observableArrayList(new ArrayList<>()));
+        scheduleTableView.setItems(FXCollections.observableArrayList(HomeworkSyncManager.homeworkSyncManager.getHomeworkList()));
     }
 }
